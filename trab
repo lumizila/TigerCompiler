@@ -1,0 +1,185 @@
+%option noyywrap
+
+INTEIRO   [0-9]+
+IDENTIFICADOR       [a-zA-Z][a-zA-Z0-9]*
+
+%{
+
+#include <string.h>
+
+struct l_simbolo{
+	int qtd;
+	struct l_simbolo* prox;
+	char* sim;
+};
+
+typedef struct l_simbolo nodo;
+
+nodo* Lista=NULL;
+
+nodo* crialista(){
+	nodo* lista = (nodo*) malloc(sizeof(nodo));
+	lista->prox = NULL;
+	lista->sim = NULL;
+	lista->qtd = 1; 
+	return lista;
+}
+
+nodo* buscasimbolo(nodo* lista, char* sim){
+	nodo* aux = lista;
+	while(aux){
+		if (aux->sim && !strcmp(sim, aux->sim)){
+			return aux;
+		}
+		aux=aux->prox;
+	}
+	return NULL;
+}
+
+nodo* inserelista(nodo* lista, char* sim){
+	nodo* res = buscasimbolo(lista, sim);
+	if (!res){
+		nodo* n = crialista();
+		n->prox = lista;
+		n->sim = (char*) malloc(25);
+		strcpy(n->sim, sim);
+		return n;	
+	}
+	res->qtd++;
+	return lista;
+}
+
+void imprime(nodo* lista){
+	nodo* aux = lista;
+	while(aux){
+		if (aux->sim)
+			printf("%s : %d\n",aux->sim, aux->qtd);
+		aux=aux->prox;
+	}
+}
+
+nodo* ordenaLista(nodo* lista){
+	//ordena a lista em ordem alfabetica por insert sort.
+	//cria lista auxiliar
+	nodo* auxLista = crialista();
+	nodo* auxListaInicial = auxLista;
+	nodo* aux = lista;
+
+	//para cada elemento da lista normal, tenta inserilo na lista auxiliar
+	while(aux->sim != NULL){	
+		auxLista = auxListaInicial;
+		//se este eh o primeiro elemento inserido
+		if(auxLista -> sim == NULL){
+			auxLista->sim = (char*) malloc(25);
+			strcpy(auxLista->sim, aux->sim);
+			auxLista->qtd = aux->qtd;
+		}
+		//iniciando do simbolo inicial, se este elemento < inicial, coloca ele como inicial
+		else if(strcmp(auxLista->sim, aux->sim) > 0){
+			//criando novo nodo
+			nodo* novoNodo = crialista();
+			novoNodo->sim = (char*) malloc(25);
+			strcpy(novoNodo->sim, aux->sim);
+			novoNodo->qtd = aux->qtd;
+			//novo nodo eh o elemento inicial agora
+			novoNodo->prox=auxLista;
+			auxLista = novoNodo;
+			auxListaInicial = auxLista;
+		}
+		//se nao, vai para o proximo nodo de auxLista. 
+		else if(strcmp(auxLista->sim, aux->sim) <= 0){
+			while(auxLista != NULL){
+				//se atingimos o final da auxLista
+				if(auxLista->prox == NULL){
+					//criando novo nodo
+					nodo* novoNodo = crialista();
+					novoNodo->sim = (char*) malloc(25);
+					strcpy(novoNodo->sim, aux->sim);
+					novoNodo->qtd = aux->qtd;
+					//insere novo nodo no final
+					auxLista->prox = novoNodo;
+					novoNodo -> prox = NULL;
+					break;
+				}
+				//Se este < proximo, faz inicial -> este -> proximo
+				else if(strcmp(auxLista->prox->sim, aux->sim) > 0){
+					//criando novo nodo
+					nodo* novoNodo = crialista();
+					novoNodo->sim = (char*) malloc(25);
+					strcpy(novoNodo->sim, aux->sim);
+					novoNodo->qtd = aux->qtd;
+					//posicionando nodo
+					novoNodo->prox = auxLista->prox;
+					auxLista->prox = novoNodo;
+					break;
+				}
+				//Se este >= proximo
+				else if(strcmp(auxLista->prox->sim, aux->sim) <= 0){
+					auxLista = auxLista -> prox;
+				}
+			}
+		}
+		aux = aux->prox;
+	}
+	//copia lista auxiliar na lista de vdd
+	return auxListaInicial;
+}
+
+
+%}
+
+%%
+{INTEIRO}  {
+	char * texto = malloc(25);
+	sprintf(texto, "INTEIRO");
+	Lista = inserelista(Lista, texto);
+	free(texto);
+}
+
+var|function|if|then|else|while|do|let|in|end    Lista = inserelista(Lista, yytext);
+
+"\"".*"\"" {
+	char * texto = malloc(25);
+	sprintf(texto, "IDENTIFICADOR");
+	Lista = inserelista(Lista, texto);
+	free(texto);
+}
+
+{IDENTIFICADOR} {
+	//printf("%s\n", yytext);
+	char * texto = malloc(25);
+	sprintf(texto, "IDENTIFICADOR");
+	Lista = inserelista(Lista, texto);
+	free(texto);
+}
+
+":="|";"|","|"("|")"|"+"|"-"|"*"|"/"|"="|"<>"|"><"|">="|"<="|"&"|"|"   Lista = inserelista(Lista, yytext);
+
+"/*".*"*/" {
+	char * texto = malloc(25);
+	sprintf(texto, "COMENTARIO");
+	Lista = inserelista(Lista, texto);
+	free(texto);
+}
+
+[ \t\n]+            /*remove quebras de linha e espacos*/
+
+.                   /*ignora caracteres nao previstos*/
+
+%%
+
+int main( argc, argv )
+int argc;
+char **argv;
+{
+// "/*"([^*]*|[*])*"*/" {
+	Lista = crialista();
+	++argv, --argc;
+	if ( argc > 0 )
+		yyin = fopen( argv[0], "r" );
+	else
+		yyin = stdin;
+	yylex();
+	Lista = ordenaLista(Lista);
+	imprime(Lista);
+}
