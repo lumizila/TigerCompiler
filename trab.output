@@ -12,8 +12,7 @@ Estado 46 conflitos: 1 de deslocamento/redução
 Estado 49 conflitos: 1 de deslocamento/redução
 Estado 50 conflitos: 13 de deslocamento/redução
 Estado 53 conflitos: 1 de deslocamento/redução
-Estado 54 conflitos: 14 de deslocamento/redução
-Estado 55 conflitos: 13 de deslocamento/redução
+Estado 54 conflitos: 1 de deslocamento/redução
 Estado 56 conflitos: 1 de deslocamento/redução
 Estado 61 conflitos: 1 de deslocamento/redução
 Estado 73 conflitos: 1 de deslocamento/redução
@@ -858,34 +857,8 @@ Estado 54
     9     | IF expr THEN expr . ELSE expr
 
     ELSE  deslocar, e ir ao estado 61
-    ATT   deslocar, e ir ao estado 25
-    DIF   deslocar, e ir ao estado 26
-    GE    deslocar, e ir ao estado 27
-    LE    deslocar, e ir ao estado 28
-    '*'   deslocar, e ir ao estado 29
-    '/'   deslocar, e ir ao estado 30
-    '+'   deslocar, e ir ao estado 31
-    '-'   deslocar, e ir ao estado 32
-    '='   deslocar, e ir ao estado 33
-    '>'   deslocar, e ir ao estado 34
-    '<'   deslocar, e ir ao estado 35
-    '&'   deslocar, e ir ao estado 36
-    '|'   deslocar, e ir ao estado 37
 
     ELSE      [reduzir usando a regra 8 (expr)]
-    ATT       [reduzir usando a regra 8 (expr)]
-    DIF       [reduzir usando a regra 8 (expr)]
-    GE        [reduzir usando a regra 8 (expr)]
-    LE        [reduzir usando a regra 8 (expr)]
-    '*'       [reduzir usando a regra 8 (expr)]
-    '/'       [reduzir usando a regra 8 (expr)]
-    '+'       [reduzir usando a regra 8 (expr)]
-    '-'       [reduzir usando a regra 8 (expr)]
-    '='       [reduzir usando a regra 8 (expr)]
-    '>'       [reduzir usando a regra 8 (expr)]
-    '<'       [reduzir usando a regra 8 (expr)]
-    '&'       [reduzir usando a regra 8 (expr)]
-    '|'       [reduzir usando a regra 8 (expr)]
     $padrão  reduzir usando a regra 8 (expr)
 
     binoperator  ir ao estado 38
@@ -896,33 +869,6 @@ Estado 55
     4 expr: expr . binoperator expr
    10     | WHILE expr DO expr .
 
-    ATT  deslocar, e ir ao estado 25
-    DIF  deslocar, e ir ao estado 26
-    GE   deslocar, e ir ao estado 27
-    LE   deslocar, e ir ao estado 28
-    '*'  deslocar, e ir ao estado 29
-    '/'  deslocar, e ir ao estado 30
-    '+'  deslocar, e ir ao estado 31
-    '-'  deslocar, e ir ao estado 32
-    '='  deslocar, e ir ao estado 33
-    '>'  deslocar, e ir ao estado 34
-    '<'  deslocar, e ir ao estado 35
-    '&'  deslocar, e ir ao estado 36
-    '|'  deslocar, e ir ao estado 37
-
-    ATT       [reduzir usando a regra 10 (expr)]
-    DIF       [reduzir usando a regra 10 (expr)]
-    GE        [reduzir usando a regra 10 (expr)]
-    LE        [reduzir usando a regra 10 (expr)]
-    '*'       [reduzir usando a regra 10 (expr)]
-    '/'       [reduzir usando a regra 10 (expr)]
-    '+'       [reduzir usando a regra 10 (expr)]
-    '-'       [reduzir usando a regra 10 (expr)]
-    '='       [reduzir usando a regra 10 (expr)]
-    '>'       [reduzir usando a regra 10 (expr)]
-    '<'       [reduzir usando a regra 10 (expr)]
-    '&'       [reduzir usando a regra 10 (expr)]
-    '|'       [reduzir usando a regra 10 (expr)]
     $padrão  reduzir usando a regra 10 (expr)
 
     binoperator  ir ao estado 38

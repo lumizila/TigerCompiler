@@ -16,9 +16,10 @@ int yylex(void);
 %token  TIPOINT
 
 /*precedencia de operadores*/
-%precedence '*' '/' '+'  '-' '=' '>' '<' '&' '|'
+%precedence '*' '/' '+' '-' '=' '>' '<' '&' '|'
 %nonassoc ATT DIF GE LE
-%precedence ELSE
+%precedence ELSE THEN
+%precedence DO
 
 %%
 
@@ -73,6 +74,8 @@ typeid:		TIPOINT
 functiondec:	FUNCTION ID '(' typefields ')' '=' expr
 		;
 
+/*a partir daqui são descrições de tipos, e nao regras*/
+
 binoperator:	ATT 
 		| DIF
 		| GE
@@ -81,11 +84,13 @@ binoperator:	ATT
 		;
 	
 nil:	%empty	;
+
 /*
 exp:		
 		| expr	{ cout << "Hello world!"<< endl; }
 		;
 */
+
 %%
 
 int yyerror(string s)
