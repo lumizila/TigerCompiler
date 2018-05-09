@@ -19,7 +19,7 @@ bison.o:	bison.c
 		$(CC) $(CFLAGS) -c bison.c -o bison.o
 
 bison.c:	trab.y
-		bison -d -v trab.y
+		bison -d -v --warnings trab.y
 		cp trab.tab.c bison.c
 		cmp -s trab.tab.h tok.h || cp trab.tab.h tok.h
 

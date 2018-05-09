@@ -16,9 +16,9 @@ int yylex(void);
 %token  TIPOINT
 
 /*precedencia de operadores*/
-%left '*' '/' '+'  '-' '=' '>' '<' '&' '|'
+%precedence '*' '/' '+'  '-' '=' '>' '<' '&' '|'
 %nonassoc ATT DIF GE LE
-%left ELSE
+%precedence ELSE
 
 %%
 
@@ -80,7 +80,7 @@ binoperator:	ATT
 		| '+' | '-' | '*' | '/' | '=' | '>' | '<' | '&' | '|'
 		;
 	
-nil:		;
+nil:	%empty	;
 /*
 exp:		
 		| expr	{ cout << "Hello world!"<< endl; }

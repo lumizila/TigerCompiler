@@ -439,11 +439,11 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    26,    26,    27,    28,    29,    30,    31,    32,    33,
-      34,    35,    36,    37,    40,    41,    44,    45,    48,    51,
-      52,    55,    56,    59,    62,    65,    66,    69,    72,    74,
-      77,    78,    79,    80,    81,    81,    81,    81,    81,    81,
-      81,    81,    81,    84
+       0,    25,    25,    26,    27,    28,    29,    30,    31,    32,
+      33,    34,    35,    36,    39,    40,    43,    44,    47,    50,
+      51,    54,    55,    58,    61,    64,    65,    68,    71,    73,
+      76,    77,    78,    79,    80,    80,    80,    80,    80,    80,
+      80,    80,    80,    83
 };
 #endif
 
@@ -1501,7 +1501,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 90 "trab.y" /* yacc.c:1906  */
+#line 89 "trab.y" /* yacc.c:1906  */
 
 
 int yyerror(string s)
