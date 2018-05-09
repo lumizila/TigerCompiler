@@ -1,7 +1,7 @@
 Estado 0 conflitos: 1 de deslocamento/redução
 Estado 3 conflitos: 1 de deslocamento/redução
 Estado 4 conflitos: 1 de deslocamento/redução
-Estado 6 conflitos: 1 de deslocamento/redução
+Estado 7 conflitos: 1 de deslocamento/redução
 Estado 9 conflitos: 1 de deslocamento/redução
 Estado 12 conflitos: 1 de deslocamento/redução
 Estado 38 conflitos: 1 de deslocamento/redução
@@ -11,13 +11,11 @@ Estado 43 conflitos: 1 de deslocamento/redução
 Estado 46 conflitos: 1 de deslocamento/redução
 Estado 49 conflitos: 1 de deslocamento/redução
 Estado 50 conflitos: 13 de deslocamento/redução
-Estado 51 conflitos: 13 de deslocamento/redução
 Estado 53 conflitos: 1 de deslocamento/redução
 Estado 54 conflitos: 14 de deslocamento/redução
 Estado 55 conflitos: 13 de deslocamento/redução
 Estado 56 conflitos: 1 de deslocamento/redução
 Estado 61 conflitos: 1 de deslocamento/redução
-Estado 67 conflitos: 13 de deslocamento/redução
 Estado 73 conflitos: 1 de deslocamento/redução
 
 
@@ -164,8 +162,8 @@ Estado 0
     IF       deslocar, e ir ao estado 3
     WHILE    deslocar, e ir ao estado 4
     LET      deslocar, e ir ao estado 5
-    '('      deslocar, e ir ao estado 6
-    '-'      deslocar, e ir ao estado 7
+    '-'      deslocar, e ir ao estado 6
+    '('      deslocar, e ir ao estado 7
 
     '-'       [reduzir usando a regra 42 (nil)]
     $padrão  reduzir usando a regra 42 (nil)
@@ -203,8 +201,8 @@ Estado 3
     IF       deslocar, e ir ao estado 3
     WHILE    deslocar, e ir ao estado 4
     LET      deslocar, e ir ao estado 5
-    '('      deslocar, e ir ao estado 6
-    '-'      deslocar, e ir ao estado 7
+    '-'      deslocar, e ir ao estado 6
+    '('      deslocar, e ir ao estado 7
 
     '-'       [reduzir usando a regra 42 (nil)]
     $padrão  reduzir usando a regra 42 (nil)
@@ -224,8 +222,8 @@ Estado 4
     IF       deslocar, e ir ao estado 3
     WHILE    deslocar, e ir ao estado 4
     LET      deslocar, e ir ao estado 5
-    '('      deslocar, e ir ao estado 6
-    '-'      deslocar, e ir ao estado 7
+    '-'      deslocar, e ir ao estado 6
+    '('      deslocar, e ir ao estado 7
 
     '-'       [reduzir usando a regra 42 (nil)]
     $padrão  reduzir usando a regra 42 (nil)
@@ -251,6 +249,15 @@ Estado 5
 
 Estado 6
 
+   12 expr: '-' . intconstant
+
+    INTEGER  deslocar, e ir ao estado 1
+
+    intconstant  ir ao estado 21
+
+
+Estado 7
+
     7 expr: '(' . exprseq ')'
 
     INTEGER  deslocar, e ir ao estado 1
@@ -258,26 +265,17 @@ Estado 6
     IF       deslocar, e ir ao estado 3
     WHILE    deslocar, e ir ao estado 4
     LET      deslocar, e ir ao estado 5
-    '('      deslocar, e ir ao estado 6
-    '-'      deslocar, e ir ao estado 7
+    '-'      deslocar, e ir ao estado 6
+    '('      deslocar, e ir ao estado 7
 
     '-'       [reduzir usando a regra 42 (nil)]
     $padrão  reduzir usando a regra 42 (nil)
 
-    expr         ir ao estado 21
-    exprseq      ir ao estado 22
+    expr         ir ao estado 22
+    exprseq      ir ao estado 23
     lvalue       ir ao estado 9
     intconstant  ir ao estado 10
     nil          ir ao estado 11
-
-
-Estado 7
-
-   12 expr: '-' . intconstant
-
-    INTEGER  deslocar, e ir ao estado 1
-
-    intconstant  ir ao estado 23
 
 
 Estado 8
@@ -290,11 +288,11 @@ Estado 8
     DIF   deslocar, e ir ao estado 26
     GE    deslocar, e ir ao estado 27
     LE    deslocar, e ir ao estado 28
-    '-'   deslocar, e ir ao estado 29
-    '='   deslocar, e ir ao estado 30
+    '*'   deslocar, e ir ao estado 29
+    '/'   deslocar, e ir ao estado 30
     '+'   deslocar, e ir ao estado 31
-    '*'   deslocar, e ir ao estado 32
-    '/'   deslocar, e ir ao estado 33
+    '-'   deslocar, e ir ao estado 32
+    '='   deslocar, e ir ao estado 33
     '>'   deslocar, e ir ao estado 34
     '<'   deslocar, e ir ao estado 35
     '&'   deslocar, e ir ao estado 36
@@ -337,8 +335,8 @@ Estado 12
     IF       deslocar, e ir ao estado 3
     WHILE    deslocar, e ir ao estado 4
     LET      deslocar, e ir ao estado 5
-    '('      deslocar, e ir ao estado 6
-    '-'      deslocar, e ir ao estado 7
+    '-'      deslocar, e ir ao estado 6
+    '('      deslocar, e ir ao estado 7
 
     '-'       [reduzir usando a regra 42 (nil)]
     $padrão  reduzir usando a regra 42 (nil)
@@ -361,11 +359,11 @@ Estado 13
     DIF   deslocar, e ir ao estado 26
     GE    deslocar, e ir ao estado 27
     LE    deslocar, e ir ao estado 28
-    '-'   deslocar, e ir ao estado 29
-    '='   deslocar, e ir ao estado 30
+    '*'   deslocar, e ir ao estado 29
+    '/'   deslocar, e ir ao estado 30
     '+'   deslocar, e ir ao estado 31
-    '*'   deslocar, e ir ao estado 32
-    '/'   deslocar, e ir ao estado 33
+    '-'   deslocar, e ir ao estado 32
+    '='   deslocar, e ir ao estado 33
     '>'   deslocar, e ir ao estado 34
     '<'   deslocar, e ir ao estado 35
     '&'   deslocar, e ir ao estado 36
@@ -384,11 +382,11 @@ Estado 14
     DIF  deslocar, e ir ao estado 26
     GE   deslocar, e ir ao estado 27
     LE   deslocar, e ir ao estado 28
-    '-'  deslocar, e ir ao estado 29
-    '='  deslocar, e ir ao estado 30
+    '*'  deslocar, e ir ao estado 29
+    '/'  deslocar, e ir ao estado 30
     '+'  deslocar, e ir ao estado 31
-    '*'  deslocar, e ir ao estado 32
-    '/'  deslocar, e ir ao estado 33
+    '-'  deslocar, e ir ao estado 32
+    '='  deslocar, e ir ao estado 33
     '>'  deslocar, e ir ao estado 34
     '<'  deslocar, e ir ao estado 35
     '&'  deslocar, e ir ao estado 36
@@ -448,6 +446,13 @@ Estado 20
 
 Estado 21
 
+   12 expr: '-' intconstant .
+
+    $padrão  reduzir usando a regra 12 (expr)
+
+
+Estado 22
+
     4 expr: expr . binoperator expr
    13 exprseq: expr .
 
@@ -455,11 +460,11 @@ Estado 21
     DIF  deslocar, e ir ao estado 26
     GE   deslocar, e ir ao estado 27
     LE   deslocar, e ir ao estado 28
-    '-'  deslocar, e ir ao estado 29
-    '='  deslocar, e ir ao estado 30
+    '*'  deslocar, e ir ao estado 29
+    '/'  deslocar, e ir ao estado 30
     '+'  deslocar, e ir ao estado 31
-    '*'  deslocar, e ir ao estado 32
-    '/'  deslocar, e ir ao estado 33
+    '-'  deslocar, e ir ao estado 32
+    '='  deslocar, e ir ao estado 33
     '>'  deslocar, e ir ao estado 34
     '<'  deslocar, e ir ao estado 35
     '&'  deslocar, e ir ao estado 36
@@ -470,20 +475,13 @@ Estado 21
     binoperator  ir ao estado 38
 
 
-Estado 22
+Estado 23
 
     7 expr: '(' exprseq . ')'
    14 exprseq: exprseq . ';' expr
 
     ')'  deslocar, e ir ao estado 48
     ';'  deslocar, e ir ao estado 49
-
-
-Estado 23
-
-   12 expr: '-' intconstant .
-
-    $padrão  reduzir usando a regra 12 (expr)
 
 
 Estado 24
@@ -523,16 +521,16 @@ Estado 28
 
 Estado 29
 
-   34 binoperator: '-' .
+   35 binoperator: '*' .
 
-    $padrão  reduzir usando a regra 34 (binoperator)
+    $padrão  reduzir usando a regra 35 (binoperator)
 
 
 Estado 30
 
-   37 binoperator: '=' .
+   36 binoperator: '/' .
 
-    $padrão  reduzir usando a regra 37 (binoperator)
+    $padrão  reduzir usando a regra 36 (binoperator)
 
 
 Estado 31
@@ -544,16 +542,16 @@ Estado 31
 
 Estado 32
 
-   35 binoperator: '*' .
+   34 binoperator: '-' .
 
-    $padrão  reduzir usando a regra 35 (binoperator)
+    $padrão  reduzir usando a regra 34 (binoperator)
 
 
 Estado 33
 
-   36 binoperator: '/' .
+   37 binoperator: '=' .
 
-    $padrão  reduzir usando a regra 36 (binoperator)
+    $padrão  reduzir usando a regra 37 (binoperator)
 
 
 Estado 34
@@ -593,8 +591,8 @@ Estado 38
     IF       deslocar, e ir ao estado 3
     WHILE    deslocar, e ir ao estado 4
     LET      deslocar, e ir ao estado 5
-    '('      deslocar, e ir ao estado 6
-    '-'      deslocar, e ir ao estado 7
+    '-'      deslocar, e ir ao estado 6
+    '('      deslocar, e ir ao estado 7
 
     '-'       [reduzir usando a regra 42 (nil)]
     $padrão  reduzir usando a regra 42 (nil)
@@ -614,8 +612,8 @@ Estado 39
     IF       deslocar, e ir ao estado 3
     WHILE    deslocar, e ir ao estado 4
     LET      deslocar, e ir ao estado 5
-    '('      deslocar, e ir ao estado 6
-    '-'      deslocar, e ir ao estado 7
+    '-'      deslocar, e ir ao estado 6
+    '('      deslocar, e ir ao estado 7
 
     '-'       [reduzir usando a regra 42 (nil)]
     $padrão  reduzir usando a regra 42 (nil)
@@ -635,11 +633,11 @@ Estado 40
     DIF  deslocar, e ir ao estado 26
     GE   deslocar, e ir ao estado 27
     LE   deslocar, e ir ao estado 28
-    '-'  deslocar, e ir ao estado 29
-    '='  deslocar, e ir ao estado 30
+    '*'  deslocar, e ir ao estado 29
+    '/'  deslocar, e ir ao estado 30
     '+'  deslocar, e ir ao estado 31
-    '*'  deslocar, e ir ao estado 32
-    '/'  deslocar, e ir ao estado 33
+    '-'  deslocar, e ir ao estado 32
+    '='  deslocar, e ir ao estado 33
     '>'  deslocar, e ir ao estado 34
     '<'  deslocar, e ir ao estado 35
     '&'  deslocar, e ir ao estado 36
@@ -669,8 +667,8 @@ Estado 42
     IF       deslocar, e ir ao estado 3
     WHILE    deslocar, e ir ao estado 4
     LET      deslocar, e ir ao estado 5
-    '('      deslocar, e ir ao estado 6
-    '-'      deslocar, e ir ao estado 7
+    '-'      deslocar, e ir ao estado 6
+    '('      deslocar, e ir ao estado 7
 
     '-'       [reduzir usando a regra 42 (nil)]
     $padrão  reduzir usando a regra 42 (nil)
@@ -690,8 +688,8 @@ Estado 43
     IF       deslocar, e ir ao estado 3
     WHILE    deslocar, e ir ao estado 4
     LET      deslocar, e ir ao estado 5
-    '('      deslocar, e ir ao estado 6
-    '-'      deslocar, e ir ao estado 7
+    '-'      deslocar, e ir ao estado 6
+    '('      deslocar, e ir ao estado 7
 
     '-'       [reduzir usando a regra 42 (nil)]
     $padrão  reduzir usando a regra 42 (nil)
@@ -725,13 +723,13 @@ Estado 46
     IF       deslocar, e ir ao estado 3
     WHILE    deslocar, e ir ao estado 4
     LET      deslocar, e ir ao estado 5
-    '('      deslocar, e ir ao estado 6
-    '-'      deslocar, e ir ao estado 7
+    '-'      deslocar, e ir ao estado 6
+    '('      deslocar, e ir ao estado 7
 
     '-'       [reduzir usando a regra 42 (nil)]
     $padrão  reduzir usando a regra 42 (nil)
 
-    expr         ir ao estado 21
+    expr         ir ao estado 22
     exprseq      ir ao estado 58
     lvalue       ir ao estado 9
     intconstant  ir ao estado 10
@@ -761,8 +759,8 @@ Estado 49
     IF       deslocar, e ir ao estado 3
     WHILE    deslocar, e ir ao estado 4
     LET      deslocar, e ir ao estado 5
-    '('      deslocar, e ir ao estado 6
-    '-'      deslocar, e ir ao estado 7
+    '-'      deslocar, e ir ao estado 6
+    '('      deslocar, e ir ao estado 7
 
     '-'       [reduzir usando a regra 42 (nil)]
     $padrão  reduzir usando a regra 42 (nil)
@@ -782,11 +780,11 @@ Estado 50
     DIF  deslocar, e ir ao estado 26
     GE   deslocar, e ir ao estado 27
     LE   deslocar, e ir ao estado 28
-    '-'  deslocar, e ir ao estado 29
-    '='  deslocar, e ir ao estado 30
+    '*'  deslocar, e ir ao estado 29
+    '/'  deslocar, e ir ao estado 30
     '+'  deslocar, e ir ao estado 31
-    '*'  deslocar, e ir ao estado 32
-    '/'  deslocar, e ir ao estado 33
+    '-'  deslocar, e ir ao estado 32
+    '='  deslocar, e ir ao estado 33
     '>'  deslocar, e ir ao estado 34
     '<'  deslocar, e ir ao estado 35
     '&'  deslocar, e ir ao estado 36
@@ -796,11 +794,11 @@ Estado 50
     DIF       [reduzir usando a regra 4 (expr)]
     GE        [reduzir usando a regra 4 (expr)]
     LE        [reduzir usando a regra 4 (expr)]
-    '-'       [reduzir usando a regra 4 (expr)]
-    '='       [reduzir usando a regra 4 (expr)]
-    '+'       [reduzir usando a regra 4 (expr)]
     '*'       [reduzir usando a regra 4 (expr)]
     '/'       [reduzir usando a regra 4 (expr)]
+    '+'       [reduzir usando a regra 4 (expr)]
+    '-'       [reduzir usando a regra 4 (expr)]
+    '='       [reduzir usando a regra 4 (expr)]
     '>'       [reduzir usando a regra 4 (expr)]
     '<'       [reduzir usando a regra 4 (expr)]
     '&'       [reduzir usando a regra 4 (expr)]
@@ -815,33 +813,11 @@ Estado 51
     4 expr: expr . binoperator expr
     5     | lvalue ATT expr .
 
-    ATT  deslocar, e ir ao estado 25
-    DIF  deslocar, e ir ao estado 26
-    GE   deslocar, e ir ao estado 27
-    LE   deslocar, e ir ao estado 28
-    '-'  deslocar, e ir ao estado 29
-    '='  deslocar, e ir ao estado 30
-    '+'  deslocar, e ir ao estado 31
-    '*'  deslocar, e ir ao estado 32
-    '/'  deslocar, e ir ao estado 33
-    '>'  deslocar, e ir ao estado 34
-    '<'  deslocar, e ir ao estado 35
-    '&'  deslocar, e ir ao estado 36
-    '|'  deslocar, e ir ao estado 37
+    ATT  erro (não associativo)
+    DIF  erro (não associativo)
+    GE   erro (não associativo)
+    LE   erro (não associativo)
 
-    ATT       [reduzir usando a regra 5 (expr)]
-    DIF       [reduzir usando a regra 5 (expr)]
-    GE        [reduzir usando a regra 5 (expr)]
-    LE        [reduzir usando a regra 5 (expr)]
-    '-'       [reduzir usando a regra 5 (expr)]
-    '='       [reduzir usando a regra 5 (expr)]
-    '+'       [reduzir usando a regra 5 (expr)]
-    '*'       [reduzir usando a regra 5 (expr)]
-    '/'       [reduzir usando a regra 5 (expr)]
-    '>'       [reduzir usando a regra 5 (expr)]
-    '<'       [reduzir usando a regra 5 (expr)]
-    '&'       [reduzir usando a regra 5 (expr)]
-    '|'       [reduzir usando a regra 5 (expr)]
     $padrão  reduzir usando a regra 5 (expr)
 
     binoperator  ir ao estado 38
@@ -863,8 +839,8 @@ Estado 53
     IF       deslocar, e ir ao estado 3
     WHILE    deslocar, e ir ao estado 4
     LET      deslocar, e ir ao estado 5
-    '('      deslocar, e ir ao estado 6
-    '-'      deslocar, e ir ao estado 7
+    '-'      deslocar, e ir ao estado 6
+    '('      deslocar, e ir ao estado 7
 
     '-'       [reduzir usando a regra 42 (nil)]
     $padrão  reduzir usando a regra 42 (nil)
@@ -886,11 +862,11 @@ Estado 54
     DIF   deslocar, e ir ao estado 26
     GE    deslocar, e ir ao estado 27
     LE    deslocar, e ir ao estado 28
-    '-'   deslocar, e ir ao estado 29
-    '='   deslocar, e ir ao estado 30
+    '*'   deslocar, e ir ao estado 29
+    '/'   deslocar, e ir ao estado 30
     '+'   deslocar, e ir ao estado 31
-    '*'   deslocar, e ir ao estado 32
-    '/'   deslocar, e ir ao estado 33
+    '-'   deslocar, e ir ao estado 32
+    '='   deslocar, e ir ao estado 33
     '>'   deslocar, e ir ao estado 34
     '<'   deslocar, e ir ao estado 35
     '&'   deslocar, e ir ao estado 36
@@ -901,11 +877,11 @@ Estado 54
     DIF       [reduzir usando a regra 8 (expr)]
     GE        [reduzir usando a regra 8 (expr)]
     LE        [reduzir usando a regra 8 (expr)]
-    '-'       [reduzir usando a regra 8 (expr)]
-    '='       [reduzir usando a regra 8 (expr)]
-    '+'       [reduzir usando a regra 8 (expr)]
     '*'       [reduzir usando a regra 8 (expr)]
     '/'       [reduzir usando a regra 8 (expr)]
+    '+'       [reduzir usando a regra 8 (expr)]
+    '-'       [reduzir usando a regra 8 (expr)]
+    '='       [reduzir usando a regra 8 (expr)]
     '>'       [reduzir usando a regra 8 (expr)]
     '<'       [reduzir usando a regra 8 (expr)]
     '&'       [reduzir usando a regra 8 (expr)]
@@ -924,11 +900,11 @@ Estado 55
     DIF  deslocar, e ir ao estado 26
     GE   deslocar, e ir ao estado 27
     LE   deslocar, e ir ao estado 28
-    '-'  deslocar, e ir ao estado 29
-    '='  deslocar, e ir ao estado 30
+    '*'  deslocar, e ir ao estado 29
+    '/'  deslocar, e ir ao estado 30
     '+'  deslocar, e ir ao estado 31
-    '*'  deslocar, e ir ao estado 32
-    '/'  deslocar, e ir ao estado 33
+    '-'  deslocar, e ir ao estado 32
+    '='  deslocar, e ir ao estado 33
     '>'  deslocar, e ir ao estado 34
     '<'  deslocar, e ir ao estado 35
     '&'  deslocar, e ir ao estado 36
@@ -938,11 +914,11 @@ Estado 55
     DIF       [reduzir usando a regra 10 (expr)]
     GE        [reduzir usando a regra 10 (expr)]
     LE        [reduzir usando a regra 10 (expr)]
-    '-'       [reduzir usando a regra 10 (expr)]
-    '='       [reduzir usando a regra 10 (expr)]
-    '+'       [reduzir usando a regra 10 (expr)]
     '*'       [reduzir usando a regra 10 (expr)]
     '/'       [reduzir usando a regra 10 (expr)]
+    '+'       [reduzir usando a regra 10 (expr)]
+    '-'       [reduzir usando a regra 10 (expr)]
+    '='       [reduzir usando a regra 10 (expr)]
     '>'       [reduzir usando a regra 10 (expr)]
     '<'       [reduzir usando a regra 10 (expr)]
     '&'       [reduzir usando a regra 10 (expr)]
@@ -961,8 +937,8 @@ Estado 56
     IF       deslocar, e ir ao estado 3
     WHILE    deslocar, e ir ao estado 4
     LET      deslocar, e ir ao estado 5
-    '('      deslocar, e ir ao estado 6
-    '-'      deslocar, e ir ao estado 7
+    '-'      deslocar, e ir ao estado 6
+    '('      deslocar, e ir ao estado 7
 
     '-'       [reduzir usando a regra 42 (nil)]
     $padrão  reduzir usando a regra 42 (nil)
@@ -1001,11 +977,11 @@ Estado 59
     DIF  deslocar, e ir ao estado 26
     GE   deslocar, e ir ao estado 27
     LE   deslocar, e ir ao estado 28
-    '-'  deslocar, e ir ao estado 29
-    '='  deslocar, e ir ao estado 30
+    '*'  deslocar, e ir ao estado 29
+    '/'  deslocar, e ir ao estado 30
     '+'  deslocar, e ir ao estado 31
-    '*'  deslocar, e ir ao estado 32
-    '/'  deslocar, e ir ao estado 33
+    '-'  deslocar, e ir ao estado 32
+    '='  deslocar, e ir ao estado 33
     '>'  deslocar, e ir ao estado 34
     '<'  deslocar, e ir ao estado 35
     '&'  deslocar, e ir ao estado 36
@@ -1025,11 +1001,11 @@ Estado 60
     DIF  deslocar, e ir ao estado 26
     GE   deslocar, e ir ao estado 27
     LE   deslocar, e ir ao estado 28
-    '-'  deslocar, e ir ao estado 29
-    '='  deslocar, e ir ao estado 30
+    '*'  deslocar, e ir ao estado 29
+    '/'  deslocar, e ir ao estado 30
     '+'  deslocar, e ir ao estado 31
-    '*'  deslocar, e ir ao estado 32
-    '/'  deslocar, e ir ao estado 33
+    '-'  deslocar, e ir ao estado 32
+    '='  deslocar, e ir ao estado 33
     '>'  deslocar, e ir ao estado 34
     '<'  deslocar, e ir ao estado 35
     '&'  deslocar, e ir ao estado 36
@@ -1049,8 +1025,8 @@ Estado 61
     IF       deslocar, e ir ao estado 3
     WHILE    deslocar, e ir ao estado 4
     LET      deslocar, e ir ao estado 5
-    '('      deslocar, e ir ao estado 6
-    '-'      deslocar, e ir ao estado 7
+    '-'      deslocar, e ir ao estado 6
+    '('      deslocar, e ir ao estado 7
 
     '-'       [reduzir usando a regra 42 (nil)]
     $padrão  reduzir usando a regra 42 (nil)
@@ -1070,11 +1046,11 @@ Estado 62
     DIF  deslocar, e ir ao estado 26
     GE   deslocar, e ir ao estado 27
     LE   deslocar, e ir ao estado 28
-    '-'  deslocar, e ir ao estado 29
-    '='  deslocar, e ir ao estado 30
+    '*'  deslocar, e ir ao estado 29
+    '/'  deslocar, e ir ao estado 30
     '+'  deslocar, e ir ao estado 31
-    '*'  deslocar, e ir ao estado 32
-    '/'  deslocar, e ir ao estado 33
+    '-'  deslocar, e ir ao estado 32
+    '='  deslocar, e ir ao estado 33
     '>'  deslocar, e ir ao estado 34
     '<'  deslocar, e ir ao estado 35
     '&'  deslocar, e ir ao estado 36
@@ -1120,33 +1096,6 @@ Estado 67
     4 expr: expr . binoperator expr
     9     | IF expr THEN expr ELSE expr .
 
-    ATT  deslocar, e ir ao estado 25
-    DIF  deslocar, e ir ao estado 26
-    GE   deslocar, e ir ao estado 27
-    LE   deslocar, e ir ao estado 28
-    '-'  deslocar, e ir ao estado 29
-    '='  deslocar, e ir ao estado 30
-    '+'  deslocar, e ir ao estado 31
-    '*'  deslocar, e ir ao estado 32
-    '/'  deslocar, e ir ao estado 33
-    '>'  deslocar, e ir ao estado 34
-    '<'  deslocar, e ir ao estado 35
-    '&'  deslocar, e ir ao estado 36
-    '|'  deslocar, e ir ao estado 37
-
-    ATT       [reduzir usando a regra 9 (expr)]
-    DIF       [reduzir usando a regra 9 (expr)]
-    GE        [reduzir usando a regra 9 (expr)]
-    LE        [reduzir usando a regra 9 (expr)]
-    '-'       [reduzir usando a regra 9 (expr)]
-    '='       [reduzir usando a regra 9 (expr)]
-    '+'       [reduzir usando a regra 9 (expr)]
-    '*'       [reduzir usando a regra 9 (expr)]
-    '/'       [reduzir usando a regra 9 (expr)]
-    '>'       [reduzir usando a regra 9 (expr)]
-    '<'       [reduzir usando a regra 9 (expr)]
-    '&'       [reduzir usando a regra 9 (expr)]
-    '|'       [reduzir usando a regra 9 (expr)]
     $padrão  reduzir usando a regra 9 (expr)
 
     binoperator  ir ao estado 38
@@ -1200,8 +1149,8 @@ Estado 73
     IF       deslocar, e ir ao estado 3
     WHILE    deslocar, e ir ao estado 4
     LET      deslocar, e ir ao estado 5
-    '('      deslocar, e ir ao estado 6
-    '-'      deslocar, e ir ao estado 7
+    '-'      deslocar, e ir ao estado 6
+    '('      deslocar, e ir ao estado 7
 
     '-'       [reduzir usando a regra 42 (nil)]
     $padrão  reduzir usando a regra 42 (nil)
@@ -1228,11 +1177,11 @@ Estado 75
     DIF  deslocar, e ir ao estado 26
     GE   deslocar, e ir ao estado 27
     LE   deslocar, e ir ao estado 28
-    '-'  deslocar, e ir ao estado 29
-    '='  deslocar, e ir ao estado 30
+    '*'  deslocar, e ir ao estado 29
+    '/'  deslocar, e ir ao estado 30
     '+'  deslocar, e ir ao estado 31
-    '*'  deslocar, e ir ao estado 32
-    '/'  deslocar, e ir ao estado 33
+    '-'  deslocar, e ir ao estado 32
+    '='  deslocar, e ir ao estado 33
     '>'  deslocar, e ir ao estado 34
     '<'  deslocar, e ir ao estado 35
     '&'  deslocar, e ir ao estado 36

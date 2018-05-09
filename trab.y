@@ -14,6 +14,12 @@ int yylex(void);
 %token  IF THEN ELSE WHILE DO LET IN END 
 %token  ATT DIF GE LE
 %token  TIPOINT
+
+/*precedencia de operadores*/
+%left '*' '/' '+'  '-' '=' '>' '<' '&' '|'
+%nonassoc ATT DIF GE LE
+%left ELSE
+
 %%
 
 expr:		intconstant
