@@ -1,0 +1,1243 @@
+Estado 0 conflitos: 1 de deslocamento/redução
+Estado 3 conflitos: 1 de deslocamento/redução
+Estado 4 conflitos: 1 de deslocamento/redução
+Estado 6 conflitos: 1 de deslocamento/redução
+Estado 9 conflitos: 1 de deslocamento/redução
+Estado 12 conflitos: 1 de deslocamento/redução
+Estado 38 conflitos: 1 de deslocamento/redução
+Estado 39 conflitos: 1 de deslocamento/redução
+Estado 42 conflitos: 1 de deslocamento/redução
+Estado 43 conflitos: 1 de deslocamento/redução
+Estado 46 conflitos: 1 de deslocamento/redução
+Estado 49 conflitos: 1 de deslocamento/redução
+Estado 50 conflitos: 13 de deslocamento/redução
+Estado 51 conflitos: 13 de deslocamento/redução
+Estado 53 conflitos: 1 de deslocamento/redução
+Estado 54 conflitos: 14 de deslocamento/redução
+Estado 55 conflitos: 13 de deslocamento/redução
+Estado 56 conflitos: 1 de deslocamento/redução
+Estado 61 conflitos: 1 de deslocamento/redução
+Estado 67 conflitos: 13 de deslocamento/redução
+Estado 73 conflitos: 1 de deslocamento/redução
+
+
+Gramática
+
+    0 $accept: expr $end
+
+    1 expr: intconstant
+    2     | nil
+    3     | lvalue
+    4     | expr binoperator expr
+    5     | lvalue ATT expr
+    6     | ID '(' exprlist ')'
+    7     | '(' exprseq ')'
+    8     | IF expr THEN expr
+    9     | IF expr THEN expr ELSE expr
+   10     | WHILE expr DO expr
+   11     | LET declist IN exprseq END
+   12     | '-' intconstant
+
+   13 exprseq: expr
+   14        | exprseq ';' expr
+
+   15 exprlist: expr
+   16         | exprlist ',' expr
+
+   17 lvalue: ID
+
+   18 declist: dec
+   19        | declist dec
+
+   20 dec: variabledec
+   21    | functiondec
+
+   22 variabledec: VAR ID ATT expr
+
+   23 intconstant: INTEGER
+
+   24 typefields: typefield
+   25           | typefields ',' typefield
+
+   26 typefield: ID ':' typeid
+
+   27 typeid: TIPOINT
+
+   28 functiondec: FUNCTION ID '(' typefields ')' '=' expr
+
+   29 binoperator: ATT
+   30            | DIF
+   31            | GE
+   32            | LE
+   33            | '+'
+   34            | '-'
+   35            | '*'
+   36            | '/'
+   37            | '='
+   38            | '>'
+   39            | '<'
+   40            | '&'
+   41            | '|'
+
+   42 nil: %empty
+
+
+Terminais, com as regras onde eles aparecem
+
+$end (0) 0
+'&' (38) 40
+'(' (40) 6 7 28
+')' (41) 6 7 28
+'*' (42) 35
+'+' (43) 33
+',' (44) 16 25
+'-' (45) 12 34
+'/' (47) 36
+':' (58) 26
+';' (59) 14
+'<' (60) 39
+'=' (61) 28 37
+'>' (62) 38
+'|' (124) 41
+error (256)
+INTEGER (258) 23
+VAR (259) 22
+FUNCTION (260) 28
+ID (261) 6 17 22 26 28
+IF (262) 8 9
+THEN (263) 8 9
+ELSE (264) 9
+WHILE (265) 10
+DO (266) 10
+LET (267) 11
+IN (268) 11
+END (269) 11
+ATT (270) 5 22 29
+DIF (271) 30
+GE (272) 31
+LE (273) 32
+TIPOINT (274) 27
+
+
+Não terminais com as regras onde eles aparecem
+
+$accept (34)
+    à esquerda: 0
+expr (35)
+    à esquerda: 1 2 3 4 5 6 7 8 9 10 11 12, à direita: 0 4 5 8 9
+    10 13 14 15 16 22 28
+exprseq (36)
+    à esquerda: 13 14, à direita: 7 11 14
+exprlist (37)
+    à esquerda: 15 16, à direita: 6 16
+lvalue (38)
+    à esquerda: 17, à direita: 3 5
+declist (39)
+    à esquerda: 18 19, à direita: 11 19
+dec (40)
+    à esquerda: 20 21, à direita: 18 19
+variabledec (41)
+    à esquerda: 22, à direita: 20
+intconstant (42)
+    à esquerda: 23, à direita: 1 12
+typefields (43)
+    à esquerda: 24 25, à direita: 25 28
+typefield (44)
+    à esquerda: 26, à direita: 24 25
+typeid (45)
+    à esquerda: 27, à direita: 26
+functiondec (46)
+    à esquerda: 28, à direita: 21
+binoperator (47)
+    à esquerda: 29 30 31 32 33 34 35 36 37 38 39 40 41, à direita:
+    4
+nil (48)
+    à esquerda: 42, à direita: 2
+
+
+Estado 0
+
+    0 $accept: . expr $end
+
+    INTEGER  deslocar, e ir ao estado 1
+    ID       deslocar, e ir ao estado 2
+    IF       deslocar, e ir ao estado 3
+    WHILE    deslocar, e ir ao estado 4
+    LET      deslocar, e ir ao estado 5
+    '('      deslocar, e ir ao estado 6
+    '-'      deslocar, e ir ao estado 7
+
+    '-'       [reduzir usando a regra 42 (nil)]
+    $padrão  reduzir usando a regra 42 (nil)
+
+    expr         ir ao estado 8
+    lvalue       ir ao estado 9
+    intconstant  ir ao estado 10
+    nil          ir ao estado 11
+
+
+Estado 1
+
+   23 intconstant: INTEGER .
+
+    $padrão  reduzir usando a regra 23 (intconstant)
+
+
+Estado 2
+
+    6 expr: ID . '(' exprlist ')'
+   17 lvalue: ID .
+
+    '('  deslocar, e ir ao estado 12
+
+    $padrão  reduzir usando a regra 17 (lvalue)
+
+
+Estado 3
+
+    8 expr: IF . expr THEN expr
+    9     | IF . expr THEN expr ELSE expr
+
+    INTEGER  deslocar, e ir ao estado 1
+    ID       deslocar, e ir ao estado 2
+    IF       deslocar, e ir ao estado 3
+    WHILE    deslocar, e ir ao estado 4
+    LET      deslocar, e ir ao estado 5
+    '('      deslocar, e ir ao estado 6
+    '-'      deslocar, e ir ao estado 7
+
+    '-'       [reduzir usando a regra 42 (nil)]
+    $padrão  reduzir usando a regra 42 (nil)
+
+    expr         ir ao estado 13
+    lvalue       ir ao estado 9
+    intconstant  ir ao estado 10
+    nil          ir ao estado 11
+
+
+Estado 4
+
+   10 expr: WHILE . expr DO expr
+
+    INTEGER  deslocar, e ir ao estado 1
+    ID       deslocar, e ir ao estado 2
+    IF       deslocar, e ir ao estado 3
+    WHILE    deslocar, e ir ao estado 4
+    LET      deslocar, e ir ao estado 5
+    '('      deslocar, e ir ao estado 6
+    '-'      deslocar, e ir ao estado 7
+
+    '-'       [reduzir usando a regra 42 (nil)]
+    $padrão  reduzir usando a regra 42 (nil)
+
+    expr         ir ao estado 14
+    lvalue       ir ao estado 9
+    intconstant  ir ao estado 10
+    nil          ir ao estado 11
+
+
+Estado 5
+
+   11 expr: LET . declist IN exprseq END
+
+    VAR       deslocar, e ir ao estado 15
+    FUNCTION  deslocar, e ir ao estado 16
+
+    declist      ir ao estado 17
+    dec          ir ao estado 18
+    variabledec  ir ao estado 19
+    functiondec  ir ao estado 20
+
+
+Estado 6
+
+    7 expr: '(' . exprseq ')'
+
+    INTEGER  deslocar, e ir ao estado 1
+    ID       deslocar, e ir ao estado 2
+    IF       deslocar, e ir ao estado 3
+    WHILE    deslocar, e ir ao estado 4
+    LET      deslocar, e ir ao estado 5
+    '('      deslocar, e ir ao estado 6
+    '-'      deslocar, e ir ao estado 7
+
+    '-'       [reduzir usando a regra 42 (nil)]
+    $padrão  reduzir usando a regra 42 (nil)
+
+    expr         ir ao estado 21
+    exprseq      ir ao estado 22
+    lvalue       ir ao estado 9
+    intconstant  ir ao estado 10
+    nil          ir ao estado 11
+
+
+Estado 7
+
+   12 expr: '-' . intconstant
+
+    INTEGER  deslocar, e ir ao estado 1
+
+    intconstant  ir ao estado 23
+
+
+Estado 8
+
+    0 $accept: expr . $end
+    4 expr: expr . binoperator expr
+
+    $end  deslocar, e ir ao estado 24
+    ATT   deslocar, e ir ao estado 25
+    DIF   deslocar, e ir ao estado 26
+    GE    deslocar, e ir ao estado 27
+    LE    deslocar, e ir ao estado 28
+    '-'   deslocar, e ir ao estado 29
+    '='   deslocar, e ir ao estado 30
+    '+'   deslocar, e ir ao estado 31
+    '*'   deslocar, e ir ao estado 32
+    '/'   deslocar, e ir ao estado 33
+    '>'   deslocar, e ir ao estado 34
+    '<'   deslocar, e ir ao estado 35
+    '&'   deslocar, e ir ao estado 36
+    '|'   deslocar, e ir ao estado 37
+
+    binoperator  ir ao estado 38
+
+
+Estado 9
+
+    3 expr: lvalue .
+    5     | lvalue . ATT expr
+
+    ATT  deslocar, e ir ao estado 39
+
+    ATT       [reduzir usando a regra 3 (expr)]
+    $padrão  reduzir usando a regra 3 (expr)
+
+
+Estado 10
+
+    1 expr: intconstant .
+
+    $padrão  reduzir usando a regra 1 (expr)
+
+
+Estado 11
+
+    2 expr: nil .
+
+    $padrão  reduzir usando a regra 2 (expr)
+
+
+Estado 12
+
+    6 expr: ID '(' . exprlist ')'
+
+    INTEGER  deslocar, e ir ao estado 1
+    ID       deslocar, e ir ao estado 2
+    IF       deslocar, e ir ao estado 3
+    WHILE    deslocar, e ir ao estado 4
+    LET      deslocar, e ir ao estado 5
+    '('      deslocar, e ir ao estado 6
+    '-'      deslocar, e ir ao estado 7
+
+    '-'       [reduzir usando a regra 42 (nil)]
+    $padrão  reduzir usando a regra 42 (nil)
+
+    expr         ir ao estado 40
+    exprlist     ir ao estado 41
+    lvalue       ir ao estado 9
+    intconstant  ir ao estado 10
+    nil          ir ao estado 11
+
+
+Estado 13
+
+    4 expr: expr . binoperator expr
+    8     | IF expr . THEN expr
+    9     | IF expr . THEN expr ELSE expr
+
+    THEN  deslocar, e ir ao estado 42
+    ATT   deslocar, e ir ao estado 25
+    DIF   deslocar, e ir ao estado 26
+    GE    deslocar, e ir ao estado 27
+    LE    deslocar, e ir ao estado 28
+    '-'   deslocar, e ir ao estado 29
+    '='   deslocar, e ir ao estado 30
+    '+'   deslocar, e ir ao estado 31
+    '*'   deslocar, e ir ao estado 32
+    '/'   deslocar, e ir ao estado 33
+    '>'   deslocar, e ir ao estado 34
+    '<'   deslocar, e ir ao estado 35
+    '&'   deslocar, e ir ao estado 36
+    '|'   deslocar, e ir ao estado 37
+
+    binoperator  ir ao estado 38
+
+
+Estado 14
+
+    4 expr: expr . binoperator expr
+   10     | WHILE expr . DO expr
+
+    DO   deslocar, e ir ao estado 43
+    ATT  deslocar, e ir ao estado 25
+    DIF  deslocar, e ir ao estado 26
+    GE   deslocar, e ir ao estado 27
+    LE   deslocar, e ir ao estado 28
+    '-'  deslocar, e ir ao estado 29
+    '='  deslocar, e ir ao estado 30
+    '+'  deslocar, e ir ao estado 31
+    '*'  deslocar, e ir ao estado 32
+    '/'  deslocar, e ir ao estado 33
+    '>'  deslocar, e ir ao estado 34
+    '<'  deslocar, e ir ao estado 35
+    '&'  deslocar, e ir ao estado 36
+    '|'  deslocar, e ir ao estado 37
+
+    binoperator  ir ao estado 38
+
+
+Estado 15
+
+   22 variabledec: VAR . ID ATT expr
+
+    ID  deslocar, e ir ao estado 44
+
+
+Estado 16
+
+   28 functiondec: FUNCTION . ID '(' typefields ')' '=' expr
+
+    ID  deslocar, e ir ao estado 45
+
+
+Estado 17
+
+   11 expr: LET declist . IN exprseq END
+   19 declist: declist . dec
+
+    VAR       deslocar, e ir ao estado 15
+    FUNCTION  deslocar, e ir ao estado 16
+    IN        deslocar, e ir ao estado 46
+
+    dec          ir ao estado 47
+    variabledec  ir ao estado 19
+    functiondec  ir ao estado 20
+
+
+Estado 18
+
+   18 declist: dec .
+
+    $padrão  reduzir usando a regra 18 (declist)
+
+
+Estado 19
+
+   20 dec: variabledec .
+
+    $padrão  reduzir usando a regra 20 (dec)
+
+
+Estado 20
+
+   21 dec: functiondec .
+
+    $padrão  reduzir usando a regra 21 (dec)
+
+
+Estado 21
+
+    4 expr: expr . binoperator expr
+   13 exprseq: expr .
+
+    ATT  deslocar, e ir ao estado 25
+    DIF  deslocar, e ir ao estado 26
+    GE   deslocar, e ir ao estado 27
+    LE   deslocar, e ir ao estado 28
+    '-'  deslocar, e ir ao estado 29
+    '='  deslocar, e ir ao estado 30
+    '+'  deslocar, e ir ao estado 31
+    '*'  deslocar, e ir ao estado 32
+    '/'  deslocar, e ir ao estado 33
+    '>'  deslocar, e ir ao estado 34
+    '<'  deslocar, e ir ao estado 35
+    '&'  deslocar, e ir ao estado 36
+    '|'  deslocar, e ir ao estado 37
+
+    $padrão  reduzir usando a regra 13 (exprseq)
+
+    binoperator  ir ao estado 38
+
+
+Estado 22
+
+    7 expr: '(' exprseq . ')'
+   14 exprseq: exprseq . ';' expr
+
+    ')'  deslocar, e ir ao estado 48
+    ';'  deslocar, e ir ao estado 49
+
+
+Estado 23
+
+   12 expr: '-' intconstant .
+
+    $padrão  reduzir usando a regra 12 (expr)
+
+
+Estado 24
+
+    0 $accept: expr $end .
+
+    $padrão  aceitar
+
+
+Estado 25
+
+   29 binoperator: ATT .
+
+    $padrão  reduzir usando a regra 29 (binoperator)
+
+
+Estado 26
+
+   30 binoperator: DIF .
+
+    $padrão  reduzir usando a regra 30 (binoperator)
+
+
+Estado 27
+
+   31 binoperator: GE .
+
+    $padrão  reduzir usando a regra 31 (binoperator)
+
+
+Estado 28
+
+   32 binoperator: LE .
+
+    $padrão  reduzir usando a regra 32 (binoperator)
+
+
+Estado 29
+
+   34 binoperator: '-' .
+
+    $padrão  reduzir usando a regra 34 (binoperator)
+
+
+Estado 30
+
+   37 binoperator: '=' .
+
+    $padrão  reduzir usando a regra 37 (binoperator)
+
+
+Estado 31
+
+   33 binoperator: '+' .
+
+    $padrão  reduzir usando a regra 33 (binoperator)
+
+
+Estado 32
+
+   35 binoperator: '*' .
+
+    $padrão  reduzir usando a regra 35 (binoperator)
+
+
+Estado 33
+
+   36 binoperator: '/' .
+
+    $padrão  reduzir usando a regra 36 (binoperator)
+
+
+Estado 34
+
+   38 binoperator: '>' .
+
+    $padrão  reduzir usando a regra 38 (binoperator)
+
+
+Estado 35
+
+   39 binoperator: '<' .
+
+    $padrão  reduzir usando a regra 39 (binoperator)
+
+
+Estado 36
+
+   40 binoperator: '&' .
+
+    $padrão  reduzir usando a regra 40 (binoperator)
+
+
+Estado 37
+
+   41 binoperator: '|' .
+
+    $padrão  reduzir usando a regra 41 (binoperator)
+
+
+Estado 38
+
+    4 expr: expr binoperator . expr
+
+    INTEGER  deslocar, e ir ao estado 1
+    ID       deslocar, e ir ao estado 2
+    IF       deslocar, e ir ao estado 3
+    WHILE    deslocar, e ir ao estado 4
+    LET      deslocar, e ir ao estado 5
+    '('      deslocar, e ir ao estado 6
+    '-'      deslocar, e ir ao estado 7
+
+    '-'       [reduzir usando a regra 42 (nil)]
+    $padrão  reduzir usando a regra 42 (nil)
+
+    expr         ir ao estado 50
+    lvalue       ir ao estado 9
+    intconstant  ir ao estado 10
+    nil          ir ao estado 11
+
+
+Estado 39
+
+    5 expr: lvalue ATT . expr
+
+    INTEGER  deslocar, e ir ao estado 1
+    ID       deslocar, e ir ao estado 2
+    IF       deslocar, e ir ao estado 3
+    WHILE    deslocar, e ir ao estado 4
+    LET      deslocar, e ir ao estado 5
+    '('      deslocar, e ir ao estado 6
+    '-'      deslocar, e ir ao estado 7
+
+    '-'       [reduzir usando a regra 42 (nil)]
+    $padrão  reduzir usando a regra 42 (nil)
+
+    expr         ir ao estado 51
+    lvalue       ir ao estado 9
+    intconstant  ir ao estado 10
+    nil          ir ao estado 11
+
+
+Estado 40
+
+    4 expr: expr . binoperator expr
+   15 exprlist: expr .
+
+    ATT  deslocar, e ir ao estado 25
+    DIF  deslocar, e ir ao estado 26
+    GE   deslocar, e ir ao estado 27
+    LE   deslocar, e ir ao estado 28
+    '-'  deslocar, e ir ao estado 29
+    '='  deslocar, e ir ao estado 30
+    '+'  deslocar, e ir ao estado 31
+    '*'  deslocar, e ir ao estado 32
+    '/'  deslocar, e ir ao estado 33
+    '>'  deslocar, e ir ao estado 34
+    '<'  deslocar, e ir ao estado 35
+    '&'  deslocar, e ir ao estado 36
+    '|'  deslocar, e ir ao estado 37
+
+    $padrão  reduzir usando a regra 15 (exprlist)
+
+    binoperator  ir ao estado 38
+
+
+Estado 41
+
+    6 expr: ID '(' exprlist . ')'
+   16 exprlist: exprlist . ',' expr
+
+    ')'  deslocar, e ir ao estado 52
+    ','  deslocar, e ir ao estado 53
+
+
+Estado 42
+
+    8 expr: IF expr THEN . expr
+    9     | IF expr THEN . expr ELSE expr
+
+    INTEGER  deslocar, e ir ao estado 1
+    ID       deslocar, e ir ao estado 2
+    IF       deslocar, e ir ao estado 3
+    WHILE    deslocar, e ir ao estado 4
+    LET      deslocar, e ir ao estado 5
+    '('      deslocar, e ir ao estado 6
+    '-'      deslocar, e ir ao estado 7
+
+    '-'       [reduzir usando a regra 42 (nil)]
+    $padrão  reduzir usando a regra 42 (nil)
+
+    expr         ir ao estado 54
+    lvalue       ir ao estado 9
+    intconstant  ir ao estado 10
+    nil          ir ao estado 11
+
+
+Estado 43
+
+   10 expr: WHILE expr DO . expr
+
+    INTEGER  deslocar, e ir ao estado 1
+    ID       deslocar, e ir ao estado 2
+    IF       deslocar, e ir ao estado 3
+    WHILE    deslocar, e ir ao estado 4
+    LET      deslocar, e ir ao estado 5
+    '('      deslocar, e ir ao estado 6
+    '-'      deslocar, e ir ao estado 7
+
+    '-'       [reduzir usando a regra 42 (nil)]
+    $padrão  reduzir usando a regra 42 (nil)
+
+    expr         ir ao estado 55
+    lvalue       ir ao estado 9
+    intconstant  ir ao estado 10
+    nil          ir ao estado 11
+
+
+Estado 44
+
+   22 variabledec: VAR ID . ATT expr
+
+    ATT  deslocar, e ir ao estado 56
+
+
+Estado 45
+
+   28 functiondec: FUNCTION ID . '(' typefields ')' '=' expr
+
+    '('  deslocar, e ir ao estado 57
+
+
+Estado 46
+
+   11 expr: LET declist IN . exprseq END
+
+    INTEGER  deslocar, e ir ao estado 1
+    ID       deslocar, e ir ao estado 2
+    IF       deslocar, e ir ao estado 3
+    WHILE    deslocar, e ir ao estado 4
+    LET      deslocar, e ir ao estado 5
+    '('      deslocar, e ir ao estado 6
+    '-'      deslocar, e ir ao estado 7
+
+    '-'       [reduzir usando a regra 42 (nil)]
+    $padrão  reduzir usando a regra 42 (nil)
+
+    expr         ir ao estado 21
+    exprseq      ir ao estado 58
+    lvalue       ir ao estado 9
+    intconstant  ir ao estado 10
+    nil          ir ao estado 11
+
+
+Estado 47
+
+   19 declist: declist dec .
+
+    $padrão  reduzir usando a regra 19 (declist)
+
+
+Estado 48
+
+    7 expr: '(' exprseq ')' .
+
+    $padrão  reduzir usando a regra 7 (expr)
+
+
+Estado 49
+
+   14 exprseq: exprseq ';' . expr
+
+    INTEGER  deslocar, e ir ao estado 1
+    ID       deslocar, e ir ao estado 2
+    IF       deslocar, e ir ao estado 3
+    WHILE    deslocar, e ir ao estado 4
+    LET      deslocar, e ir ao estado 5
+    '('      deslocar, e ir ao estado 6
+    '-'      deslocar, e ir ao estado 7
+
+    '-'       [reduzir usando a regra 42 (nil)]
+    $padrão  reduzir usando a regra 42 (nil)
+
+    expr         ir ao estado 59
+    lvalue       ir ao estado 9
+    intconstant  ir ao estado 10
+    nil          ir ao estado 11
+
+
+Estado 50
+
+    4 expr: expr . binoperator expr
+    4     | expr binoperator expr .
+
+    ATT  deslocar, e ir ao estado 25
+    DIF  deslocar, e ir ao estado 26
+    GE   deslocar, e ir ao estado 27
+    LE   deslocar, e ir ao estado 28
+    '-'  deslocar, e ir ao estado 29
+    '='  deslocar, e ir ao estado 30
+    '+'  deslocar, e ir ao estado 31
+    '*'  deslocar, e ir ao estado 32
+    '/'  deslocar, e ir ao estado 33
+    '>'  deslocar, e ir ao estado 34
+    '<'  deslocar, e ir ao estado 35
+    '&'  deslocar, e ir ao estado 36
+    '|'  deslocar, e ir ao estado 37
+
+    ATT       [reduzir usando a regra 4 (expr)]
+    DIF       [reduzir usando a regra 4 (expr)]
+    GE        [reduzir usando a regra 4 (expr)]
+    LE        [reduzir usando a regra 4 (expr)]
+    '-'       [reduzir usando a regra 4 (expr)]
+    '='       [reduzir usando a regra 4 (expr)]
+    '+'       [reduzir usando a regra 4 (expr)]
+    '*'       [reduzir usando a regra 4 (expr)]
+    '/'       [reduzir usando a regra 4 (expr)]
+    '>'       [reduzir usando a regra 4 (expr)]
+    '<'       [reduzir usando a regra 4 (expr)]
+    '&'       [reduzir usando a regra 4 (expr)]
+    '|'       [reduzir usando a regra 4 (expr)]
+    $padrão  reduzir usando a regra 4 (expr)
+
+    binoperator  ir ao estado 38
+
+
+Estado 51
+
+    4 expr: expr . binoperator expr
+    5     | lvalue ATT expr .
+
+    ATT  deslocar, e ir ao estado 25
+    DIF  deslocar, e ir ao estado 26
+    GE   deslocar, e ir ao estado 27
+    LE   deslocar, e ir ao estado 28
+    '-'  deslocar, e ir ao estado 29
+    '='  deslocar, e ir ao estado 30
+    '+'  deslocar, e ir ao estado 31
+    '*'  deslocar, e ir ao estado 32
+    '/'  deslocar, e ir ao estado 33
+    '>'  deslocar, e ir ao estado 34
+    '<'  deslocar, e ir ao estado 35
+    '&'  deslocar, e ir ao estado 36
+    '|'  deslocar, e ir ao estado 37
+
+    ATT       [reduzir usando a regra 5 (expr)]
+    DIF       [reduzir usando a regra 5 (expr)]
+    GE        [reduzir usando a regra 5 (expr)]
+    LE        [reduzir usando a regra 5 (expr)]
+    '-'       [reduzir usando a regra 5 (expr)]
+    '='       [reduzir usando a regra 5 (expr)]
+    '+'       [reduzir usando a regra 5 (expr)]
+    '*'       [reduzir usando a regra 5 (expr)]
+    '/'       [reduzir usando a regra 5 (expr)]
+    '>'       [reduzir usando a regra 5 (expr)]
+    '<'       [reduzir usando a regra 5 (expr)]
+    '&'       [reduzir usando a regra 5 (expr)]
+    '|'       [reduzir usando a regra 5 (expr)]
+    $padrão  reduzir usando a regra 5 (expr)
+
+    binoperator  ir ao estado 38
+
+
+Estado 52
+
+    6 expr: ID '(' exprlist ')' .
+
+    $padrão  reduzir usando a regra 6 (expr)
+
+
+Estado 53
+
+   16 exprlist: exprlist ',' . expr
+
+    INTEGER  deslocar, e ir ao estado 1
+    ID       deslocar, e ir ao estado 2
+    IF       deslocar, e ir ao estado 3
+    WHILE    deslocar, e ir ao estado 4
+    LET      deslocar, e ir ao estado 5
+    '('      deslocar, e ir ao estado 6
+    '-'      deslocar, e ir ao estado 7
+
+    '-'       [reduzir usando a regra 42 (nil)]
+    $padrão  reduzir usando a regra 42 (nil)
+
+    expr         ir ao estado 60
+    lvalue       ir ao estado 9
+    intconstant  ir ao estado 10
+    nil          ir ao estado 11
+
+
+Estado 54
+
+    4 expr: expr . binoperator expr
+    8     | IF expr THEN expr .
+    9     | IF expr THEN expr . ELSE expr
+
+    ELSE  deslocar, e ir ao estado 61
+    ATT   deslocar, e ir ao estado 25
+    DIF   deslocar, e ir ao estado 26
+    GE    deslocar, e ir ao estado 27
+    LE    deslocar, e ir ao estado 28
+    '-'   deslocar, e ir ao estado 29
+    '='   deslocar, e ir ao estado 30
+    '+'   deslocar, e ir ao estado 31
+    '*'   deslocar, e ir ao estado 32
+    '/'   deslocar, e ir ao estado 33
+    '>'   deslocar, e ir ao estado 34
+    '<'   deslocar, e ir ao estado 35
+    '&'   deslocar, e ir ao estado 36
+    '|'   deslocar, e ir ao estado 37
+
+    ELSE      [reduzir usando a regra 8 (expr)]
+    ATT       [reduzir usando a regra 8 (expr)]
+    DIF       [reduzir usando a regra 8 (expr)]
+    GE        [reduzir usando a regra 8 (expr)]
+    LE        [reduzir usando a regra 8 (expr)]
+    '-'       [reduzir usando a regra 8 (expr)]
+    '='       [reduzir usando a regra 8 (expr)]
+    '+'       [reduzir usando a regra 8 (expr)]
+    '*'       [reduzir usando a regra 8 (expr)]
+    '/'       [reduzir usando a regra 8 (expr)]
+    '>'       [reduzir usando a regra 8 (expr)]
+    '<'       [reduzir usando a regra 8 (expr)]
+    '&'       [reduzir usando a regra 8 (expr)]
+    '|'       [reduzir usando a regra 8 (expr)]
+    $padrão  reduzir usando a regra 8 (expr)
+
+    binoperator  ir ao estado 38
+
+
+Estado 55
+
+    4 expr: expr . binoperator expr
+   10     | WHILE expr DO expr .
+
+    ATT  deslocar, e ir ao estado 25
+    DIF  deslocar, e ir ao estado 26
+    GE   deslocar, e ir ao estado 27
+    LE   deslocar, e ir ao estado 28
+    '-'  deslocar, e ir ao estado 29
+    '='  deslocar, e ir ao estado 30
+    '+'  deslocar, e ir ao estado 31
+    '*'  deslocar, e ir ao estado 32
+    '/'  deslocar, e ir ao estado 33
+    '>'  deslocar, e ir ao estado 34
+    '<'  deslocar, e ir ao estado 35
+    '&'  deslocar, e ir ao estado 36
+    '|'  deslocar, e ir ao estado 37
+
+    ATT       [reduzir usando a regra 10 (expr)]
+    DIF       [reduzir usando a regra 10 (expr)]
+    GE        [reduzir usando a regra 10 (expr)]
+    LE        [reduzir usando a regra 10 (expr)]
+    '-'       [reduzir usando a regra 10 (expr)]
+    '='       [reduzir usando a regra 10 (expr)]
+    '+'       [reduzir usando a regra 10 (expr)]
+    '*'       [reduzir usando a regra 10 (expr)]
+    '/'       [reduzir usando a regra 10 (expr)]
+    '>'       [reduzir usando a regra 10 (expr)]
+    '<'       [reduzir usando a regra 10 (expr)]
+    '&'       [reduzir usando a regra 10 (expr)]
+    '|'       [reduzir usando a regra 10 (expr)]
+    $padrão  reduzir usando a regra 10 (expr)
+
+    binoperator  ir ao estado 38
+
+
+Estado 56
+
+   22 variabledec: VAR ID ATT . expr
+
+    INTEGER  deslocar, e ir ao estado 1
+    ID       deslocar, e ir ao estado 2
+    IF       deslocar, e ir ao estado 3
+    WHILE    deslocar, e ir ao estado 4
+    LET      deslocar, e ir ao estado 5
+    '('      deslocar, e ir ao estado 6
+    '-'      deslocar, e ir ao estado 7
+
+    '-'       [reduzir usando a regra 42 (nil)]
+    $padrão  reduzir usando a regra 42 (nil)
+
+    expr         ir ao estado 62
+    lvalue       ir ao estado 9
+    intconstant  ir ao estado 10
+    nil          ir ao estado 11
+
+
+Estado 57
+
+   28 functiondec: FUNCTION ID '(' . typefields ')' '=' expr
+
+    ID  deslocar, e ir ao estado 63
+
+    typefields  ir ao estado 64
+    typefield   ir ao estado 65
+
+
+Estado 58
+
+   11 expr: LET declist IN exprseq . END
+   14 exprseq: exprseq . ';' expr
+
+    END  deslocar, e ir ao estado 66
+    ';'  deslocar, e ir ao estado 49
+
+
+Estado 59
+
+    4 expr: expr . binoperator expr
+   14 exprseq: exprseq ';' expr .
+
+    ATT  deslocar, e ir ao estado 25
+    DIF  deslocar, e ir ao estado 26
+    GE   deslocar, e ir ao estado 27
+    LE   deslocar, e ir ao estado 28
+    '-'  deslocar, e ir ao estado 29
+    '='  deslocar, e ir ao estado 30
+    '+'  deslocar, e ir ao estado 31
+    '*'  deslocar, e ir ao estado 32
+    '/'  deslocar, e ir ao estado 33
+    '>'  deslocar, e ir ao estado 34
+    '<'  deslocar, e ir ao estado 35
+    '&'  deslocar, e ir ao estado 36
+    '|'  deslocar, e ir ao estado 37
+
+    $padrão  reduzir usando a regra 14 (exprseq)
+
+    binoperator  ir ao estado 38
+
+
+Estado 60
+
+    4 expr: expr . binoperator expr
+   16 exprlist: exprlist ',' expr .
+
+    ATT  deslocar, e ir ao estado 25
+    DIF  deslocar, e ir ao estado 26
+    GE   deslocar, e ir ao estado 27
+    LE   deslocar, e ir ao estado 28
+    '-'  deslocar, e ir ao estado 29
+    '='  deslocar, e ir ao estado 30
+    '+'  deslocar, e ir ao estado 31
+    '*'  deslocar, e ir ao estado 32
+    '/'  deslocar, e ir ao estado 33
+    '>'  deslocar, e ir ao estado 34
+    '<'  deslocar, e ir ao estado 35
+    '&'  deslocar, e ir ao estado 36
+    '|'  deslocar, e ir ao estado 37
+
+    $padrão  reduzir usando a regra 16 (exprlist)
+
+    binoperator  ir ao estado 38
+
+
+Estado 61
+
+    9 expr: IF expr THEN expr ELSE . expr
+
+    INTEGER  deslocar, e ir ao estado 1
+    ID       deslocar, e ir ao estado 2
+    IF       deslocar, e ir ao estado 3
+    WHILE    deslocar, e ir ao estado 4
+    LET      deslocar, e ir ao estado 5
+    '('      deslocar, e ir ao estado 6
+    '-'      deslocar, e ir ao estado 7
+
+    '-'       [reduzir usando a regra 42 (nil)]
+    $padrão  reduzir usando a regra 42 (nil)
+
+    expr         ir ao estado 67
+    lvalue       ir ao estado 9
+    intconstant  ir ao estado 10
+    nil          ir ao estado 11
+
+
+Estado 62
+
+    4 expr: expr . binoperator expr
+   22 variabledec: VAR ID ATT expr .
+
+    ATT  deslocar, e ir ao estado 25
+    DIF  deslocar, e ir ao estado 26
+    GE   deslocar, e ir ao estado 27
+    LE   deslocar, e ir ao estado 28
+    '-'  deslocar, e ir ao estado 29
+    '='  deslocar, e ir ao estado 30
+    '+'  deslocar, e ir ao estado 31
+    '*'  deslocar, e ir ao estado 32
+    '/'  deslocar, e ir ao estado 33
+    '>'  deslocar, e ir ao estado 34
+    '<'  deslocar, e ir ao estado 35
+    '&'  deslocar, e ir ao estado 36
+    '|'  deslocar, e ir ao estado 37
+
+    $padrão  reduzir usando a regra 22 (variabledec)
+
+    binoperator  ir ao estado 38
+
+
+Estado 63
+
+   26 typefield: ID . ':' typeid
+
+    ':'  deslocar, e ir ao estado 68
+
+
+Estado 64
+
+   25 typefields: typefields . ',' typefield
+   28 functiondec: FUNCTION ID '(' typefields . ')' '=' expr
+
+    ')'  deslocar, e ir ao estado 69
+    ','  deslocar, e ir ao estado 70
+
+
+Estado 65
+
+   24 typefields: typefield .
+
+    $padrão  reduzir usando a regra 24 (typefields)
+
+
+Estado 66
+
+   11 expr: LET declist IN exprseq END .
+
+    $padrão  reduzir usando a regra 11 (expr)
+
+
+Estado 67
+
+    4 expr: expr . binoperator expr
+    9     | IF expr THEN expr ELSE expr .
+
+    ATT  deslocar, e ir ao estado 25
+    DIF  deslocar, e ir ao estado 26
+    GE   deslocar, e ir ao estado 27
+    LE   deslocar, e ir ao estado 28
+    '-'  deslocar, e ir ao estado 29
+    '='  deslocar, e ir ao estado 30
+    '+'  deslocar, e ir ao estado 31
+    '*'  deslocar, e ir ao estado 32
+    '/'  deslocar, e ir ao estado 33
+    '>'  deslocar, e ir ao estado 34
+    '<'  deslocar, e ir ao estado 35
+    '&'  deslocar, e ir ao estado 36
+    '|'  deslocar, e ir ao estado 37
+
+    ATT       [reduzir usando a regra 9 (expr)]
+    DIF       [reduzir usando a regra 9 (expr)]
+    GE        [reduzir usando a regra 9 (expr)]
+    LE        [reduzir usando a regra 9 (expr)]
+    '-'       [reduzir usando a regra 9 (expr)]
+    '='       [reduzir usando a regra 9 (expr)]
+    '+'       [reduzir usando a regra 9 (expr)]
+    '*'       [reduzir usando a regra 9 (expr)]
+    '/'       [reduzir usando a regra 9 (expr)]
+    '>'       [reduzir usando a regra 9 (expr)]
+    '<'       [reduzir usando a regra 9 (expr)]
+    '&'       [reduzir usando a regra 9 (expr)]
+    '|'       [reduzir usando a regra 9 (expr)]
+    $padrão  reduzir usando a regra 9 (expr)
+
+    binoperator  ir ao estado 38
+
+
+Estado 68
+
+   26 typefield: ID ':' . typeid
+
+    TIPOINT  deslocar, e ir ao estado 71
+
+    typeid  ir ao estado 72
+
+
+Estado 69
+
+   28 functiondec: FUNCTION ID '(' typefields ')' . '=' expr
+
+    '='  deslocar, e ir ao estado 73
+
+
+Estado 70
+
+   25 typefields: typefields ',' . typefield
+
+    ID  deslocar, e ir ao estado 63
+
+    typefield  ir ao estado 74
+
+
+Estado 71
+
+   27 typeid: TIPOINT .
+
+    $padrão  reduzir usando a regra 27 (typeid)
+
+
+Estado 72
+
+   26 typefield: ID ':' typeid .
+
+    $padrão  reduzir usando a regra 26 (typefield)
+
+
+Estado 73
+
+   28 functiondec: FUNCTION ID '(' typefields ')' '=' . expr
+
+    INTEGER  deslocar, e ir ao estado 1
+    ID       deslocar, e ir ao estado 2
+    IF       deslocar, e ir ao estado 3
+    WHILE    deslocar, e ir ao estado 4
+    LET      deslocar, e ir ao estado 5
+    '('      deslocar, e ir ao estado 6
+    '-'      deslocar, e ir ao estado 7
+
+    '-'       [reduzir usando a regra 42 (nil)]
+    $padrão  reduzir usando a regra 42 (nil)
+
+    expr         ir ao estado 75
+    lvalue       ir ao estado 9
+    intconstant  ir ao estado 10
+    nil          ir ao estado 11
+
+
+Estado 74
+
+   25 typefields: typefields ',' typefield .
+
+    $padrão  reduzir usando a regra 25 (typefields)
+
+
+Estado 75
+
+    4 expr: expr . binoperator expr
+   28 functiondec: FUNCTION ID '(' typefields ')' '=' expr .
+
+    ATT  deslocar, e ir ao estado 25
+    DIF  deslocar, e ir ao estado 26
+    GE   deslocar, e ir ao estado 27
+    LE   deslocar, e ir ao estado 28
+    '-'  deslocar, e ir ao estado 29
+    '='  deslocar, e ir ao estado 30
+    '+'  deslocar, e ir ao estado 31
+    '*'  deslocar, e ir ao estado 32
+    '/'  deslocar, e ir ao estado 33
+    '>'  deslocar, e ir ao estado 34
+    '<'  deslocar, e ir ao estado 35
+    '&'  deslocar, e ir ao estado 36
+    '|'  deslocar, e ir ao estado 37
+
+    $padrão  reduzir usando a regra 28 (functiondec)
+
+    binoperator  ir ao estado 38

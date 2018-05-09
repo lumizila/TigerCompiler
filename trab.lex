@@ -27,10 +27,10 @@ do return DO;
 let return LET;
 in return IN;
 end return END;
+int return TIPOINT;
 
-"\"".*"\"" {
 
-}
+"\"".*"\"" {}
 
 {IDENTIFICADOR} {
 	return ID;

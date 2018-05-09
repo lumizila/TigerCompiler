@@ -8,31 +8,78 @@ int yyerror(char *s);
 int yylex(void);
 %}
 
-%start	input 
+%start	expr 
 
-%token	INTEGER VAR FUNCTION IF THEN ELSE WHILE DO LET IN END ID ATT DIF GE LE
-
+%token	INTEGER VAR FUNCTION ID
+%token  IF THEN ELSE WHILE DO LET IN END 
+%token  ATT DIF GE LE
+%token  TIPOINT
 %%
 
-
-expr:		integer-constant
+expr:		intconstant
 		| nil
 		| lvalue
-		| expr binary-operator expr
-		| lvalue ':=' expr
-		| id '(' exprlist  ')'
+		| expr binoperator expr
+		| lvalue ATT expr
+		| ID '(' exprlist  ')'
 		| '(' exprseq ')'
-		| if expr then expr
-		| if expr then expr else expr
-		| while expr do expr
-		| let declarationlist in exprseq end
-		| '-' integer-constant
+		| IF expr THEN expr
+		| IF expr THEN expr ELSE expr
+		| WHILE expr DO expr
+		| LET declist IN exprseq END
+		| '-' intconstant
 		;
 
-input:		
+exprseq:	expr
+		| exprseq ';' expr
+		;
+
+exprlist:	expr
+		| exprlist ',' expr
+		;
+
+lvalue:		ID
+		;
+
+declist:	dec
+		| declist dec
+		;
+
+dec:		variabledec
+		| functiondec
+		;
+
+variabledec:	VAR ID ATT expr
+		;
+
+intconstant:	INTEGER
+		;
+
+typefields:	typefield
+		| typefields ',' typefield
+		;
+
+typefield:	ID ':' typeid
+		;
+
+typeid:		TIPOINT
+		;
+functiondec:	FUNCTION ID '(' typefields ')' '=' expr
+		;
+
+binoperator:	ATT 
+		| DIF
+		| GE
+		| LE
+		| '+' | '-' | '*' | '/' | '=' | '>' | '<' | '&' | '|'
+		;
+	
+nil:		;
+/*
+exp:		
 		| expr	{ cout << "Hello world!"<< endl; }
 		;
-
+*/
 %%
 
 int yyerror(string s)
