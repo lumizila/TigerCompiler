@@ -38,8 +38,8 @@ prog:		expr
 expr:		intconstant
 /*		| nil
 */		| lvalue
-		| expr ATT expr
-		| expr DIF expr
+/*		| expr ATT expr
+*/		| expr DIF expr
 		| expr GE expr
 		| expr LE expr
 		| expr EQ expr
