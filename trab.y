@@ -12,7 +12,7 @@ int yylex(void);
 
 %token	STRING INTEGER VAR FUNCTION ID
 %token  IF THEN ELSE WHILE DO LET IN END 
-%token  ATT DIF GE LE EQ GT LT
+%token  ATT DIF GE LE EQ GT LT 
 %token  TIPOINT
 %token  MAIS MENOS VEZES DIV AND OR
 %token 	AP FP PVIR VIR
@@ -21,8 +21,8 @@ int yylex(void);
 
 %left  MAIS MENOS
 %left  VEZES DIV 
-%nonassoc  ATT DIF GE LE EQ GT AND OR LT
-
+%nonassoc  ATT DIF GE LE EQ GT LT
+%left AND OR
 %precedence  HTO UMENOS
 %right  ELSE LTE
 %%
@@ -32,10 +32,8 @@ prog:		expr
 
 expr:		intconstant
 		| stringconstant
-/*		| nil
-*/		| lvalue
-/*		| expr ATT expr
-*/		| expr DIF expr
+		| lvalue
+		| expr DIF expr
 		| expr GE expr
 		| expr LE expr
 		| expr EQ expr
@@ -54,7 +52,7 @@ expr:		intconstant
 		| IF expr THEN expr ELSE expr
 		| WHILE expr DO expr %prec HTO
 		| LET declist IN exprseq END
-		| MENOS expr %prec UMENOS
+		| MENOS expr %prec UMENOS 
 		;
 
 exprseq:	 exprseq PVIR expr
@@ -70,7 +68,7 @@ exprlist:	 exprlist VIR expr
 lvalue:		ID
 		;
 
-declist:	%empty	
+declist:	%empty
 		| declist dec
 		;
 
@@ -91,33 +89,11 @@ typefields:	ID
 		| typefields VIR ID
 		;
 
-
-/*
-typefield:	ID DP typeid
-		;
-
-typeid:		TIPOINT
-		;
-*/
 functiondec:	FUNCTION ID AP typefields FP ATT expr
+		| FUNCTION ID AP FP ATT expr
+		| FUNCTION ID AP typefields FP ATT 
+		| FUNCTION ID AP FP ATT 
 		;
-
-/*a partir daqui são descrições de tipos, e nao regras*/
-/*
-binoperator:	ATT 
-		| DIF
-		| GE
-		| LE
-		| MAIS | MENOS | VEZES | DIV | EQ | GT | LT | AND | OR
-		;
-
-nil:	%empty	;
-
-/*
-exp:		
-		| expr	{ cout << "Hello world!"<< endl; }
-		;
-*/
 
 %%
 

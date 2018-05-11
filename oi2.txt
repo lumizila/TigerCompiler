@@ -6,11 +6,16 @@
   in
      /*       printf("Entre com o numero:");*/
             n := getint();
-            while i <= n do
+            while i do
             (
                     f := f * i;
                     i := i + 1
-            );
-            oi (n:=f, f)
+            ); 
+            while i & n & j do
+            (
+                    f := f * i;
+                    i := i + 1
+            )
     end
+    
 

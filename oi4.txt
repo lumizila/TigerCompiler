@@ -1,0 +1,10 @@
+let 
+	var a := b := c
+	function oi(i,f):= lii(i,f)
+in 
+	if ()
+	then 
+	if ()
+	then ()
+	else ()
+end

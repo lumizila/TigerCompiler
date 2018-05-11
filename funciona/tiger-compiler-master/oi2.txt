@@ -1,1 +1,0 @@
-let function hello() = print(5) in hello() end
