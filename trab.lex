@@ -13,10 +13,8 @@ int yyerror(char *s);
 %}
 
 %%
-{INTEIRO}  {
-	return INTEGER; 
-}
 
+{INTEIRO} return INTEGER; 
 var return VAR; 
 function return FUNCTION;
 if return IF;
@@ -30,11 +28,9 @@ end return END;
 int return TIPOINT;
 
 
-"\"".*"\"" {}
+"\"".*"\"" return STRING;
 
-{IDENTIFICADOR} {
-	return ID;
-}
+{IDENTIFICADOR} return ID;
 
 ":=" return ATT;
 ";" return PVIR;
@@ -54,14 +50,16 @@ int return TIPOINT;
 "&" return AND;
 "|" return OR;
 ":" return DP;
-"/*".*"*/" {
-	
-}
+"/*".*"*/" {}
 
 [ \t]*		{}
-[\n]		{ yylineno++;}
+[\n]		{yylineno++;}
 
-.		{std::cerr << "SCANNER "; yyerror(""); exit(1);}
+.		{
+		std::cerr << "SCANNER - Erro linha: " << yylineno << "\n";
+		yyerror("");
+		exit(1);
+}
 
 %%
 

@@ -10,32 +10,28 @@ int yylex(void);
 
 %start	prog
 
-%token	INTEGER VAR FUNCTION ID
+%token	STRING INTEGER VAR FUNCTION ID
 %token  IF THEN ELSE WHILE DO LET IN END 
 %token  ATT DIF GE LE EQ GT LT
 %token  TIPOINT
 %token  MAIS MENOS VEZES DIV AND OR
 %token 	AP FP PVIR VIR
-%token DP
-/*precedencia de operadores*/
-/*%precedence '*' '/' '+' '-' '&' '|'
-*/
-%right VEZES DIV 
-%right MAIS MENOS
-%nonassoc ATT DIF GE LE EQ GT AND OR LT
+%token  DP
 
-/*%left OR AND
-%precedence '+' '-' '*' '/'
-/*%precedence ELSE THEN
-%precedence DO
-*/
-%precedence HTO UMENOS
-%right ELSE LTE
+
+%right  VEZES DIV 
+%right  MAIS MENOS
+%nonassoc  ATT DIF GE LE EQ GT AND OR LT
+
+%precedence  HTO UMENOS
+%right  ELSE LTE
 %%
 
 prog:		expr
 		;
+
 expr:		intconstant
+		| stringconstant
 /*		| nil
 */		| lvalue
 /*		| expr ATT expr
@@ -86,6 +82,9 @@ variabledec:	VAR ID ATT expr
 		;
 
 intconstant:	INTEGER
+		;
+
+stringconstant:	STRING
 		;
 
 typefields:	ID
