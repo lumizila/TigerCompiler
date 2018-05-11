@@ -88,16 +88,18 @@ variabledec:	VAR ID ATT expr
 intconstant:	INTEGER
 		;
 
-typefields:	typefield
-		| typefields VIR typefield
+typefields:	ID
+		| typefields VIR ID
 		;
 
+
+/*
 typefield:	ID DP typeid
 		;
 
 typeid:		TIPOINT
 		;
-
+*/
 functiondec:	FUNCTION ID AP typefields FP ATT expr
 		;
 
