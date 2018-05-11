@@ -19,8 +19,8 @@ int yylex(void);
 %token  DP
 
 
-%right  VEZES DIV 
-%right  MAIS MENOS
+%left  MAIS MENOS
+%left  VEZES DIV 
 %nonassoc  ATT DIF GE LE EQ GT AND OR LT
 
 %precedence  HTO UMENOS
