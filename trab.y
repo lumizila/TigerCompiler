@@ -8,47 +8,73 @@ int yyerror(char *s);
 int yylex(void);
 %}
 
-%start	expr 
+%start	prog
 
 %token	INTEGER VAR FUNCTION ID
 %token  IF THEN ELSE WHILE DO LET IN END 
-%token  ATT DIF GE LE
+%token  ATT DIF GE LE EQ GT LT
 %token  TIPOINT
-
+%token  MAIS MENOS VEZES DIV AND OR
+%token 	AP FP PVIR VIR
+%token DP
 /*precedencia de operadores*/
-%precedence '*' '/' '+' '-' '=' '>' '<' '&' '|'
-%nonassoc ATT DIF GE LE
-%precedence ELSE THEN
-%precedence DO
+/*%precedence '*' '/' '+' '-' '&' '|'
+*/
+%right VEZES DIV 
+%right MAIS MENOS
+%nonassoc ATT DIF GE LE EQ GT AND OR LT
 
+/*%left OR AND
+%precedence '+' '-' '*' '/'
+/*%precedence ELSE THEN
+%precedence DO
+*/
+%precedence HTO UMENOS
+%right ELSE LTE
 %%
 
+prog:		expr
+		;
 expr:		intconstant
-		| nil
-		| lvalue
-		| expr binoperator expr
+/*		| nil
+*/		| lvalue
+		| expr ATT expr
+		| expr DIF expr
+		| expr GE expr
+		| expr LE expr
+		| expr EQ expr
+		| expr GT expr
+		| expr AND expr
+		| expr OR expr
+		| expr LT expr
+		| expr VEZES expr
+		| expr DIV expr
+		| expr MAIS expr
+		| expr MENOS expr
 		| lvalue ATT expr
-		| ID '(' exprlist  ')'
-		| '(' exprseq ')'
-		| IF expr THEN expr
+		| ID AP exprlist FP
+		| AP exprseq FP
+		| IF expr THEN expr %prec LTE
 		| IF expr THEN expr ELSE expr
-		| WHILE expr DO expr
+		| WHILE expr DO expr %prec HTO
 		| LET declist IN exprseq END
-		| '-' intconstant
+		| MENOS expr %prec UMENOS
 		;
 
-exprseq:	expr
-		| exprseq ';' expr
+exprseq:	 exprseq PVIR expr
+		| expr
+		| %empty
 		;
 
-exprlist:	expr
-		| exprlist ',' expr
+exprlist:	 exprlist VIR expr
+		| expr
+		| %empty
 		;
 
 lvalue:		ID
 		;
 
-declist:	dec
+declist:	%empty	
 		| declist dec
 		;
 
@@ -63,26 +89,26 @@ intconstant:	INTEGER
 		;
 
 typefields:	typefield
-		| typefields ',' typefield
+		| typefields VIR typefield
 		;
 
-typefield:	ID ':' typeid
+typefield:	ID DP typeid
 		;
 
 typeid:		TIPOINT
 		;
-functiondec:	FUNCTION ID '(' typefields ')' '=' expr
+functiondec:	FUNCTION ID AP typefields FP EQ expr
 		;
 
 /*a partir daqui são descrições de tipos, e nao regras*/
-
+/*
 binoperator:	ATT 
 		| DIF
 		| GE
 		| LE
-		| '+' | '-' | '*' | '/' | '=' | '>' | '<' | '&' | '|'
+		| MAIS | MENOS | VEZES | DIV | EQ | GT | LT | AND | OR
 		;
-	
+
 nil:	%empty	;
 
 /*

@@ -378,8 +378,8 @@ static void yy_fatal_error (yyconst char msg[]  );
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
 
-#define YY_NUM_RULES 36
-#define YY_END_OF_BUFFER 37
+#define YY_NUM_RULES 37
+#define YY_END_OF_BUFFER 38
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -389,13 +389,13 @@ struct yy_trans_info
 	};
 static yyconst flex_int16_t yy_accept[73] =
     {   0,
-       33,   33,   37,   35,   33,   34,   35,   30,   18,   19,
-       22,   20,   17,   21,   23,    1,   35,   16,   27,   24,
+       34,   34,   38,   36,   34,   35,   36,   30,   18,   19,
+       22,   20,   17,   21,   23,    1,   32,   16,   27,   24,
        26,   14,   14,   14,   14,   14,   14,   14,   14,   14,
-       31,   33,    0,   13,    0,    1,   15,   29,   25,   28,
+       31,   34,    0,   13,    0,    1,   15,   29,   25,   28,
        14,    8,   14,   14,   14,    4,   10,   14,   14,   14,
        14,    0,    0,   14,   11,   14,   12,    9,   14,    2,
-       14,   32,    6,   14,    5,   14,   14,    7,   14,   14,
+       14,   33,    6,   14,    5,   14,   14,    7,   14,   14,
         3,    0
     } ;
 
@@ -880,47 +880,47 @@ return ATT;
 case 16:
 YY_RULE_SETUP
 #line 40 "trab.lex"
-return ';';
+return PVIR;
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
 #line 41 "trab.lex"
-return ',';
+return VIR;
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
 #line 42 "trab.lex"
-return '(';
+return AP;
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
 #line 43 "trab.lex"
-return ')';
+return FP;
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
 #line 44 "trab.lex"
-return '+';
+return MAIS;
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
 #line 45 "trab.lex"
-return '-';
+return MENOS;
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
 #line 46 "trab.lex"
-return '*';
+return VEZES;
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
 #line 47 "trab.lex"
-return '/';
+return DIV;
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
 #line 48 "trab.lex"
-return '=';
+return EQ;
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
@@ -930,12 +930,12 @@ return DIF;
 case 26:
 YY_RULE_SETUP
 #line 50 "trab.lex"
-return '>';
+return GT;
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
 #line 51 "trab.lex"
-return '<';
+return LT;
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
@@ -950,42 +950,47 @@ return LE;
 case 30:
 YY_RULE_SETUP
 #line 54 "trab.lex"
-return '&';
+return AND;
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
 #line 55 "trab.lex"
-return '|';
+return OR;
 	YY_BREAK
 case 32:
+YY_RULE_SETUP
+#line 56 "trab.lex"
+return DP;
+	YY_BREAK
+case 33:
 YY_RULE_SETUP
 #line 57 "trab.lex"
 {
 	
 }
 	YY_BREAK
-case 33:
+case 34:
 YY_RULE_SETUP
 #line 61 "trab.lex"
 {}
 	YY_BREAK
-case 34:
-/* rule 34 can match eol */
+case 35:
+/* rule 35 can match eol */
 YY_RULE_SETUP
 #line 62 "trab.lex"
 { yylineno++;}
 	YY_BREAK
-case 35:
+case 36:
 YY_RULE_SETUP
 #line 64 "trab.lex"
 {std::cerr << "SCANNER "; yyerror(""); exit(1);}
 	YY_BREAK
-case 36:
+case 37:
 YY_RULE_SETUP
 #line 66 "trab.lex"
 ECHO;
 	YY_BREAK
-#line 989 "lex.yy.c"
+#line 994 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 

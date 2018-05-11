@@ -37,23 +37,23 @@ int return TIPOINT;
 }
 
 ":=" return ATT;
-";" return ';';
-"," return ',';
-"(" return '(';
-")" return ')';
-"+" return '+';
-"-" return '-';
-"*" return '*';
-"/" return '/';
-"=" return '=';
+";" return PVIR;
+"," return VIR;
+"(" return AP;
+")" return FP;
+"+" return MAIS;
+"-" return MENOS;
+"*" return VEZES;
+"/" return DIV;
+"=" return EQ;
 "<>" return DIF;
-">" return '>';
-"<" return '<';
+">" return GT;
+"<" return LT;
 ">=" return GE;
 "<=" return LE;
-"&" return '&';
-"|" return '|';
-
+"&" return AND;
+"|" return OR;
+":" return DP;
 "/*".*"*/" {
 	
 }

@@ -2,7 +2,7 @@
 
 OBJS	= bison.o lex.o main.o
 
-CC	= g++-7
+CC	= g++
 CFLAGS	= -g -Wall -ansi -pedantic
 
 trab:		$(OBJS)
@@ -12,14 +12,14 @@ lex.o:		lex.c
 		$(CC) $(CFLAGS) -c lex.c -o lex.o
 
 lex.c:		trab.lex 
-		flex trab.lex
+		lex trab.lex
 		cp lex.yy.c lex.c
 
 bison.o:	bison.c
 		$(CC) $(CFLAGS) -c bison.c -o bison.o
 
 bison.c:	trab.y
-		bison -d -v --warnings trab.y
+		bison -v -d --warnings trab.y
 		cp trab.tab.c bison.c
 		cmp -s trab.tab.h tok.h || cp trab.tab.h tok.h
 

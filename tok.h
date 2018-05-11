@@ -61,7 +61,24 @@ extern int yydebug;
     DIF = 271,
     GE = 272,
     LE = 273,
-    TIPOINT = 274
+    EQ = 274,
+    GT = 275,
+    LT = 276,
+    TIPOINT = 277,
+    MAIS = 278,
+    MENOS = 279,
+    VEZES = 280,
+    DIV = 281,
+    AND = 282,
+    OR = 283,
+    AP = 284,
+    FP = 285,
+    PVIR = 286,
+    VIR = 287,
+    DP = 288,
+    HTO = 289,
+    UMENOS = 290,
+    LTE = 291
   };
 #endif
 

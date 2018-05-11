@@ -1,0 +1,36 @@
+bison -d -v --warnings trab.y
+trab.y:41.19-45: aviso: regra inútil no analisador por causa de conflitos [-Wother]
+ 		| IF expr THEN expr ELSE expr
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+trab.y:27.1-9: aviso: associatividade inútil para ELSE, use %precedence [-Wprecedence]
+ %nonassoc ELSE
+ ^^^^^^^^^
+trab.y:28.1-9: aviso: associatividade inútil para LTE, use %precedence [-Wprecedence]
+ %nonassoc LTE HTO
+ ^^^^^^^^^
+trab.y:28.1-9: aviso: precedência e associatividade inúteis para HTO [-Wprecedence]
+ %nonassoc LTE HTO
+ ^^^^^^^^^
+cp trab.tab.c bison.c
+cmp -s trab.tab.h tok.h || cp trab.tab.h tok.h
+g++-7 -g -Wall -ansi -pedantic -c bison.c -o bison.o
+trab.tab.c: In function ‘int yyparse()’:
+trab.tab.c:1302:35: warning: deprecated conversion from string constant to ‘char*’ [-Wwrite-strings]
+       yyerror (YY_("syntax error"));
+                                   ^
+trab.tab.c:1446:35: warning: deprecated conversion from string constant to ‘char*’ [-Wwrite-strings]
+   yyerror (YY_("memory exhausted"));
+                                   ^
+flex trab.lex
+cp lex.yy.c lex.c
+g++-7 -g -Wall -ansi -pedantic -c lex.c -o lex.o
+trab.lex: In function ‘int yylex()’:
+trab.lex:64:37: warning: deprecated conversion from string constant to ‘char*’ [-Wwrite-strings]
+ .  {std::cerr << "SCANNER "; yyerror(""); exit(1);}
+                                     ^
+lex.yy.c: In function ‘int yy_get_next_buffer()’:
+lex.yy.c:1244:44: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+  if ((int) ((yy_n_chars) + number_to_move) > YY_CURRENT_BUFFER_LVALUE->yy_buf_size) {
+      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+g++-7 -g -Wall -ansi -pedantic -c main.cc -o main.o
+g++-7 -g -Wall -ansi -pedantic bison.o lex.o main.o -o trab -lfl
