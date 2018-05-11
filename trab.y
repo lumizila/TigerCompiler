@@ -97,7 +97,8 @@ typefield:	ID DP typeid
 
 typeid:		TIPOINT
 		;
-functiondec:	FUNCTION ID AP typefields FP EQ expr
+
+functiondec:	FUNCTION ID AP typefields FP ATT expr
 		;
 
 /*a partir daqui são descrições de tipos, e nao regras*/

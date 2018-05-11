@@ -2,7 +2,8 @@
             var n := 0     /* o numero    */
             var f := 1     /* o fatorial  */
             var i := 2     /* um contador */
-    in
+            function oi(i:int)=oi  
+  in
      /*       printf("Entre com o numero:");*/
             n := getint();
             while i <= n do
@@ -10,6 +11,6 @@
                     f := f * i;
                     i := i + 1
             );
-            oi (n, f)
+            oi (n:=f, f)
     end
 
