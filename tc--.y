@@ -1,6 +1,3 @@
-/* Mini Calculator */
-/* calc.y */
-
 %{
 #include "heading.h"
 #include <string.h>
@@ -8,8 +5,10 @@ int yyerror(char *s);
 int yylex(void);
 %}
 
+/*prog eh o primeiro comando na raiz da arvore */
 %start	prog
 
+/*declarando os nomes dos tokens*/
 %token	STRING INTEGER VAR FUNCTION ID
 %token  IF THEN ELSE WHILE DO LET IN END 
 %token  ATT DIF GE LE EQ GT LT 
@@ -18,15 +17,16 @@ int yylex(void);
 %token 	AP FP PVIR VIR
 %token  DP
 
-
+/*declarando as precedencias*/
 %left  MAIS MENOS
 %left  VEZES DIV 
 %nonassoc  ATT DIF GE LE EQ GT LT
 %left AND OR
-%precedence  HTO UMENOS
+%precedence  HTO UMENOS HTOO
 %right  ELSE LTE
 %%
 
+/*inicio das definicoes das regras*/
 prog:		expr
 		;
 
@@ -51,6 +51,7 @@ expr:		intconstant
 		| IF expr THEN expr %prec LTE
 		| IF expr THEN expr ELSE expr
 		| WHILE expr DO expr %prec HTO
+		| WHILE expr DO %prec HTOO
 		| LET declist IN exprseq END
 		| MENOS expr %prec UMENOS 
 		;
@@ -97,6 +98,7 @@ functiondec:	FUNCTION ID AP typefields FP ATT expr
 
 %%
 
+/*funcao executada quando houve algum erro*/
 int yyerror(string s)
 {
   extern int yylineno;	// defined and maintained in lex.c
