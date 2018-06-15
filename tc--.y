@@ -43,12 +43,8 @@ no* addIrmao(no* nodo, no* irmao){
 }
 void imprimeArvore(no* nodo, int nivel){
 	for (int j=0; j<nivel; j++) printf("#");
-	printf("(%s) ",nodo->conteudo);
-/*	for (int j=0; j<nivel+1; j++) printf("#");
-	for (int i=0; i<nodo->numfilhos; i++){
-		printf(" %s ",nodo->filhos[i]->conteudo);
-	}
-*/	printf("\n");
+	printf("<%s> ",nodo->conteudo);
+	printf("\n");
 	if (nivel==0){
 	for (no* i=nodo->irmao; i!=NULL; i=i->irmao){
 		imprimeArvore(i, nivel);
@@ -83,7 +79,7 @@ void imprimeArvore(no* nodo, int nivel){
 %right ELSE LTE
 %%
 
-prog:		expr {imprimeArvore($1,0);/*printf(" pai: %s filho: %s filhodofilho1: %s filhodofilho2: %s \n",$1->conteudo,$1->filhos[0]->conteudo,$1->filhos[0]->filhos[0]->conteudo,$1->filhos[0]->filhos[1]->conteudo);*/}
+prog:		expr {imprimeArvore(addFilho(criaNo((char*)"expr"),$1),0);}
 		;
 
 expr:		intconstant 
@@ -107,7 +103,7 @@ expr:		intconstant
 		| IF expr THEN expr %prec LTE 
 		| IF expr THEN expr ELSE expr 
 		| WHILE expr DO expr %prec HTO 
-		| LET declist IN exprseq END {$$=addIrmao(criaNo((char*)"let"),addFilho(criaNo((char*)"declist"),$2)); }
+		| LET declist IN exprseq END {$$=addIrmao(criaNo((char*)"let"),addIrmao(addFilho(criaNo((char*)"declist"),$2),addIrmao(criaNo((char*)"in"),addIrmao(addFilho(criaNo((char*)"exprseq"),$4),criaNo((char*)"end"))))); }
 		| MENOS expr %prec UMENOS 
 		| %empty { $$=NULL;} 
 		;
