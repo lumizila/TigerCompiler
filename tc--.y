@@ -11,38 +11,49 @@ struct node{
 	int numfilhos;
 	char * conteudo; 
 	struct node **filhos;
-	struct node *pai;
+	struct node *irmao;
 };
 typedef struct node no;
-no* criaNo(char * conteudo, no* filho){
+no* criaNo(char * conteudo){
 	no* novo = (no*) malloc(sizeof(no));
-	if (filho) 
-		novo->numfilhos=1;
-	else
-		novo->numfilhos=0;
 	novo->filhos = (no**) malloc(10*sizeof(no*));
-	novo->filhos[0] = filho;
-	novo->pai=NULL;
+	novo->irmao = NULL;
 	novo->conteudo = conteudo;
 	return novo;
 }
 no* addFilho(no* pai, no* filho){
+	if (!filho) return pai;
 	if (pai->numfilhos==10){
 		printf("ERRO, numero de nos filhos excedeu o limite: 10\n");
 		exit(-1);
 	}
+	no* aux = filho->irmao;
 	pai->filhos[pai->numfilhos] = filho;
 	pai->numfilhos++;
+	while (aux){
+		pai->filhos[pai->numfilhos] = aux;
+		pai->numfilhos++;
+		aux = aux->irmao;
+	}
 	return pai;
+}
+no* addIrmao(no* nodo, no* irmao){
+	nodo->irmao=irmao;
+	return nodo;
 }
 void imprimeArvore(no* nodo, int nivel){
 	for (int j=0; j<nivel; j++) printf("#");
 	printf("(%s) ",nodo->conteudo);
-	for (int j=0; j<nivel+1; j++) printf("#");
+/*	for (int j=0; j<nivel+1; j++) printf("#");
 	for (int i=0; i<nodo->numfilhos; i++){
 		printf(" %s ",nodo->filhos[i]->conteudo);
 	}
-	printf("\n");
+*/	printf("\n");
+	if (nivel==0){
+	for (no* i=nodo->irmao; i!=NULL; i=i->irmao){
+		imprimeArvore(i, nivel);
+	}
+	}
 	for (int i=0; i<nodo->numfilhos; i++){
 		imprimeArvore(nodo->filhos[i], nivel+1);
 	}
@@ -78,59 +89,61 @@ prog:		expr {imprimeArvore($1,0);/*printf(" pai: %s filho: %s filhodofilho1: %s 
 expr:		intconstant 
 		| stringconstant 
 		| lvalue 
-		| expr DIF expr { $$=addFilho(criaNo((char*)"<>",$1),$3);} 
-		| expr GE expr{ $$=addFilho(criaNo((char*)">=",$1),$3);} 
-		| expr LE expr{ $$=addFilho(criaNo((char*)"<=",$1),$3);} 
-		| expr EQ expr{ $$=addFilho(criaNo((char*)"=",$1),$3);} 
-		| expr GT expr{ $$=addFilho(criaNo((char*)">",$1),$3);} 
-		| expr AND expr { $$=addFilho(criaNo((char*)"&",$1),$3);}
-		| expr OR expr{ $$=addFilho(criaNo((char*)"|",$1),$3);} 
-		| expr LT expr{ $$=addFilho(criaNo((char*)"<",$1),$3);} 
-		| expr VEZES expr{ $$=addFilho(criaNo((char*)"*",$1),$3);} 
-		| expr DIV expr{ $$=addFilho(criaNo((char*)"/",$1),$3);} 
-		| expr MAIS expr{ $$=addFilho(criaNo((char*)"+",$1),$3);} 
-		| expr MENOS expr{ $$=addFilho(criaNo((char*)"-",$1),$3);} 
-		| lvalue ATT expr { $$=addFilho(criaNo((char*)":=",$1),$3);}		
+		| expr DIF expr { $$=addFilho(addFilho(criaNo((char*)"<>"),$1),$3);} 
+		| expr GE expr{ $$=addFilho(addFilho(criaNo((char*)">="),$1),$3);} 
+		| expr LE expr{ $$=addFilho(addFilho(criaNo((char*)"<="),$1),$3);} 
+		| expr EQ expr{ $$=addFilho(addFilho(criaNo((char*)"="),$1),$3);} 
+		| expr GT expr{ $$=addFilho(addFilho(criaNo((char*)">"),$1),$3);} 
+		| expr AND expr { $$=addFilho(addFilho(criaNo((char*)"&"),$1),$3);}
+		| expr OR expr{ $$=addFilho(addFilho(criaNo((char*)"|"),$1),$3);} 
+		| expr LT expr{ $$=addFilho(addFilho(criaNo((char*)"<"),$1),$3);} 
+		| expr VEZES expr{ $$=addFilho(addFilho(criaNo((char*)"*"),$1),$3);} 
+		| expr DIV expr{ $$=addFilho(addFilho(criaNo((char*)"/"),$1),$3);} 
+		| expr MAIS expr{ $$=addFilho(addFilho(criaNo((char*)"+"),$1),$3);} 
+		| expr MENOS expr{ $$=addFilho(addFilho(criaNo((char*)"-"),$1),$3);} 
+		| lvalue ATT expr { $$=addFilho(addFilho(criaNo((char*)":="),$1),$3);}		
 		| ID AP exprlist FP 
 		| AP exprseq FP 
 		| IF expr THEN expr %prec LTE 
 		| IF expr THEN expr ELSE expr 
 		| WHILE expr DO expr %prec HTO 
-		| LET declist IN exprseq END { $$= criaNo("in",$4);/* a->lotacao++;a->filhos[0]=$4;$$=a;*/}
+		| LET declist IN exprseq END {$$=addIrmao(criaNo((char*)"let"),addFilho(criaNo((char*)"declist"),$2)); }
 		| MENOS expr %prec UMENOS 
-		| %empty 
+		| %empty { $$=NULL;} 
 		;
 
 exprseq:	 exprseq PVIR expr
-		| expr {$$=$1;}
+		| expr
 		;
 
 exprlist:	 exprlist VIR expr
 		| expr
 		;
 
-lvalue:		ID 
-/*lvalue:		ID { $$ = criaNo(strdup(yytext));}
-*/		;
-
-declist:	%empty	
-		| declist dec
+lvalue:		ID{ $$ = criaNo(strdup(yytext));}   
 		;
 
-dec:		variabledec
+declist:	%empty{ $$=NULL;}	
+		| declist dec {$$=addIrmao(criaNo((char*)"var"),addFilho(criaNo((char*)"dec"),$2));}
+		;
+
+dec:		variabledec {$$=addFilho(criaNo((char*)"variabledec"),$1);}
 		| functiondec
 		;
 
-variabledec:	VAR ID ATT expr
+variabledec:	VAR id ATT expr {$$=addIrmao(criaNo((char*)"var"),addIrmao(addFilho(criaNo((char*)"id"),$2),addIrmao(criaNo((char*)":="),addFilho(criaNo((char*)"expr"),$4))));}
 		;
 
-intconstant:	INTEGER{ $$ = criaNo(strdup(yytext),NULL);} 
+id:		ID{ $$ = criaNo(strdup(yytext));}   
 		;
 
-stringconstant:	STRING{ $$ = criaNo(strdup(yytext),NULL);}  
+intconstant:	INTEGER{ $$ = criaNo(strdup(yytext));} 
 		;
 
-typefields:	ID
+stringconstant:	STRING{ $$ = criaNo(strdup(yytext));}  
+		;
+
+typefields:	ID { $$ = criaNo(strdup(yytext));}   
 		| typefields VIR ID
 		;
 

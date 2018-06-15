@@ -23,7 +23,7 @@ bison.c:	tc--.y
 		cp tc--.tab.c bison.c
 		cmp -s tc--.tab.h tok.h || cp tc--.tab.h tok.h
 
-main.o:		main.cc
+main.o:		main.c
 		$(CC) $(CFLAGS) -c main.c -o main.o
 
 lex.o yac.o main.o	: heading.h
