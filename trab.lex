@@ -8,7 +8,7 @@ IDENTIFICADOR       [a-zA-Z][a-zA-Z0-9]*
 #include "tok.h"
 #include <string.h>
 #include <iostream>
-int yyerror(char *s);
+int yyerror(const char *s);
 
 %}
 
@@ -50,8 +50,7 @@ int return TIPOINT;
 "&" return AND;
 "|" return OR;
 ":" return DP;
-"/*".*"*/" {}
-
+"/*"([^*]|\*+[^*/])*\*+"/" 
 [ \t]*		{}
 [\n]		{yylineno++;}
 

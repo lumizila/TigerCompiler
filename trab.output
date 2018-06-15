@@ -1,4 +1,36 @@
-Estado 10 conflitos: 1 de deslocamento/redução
+Terminais sem uso na gramática
+
+   TIPOINT
+   DP
+
+
+Estado 0 conflitos: 1 de deslocamento/redução
+Estado 4 conflitos: 1 de deslocamento/redução
+Estado 5 conflitos: 1 de deslocamento/redução
+Estado 7 conflitos: 1 de deslocamento/redução
+Estado 8 conflitos: 1 de deslocamento/redução
+Estado 15 conflitos: 1 de deslocamento/redução
+Estado 22 conflitos: 1 de deslocamento/redução
+Estado 23 conflitos: 1 de deslocamento/redução
+Estado 24 conflitos: 1 de deslocamento/redução
+Estado 25 conflitos: 1 de deslocamento/redução
+Estado 26 conflitos: 1 de deslocamento/redução
+Estado 27 conflitos: 1 de deslocamento/redução
+Estado 28 conflitos: 1 de deslocamento/redução
+Estado 29 conflitos: 1 de deslocamento/redução
+Estado 30 conflitos: 1 de deslocamento/redução
+Estado 31 conflitos: 1 de deslocamento/redução
+Estado 32 conflitos: 1 de deslocamento/redução
+Estado 33 conflitos: 1 de deslocamento/redução
+Estado 35 conflitos: 1 de deslocamento/redução
+Estado 38 conflitos: 1 de deslocamento/redução
+Estado 39 conflitos: 1 de deslocamento/redução
+Estado 41 conflitos: 1 de deslocamento/redução
+Estado 57 conflitos: 1 de deslocamento/redução
+Estado 63 conflitos: 1 de deslocamento/redução
+Estado 71 conflitos: 1 de deslocamento/redução
+Estado 72 conflitos: 1 de deslocamento/redução
+Estado 82 conflitos: 1 de deslocamento/redução
 
 
 Gramática
@@ -8,8 +40,8 @@ Gramática
     1 prog: expr
 
     2 expr: intconstant
-    3     | lvalue
-    4     | expr ATT expr
+    3     | stringconstant
+    4     | lvalue
     5     | expr DIF expr
     6     | expr GE expr
     7     | expr LE expr
@@ -28,241 +60,281 @@ Gramática
    20     | IF expr THEN expr
    21     | IF expr THEN expr ELSE expr
    22     | WHILE expr DO expr
-   23     | LET declist IN exprseq END
+   23     | let declist in exprseq end
    24     | MENOS expr
+   25     | %empty
 
-   25 exprseq: exprseq PVIR expr
-   26        | expr
-   27        | %empty
+   26 let: LET
 
-   28 exprlist: exprlist VIR expr
-   29         | expr
-   30         | %empty
+   27 in: IN
 
-   31 lvalue: ID
+   28 end: END
 
-   32 declist: %empty
-   33        | declist dec
+   29 exprseq: exprseq PVIR expr
+   30        | expr
 
-   34 dec: variabledec
-   35    | functiondec
+   31 exprlist: exprlist VIR expr
+   32         | expr
 
-   36 variabledec: VAR ID ATT expr
+   33 lvalue: ID
 
-   37 intconstant: INTEGER
+   34 declist: %empty
+   35        | declist dec
 
-   38 typefields: typefield
-   39           | typefields VIR typefield
+   36 dec: variabledec
+   37    | functiondec
 
-   40 typefield: ID DP typeid
+   38 variabledec: VAR ID ATT expr
 
-   41 typeid: TIPOINT
+   39 intconstant: INTEGER
 
-   42 functiondec: FUNCTION ID AP typefields FP EQ expr
+   40 stringconstant: STRING
+
+   41 typefields: ID
+   42           | typefields VIR ID
+
+   43 functiondec: FUNCTION ID AP typefields FP ATT expr
 
 
 Terminais, com as regras onde eles aparecem
 
 $end (0) 0
 error (256)
-INTEGER (258) 37
-VAR (259) 36
-FUNCTION (260) 42
-ID (261) 18 31 36 40 42
-IF (262) 20 21
-THEN (263) 20 21
-ELSE (264) 21
-WHILE (265) 22
-DO (266) 22
-LET (267) 23
-IN (268) 23
-END (269) 23
-ATT (270) 4 17 36
-DIF (271) 5
-GE (272) 6
-LE (273) 7
-EQ (274) 8 42
-GT (275) 9
-LT (276) 12
-TIPOINT (277) 41
-MAIS (278) 15
-MENOS (279) 16 24
-VEZES (280) 13
-DIV (281) 14
-AND (282) 10
-OR (283) 11
-AP (284) 18 19 42
-FP (285) 18 19 42
-PVIR (286) 25
-VIR (287) 28 39
-DP (288) 40
-HTO (289)
-UMENOS (290)
-LTE (291)
+STRING (258) 40
+INTEGER (259) 39
+VAR (260) 38
+FUNCTION (261) 43
+ID (262) 18 33 38 41 42 43
+IF (263) 20 21
+THEN (264) 20 21
+ELSE (265) 21
+WHILE (266) 22
+DO (267) 22
+LET (268) 26
+IN (269) 27
+END (270) 28
+ATT (271) 17 38 43
+DIF (272) 5
+GE (273) 6
+LE (274) 7
+EQ (275) 8
+GT (276) 9
+LT (277) 12
+TIPOINT (278)
+MAIS (279) 15
+MENOS (280) 16 24
+VEZES (281) 13
+DIV (282) 14
+AND (283) 10
+OR (284) 11
+AP (285) 18 19 43
+FP (286) 18 19 43
+PVIR (287) 29
+VIR (288) 31 42
+DP (289)
+HTO (290)
+UMENOS (291)
+LTE (292)
 
 
 Não terminais com as regras onde eles aparecem
 
-$accept (37)
+$accept (38)
     à esquerda: 0
-prog (38)
+prog (39)
     à esquerda: 1, à direita: 0
-expr (39)
+expr (40)
     à esquerda: 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21
-    22 23 24, à direita: 1 4 5 6 7 8 9 10 11 12 13 14 15 16 17 20
-    21 22 24 25 26 28 29 36 42
-exprseq (40)
-    à esquerda: 25 26 27, à direita: 19 23 25
-exprlist (41)
-    à esquerda: 28 29 30, à direita: 18 28
-lvalue (42)
-    à esquerda: 31, à direita: 3 17
-declist (43)
-    à esquerda: 32 33, à direita: 23 33
-dec (44)
-    à esquerda: 34 35, à direita: 33
-variabledec (45)
-    à esquerda: 36, à direita: 34
-intconstant (46)
-    à esquerda: 37, à direita: 2
-typefields (47)
-    à esquerda: 38 39, à direita: 39 42
-typefield (48)
-    à esquerda: 40, à direita: 38 39
-typeid (49)
-    à esquerda: 41, à direita: 40
-functiondec (50)
-    à esquerda: 42, à direita: 35
+    22 23 24 25, à direita: 1 5 6 7 8 9 10 11 12 13 14 15 16 17 20
+    21 22 24 29 30 31 32 38 43
+let (41)
+    à esquerda: 26, à direita: 23
+in (42)
+    à esquerda: 27, à direita: 23
+end (43)
+    à esquerda: 28, à direita: 23
+exprseq (44)
+    à esquerda: 29 30, à direita: 19 23 29
+exprlist (45)
+    à esquerda: 31 32, à direita: 18 31
+lvalue (46)
+    à esquerda: 33, à direita: 4 17
+declist (47)
+    à esquerda: 34 35, à direita: 23 35
+dec (48)
+    à esquerda: 36 37, à direita: 35
+variabledec (49)
+    à esquerda: 38, à direita: 36
+intconstant (50)
+    à esquerda: 39, à direita: 2
+stringconstant (51)
+    à esquerda: 40, à direita: 3
+typefields (52)
+    à esquerda: 41 42, à direita: 42 43
+functiondec (53)
+    à esquerda: 43, à direita: 37
 
 
 Estado 0
 
     0 $accept: . prog $end
 
-    INTEGER  deslocar, e ir ao estado 1
-    ID       deslocar, e ir ao estado 2
-    IF       deslocar, e ir ao estado 3
-    WHILE    deslocar, e ir ao estado 4
-    LET      deslocar, e ir ao estado 5
-    MENOS    deslocar, e ir ao estado 6
-    AP       deslocar, e ir ao estado 7
+    STRING   deslocar, e ir ao estado 1
+    INTEGER  deslocar, e ir ao estado 2
+    ID       deslocar, e ir ao estado 3
+    IF       deslocar, e ir ao estado 4
+    WHILE    deslocar, e ir ao estado 5
+    LET      deslocar, e ir ao estado 6
+    MENOS    deslocar, e ir ao estado 7
+    AP       deslocar, e ir ao estado 8
 
-    prog         ir ao estado 8
-    expr         ir ao estado 9
-    lvalue       ir ao estado 10
-    intconstant  ir ao estado 11
+    MENOS     [reduzir usando a regra 25 (expr)]
+    $padrão  reduzir usando a regra 25 (expr)
+
+    prog            ir ao estado 9
+    expr            ir ao estado 10
+    let             ir ao estado 11
+    lvalue          ir ao estado 12
+    intconstant     ir ao estado 13
+    stringconstant  ir ao estado 14
 
 
 Estado 1
 
-   37 intconstant: INTEGER .
+   40 stringconstant: STRING .
 
-    $padrão  reduzir usando a regra 37 (intconstant)
+    $padrão  reduzir usando a regra 40 (stringconstant)
 
 
 Estado 2
 
-   18 expr: ID . AP exprlist FP
-   31 lvalue: ID .
+   39 intconstant: INTEGER .
 
-    AP  deslocar, e ir ao estado 12
-
-    $padrão  reduzir usando a regra 31 (lvalue)
+    $padrão  reduzir usando a regra 39 (intconstant)
 
 
 Estado 3
 
-   20 expr: IF . expr THEN expr
-   21     | IF . expr THEN expr ELSE expr
+   18 expr: ID . AP exprlist FP
+   33 lvalue: ID .
 
-    INTEGER  deslocar, e ir ao estado 1
-    ID       deslocar, e ir ao estado 2
-    IF       deslocar, e ir ao estado 3
-    WHILE    deslocar, e ir ao estado 4
-    LET      deslocar, e ir ao estado 5
-    MENOS    deslocar, e ir ao estado 6
-    AP       deslocar, e ir ao estado 7
+    AP  deslocar, e ir ao estado 15
 
-    expr         ir ao estado 13
-    lvalue       ir ao estado 10
-    intconstant  ir ao estado 11
+    $padrão  reduzir usando a regra 33 (lvalue)
 
 
 Estado 4
 
-   22 expr: WHILE . expr DO expr
+   20 expr: IF . expr THEN expr
+   21     | IF . expr THEN expr ELSE expr
 
-    INTEGER  deslocar, e ir ao estado 1
-    ID       deslocar, e ir ao estado 2
-    IF       deslocar, e ir ao estado 3
-    WHILE    deslocar, e ir ao estado 4
-    LET      deslocar, e ir ao estado 5
-    MENOS    deslocar, e ir ao estado 6
-    AP       deslocar, e ir ao estado 7
+    STRING   deslocar, e ir ao estado 1
+    INTEGER  deslocar, e ir ao estado 2
+    ID       deslocar, e ir ao estado 3
+    IF       deslocar, e ir ao estado 4
+    WHILE    deslocar, e ir ao estado 5
+    LET      deslocar, e ir ao estado 6
+    MENOS    deslocar, e ir ao estado 7
+    AP       deslocar, e ir ao estado 8
 
-    expr         ir ao estado 14
-    lvalue       ir ao estado 10
-    intconstant  ir ao estado 11
+    MENOS     [reduzir usando a regra 25 (expr)]
+    $padrão  reduzir usando a regra 25 (expr)
+
+    expr            ir ao estado 16
+    let             ir ao estado 11
+    lvalue          ir ao estado 12
+    intconstant     ir ao estado 13
+    stringconstant  ir ao estado 14
 
 
 Estado 5
 
-   23 expr: LET . declist IN exprseq END
+   22 expr: WHILE . expr DO expr
 
-    $padrão  reduzir usando a regra 32 (declist)
+    STRING   deslocar, e ir ao estado 1
+    INTEGER  deslocar, e ir ao estado 2
+    ID       deslocar, e ir ao estado 3
+    IF       deslocar, e ir ao estado 4
+    WHILE    deslocar, e ir ao estado 5
+    LET      deslocar, e ir ao estado 6
+    MENOS    deslocar, e ir ao estado 7
+    AP       deslocar, e ir ao estado 8
 
-    declist  ir ao estado 15
+    MENOS     [reduzir usando a regra 25 (expr)]
+    $padrão  reduzir usando a regra 25 (expr)
+
+    expr            ir ao estado 17
+    let             ir ao estado 11
+    lvalue          ir ao estado 12
+    intconstant     ir ao estado 13
+    stringconstant  ir ao estado 14
 
 
 Estado 6
 
-   24 expr: MENOS . expr
+   26 let: LET .
 
-    INTEGER  deslocar, e ir ao estado 1
-    ID       deslocar, e ir ao estado 2
-    IF       deslocar, e ir ao estado 3
-    WHILE    deslocar, e ir ao estado 4
-    LET      deslocar, e ir ao estado 5
-    MENOS    deslocar, e ir ao estado 6
-    AP       deslocar, e ir ao estado 7
-
-    expr         ir ao estado 16
-    lvalue       ir ao estado 10
-    intconstant  ir ao estado 11
+    $padrão  reduzir usando a regra 26 (let)
 
 
 Estado 7
 
-   19 expr: AP . exprseq FP
+   24 expr: MENOS . expr
 
-    INTEGER  deslocar, e ir ao estado 1
-    ID       deslocar, e ir ao estado 2
-    IF       deslocar, e ir ao estado 3
-    WHILE    deslocar, e ir ao estado 4
-    LET      deslocar, e ir ao estado 5
-    MENOS    deslocar, e ir ao estado 6
-    AP       deslocar, e ir ao estado 7
+    STRING   deslocar, e ir ao estado 1
+    INTEGER  deslocar, e ir ao estado 2
+    ID       deslocar, e ir ao estado 3
+    IF       deslocar, e ir ao estado 4
+    WHILE    deslocar, e ir ao estado 5
+    LET      deslocar, e ir ao estado 6
+    MENOS    deslocar, e ir ao estado 7
+    AP       deslocar, e ir ao estado 8
 
-    $padrão  reduzir usando a regra 27 (exprseq)
+    MENOS     [reduzir usando a regra 25 (expr)]
+    $padrão  reduzir usando a regra 25 (expr)
 
-    expr         ir ao estado 17
-    exprseq      ir ao estado 18
-    lvalue       ir ao estado 10
-    intconstant  ir ao estado 11
+    expr            ir ao estado 18
+    let             ir ao estado 11
+    lvalue          ir ao estado 12
+    intconstant     ir ao estado 13
+    stringconstant  ir ao estado 14
 
 
 Estado 8
 
-    0 $accept: prog . $end
+   19 expr: AP . exprseq FP
 
-    $end  deslocar, e ir ao estado 19
+    STRING   deslocar, e ir ao estado 1
+    INTEGER  deslocar, e ir ao estado 2
+    ID       deslocar, e ir ao estado 3
+    IF       deslocar, e ir ao estado 4
+    WHILE    deslocar, e ir ao estado 5
+    LET      deslocar, e ir ao estado 6
+    MENOS    deslocar, e ir ao estado 7
+    AP       deslocar, e ir ao estado 8
+
+    MENOS     [reduzir usando a regra 25 (expr)]
+    $padrão  reduzir usando a regra 25 (expr)
+
+    expr            ir ao estado 19
+    let             ir ao estado 11
+    exprseq         ir ao estado 20
+    lvalue          ir ao estado 12
+    intconstant     ir ao estado 13
+    stringconstant  ir ao estado 14
 
 
 Estado 9
 
+    0 $accept: prog . $end
+
+    $end  deslocar, e ir ao estado 21
+
+
+Estado 10
+
     1 prog: expr .
-    4 expr: expr . ATT expr
-    5     | expr . DIF expr
+    5 expr: expr . DIF expr
     6     | expr . GE expr
     7     | expr . LE expr
     8     | expr . EQ expr
@@ -275,65 +347,82 @@ Estado 9
    15     | expr . MAIS expr
    16     | expr . MENOS expr
 
-    ATT    deslocar, e ir ao estado 20
-    DIF    deslocar, e ir ao estado 21
-    GE     deslocar, e ir ao estado 22
-    LE     deslocar, e ir ao estado 23
-    EQ     deslocar, e ir ao estado 24
-    GT     deslocar, e ir ao estado 25
-    LT     deslocar, e ir ao estado 26
-    MAIS   deslocar, e ir ao estado 27
-    MENOS  deslocar, e ir ao estado 28
-    VEZES  deslocar, e ir ao estado 29
-    DIV    deslocar, e ir ao estado 30
-    AND    deslocar, e ir ao estado 31
-    OR     deslocar, e ir ao estado 32
+    DIF    deslocar, e ir ao estado 22
+    GE     deslocar, e ir ao estado 23
+    LE     deslocar, e ir ao estado 24
+    EQ     deslocar, e ir ao estado 25
+    GT     deslocar, e ir ao estado 26
+    LT     deslocar, e ir ao estado 27
+    MAIS   deslocar, e ir ao estado 28
+    MENOS  deslocar, e ir ao estado 29
+    VEZES  deslocar, e ir ao estado 30
+    DIV    deslocar, e ir ao estado 31
+    AND    deslocar, e ir ao estado 32
+    OR     deslocar, e ir ao estado 33
 
     $padrão  reduzir usando a regra 1 (prog)
 
 
-Estado 10
+Estado 11
 
-    3 expr: lvalue .
+   23 expr: let . declist in exprseq end
+
+    $padrão  reduzir usando a regra 34 (declist)
+
+    declist  ir ao estado 34
+
+
+Estado 12
+
+    4 expr: lvalue .
    17     | lvalue . ATT expr
 
-    ATT  deslocar, e ir ao estado 33
+    ATT  deslocar, e ir ao estado 35
 
-    ATT       [reduzir usando a regra 3 (expr)]
-    $padrão  reduzir usando a regra 3 (expr)
+    $padrão  reduzir usando a regra 4 (expr)
 
 
-Estado 11
+Estado 13
 
     2 expr: intconstant .
 
     $padrão  reduzir usando a regra 2 (expr)
 
 
-Estado 12
+Estado 14
+
+    3 expr: stringconstant .
+
+    $padrão  reduzir usando a regra 3 (expr)
+
+
+Estado 15
 
    18 expr: ID AP . exprlist FP
 
-    INTEGER  deslocar, e ir ao estado 1
-    ID       deslocar, e ir ao estado 2
-    IF       deslocar, e ir ao estado 3
-    WHILE    deslocar, e ir ao estado 4
-    LET      deslocar, e ir ao estado 5
-    MENOS    deslocar, e ir ao estado 6
-    AP       deslocar, e ir ao estado 7
+    STRING   deslocar, e ir ao estado 1
+    INTEGER  deslocar, e ir ao estado 2
+    ID       deslocar, e ir ao estado 3
+    IF       deslocar, e ir ao estado 4
+    WHILE    deslocar, e ir ao estado 5
+    LET      deslocar, e ir ao estado 6
+    MENOS    deslocar, e ir ao estado 7
+    AP       deslocar, e ir ao estado 8
 
-    $padrão  reduzir usando a regra 30 (exprlist)
+    MENOS     [reduzir usando a regra 25 (expr)]
+    $padrão  reduzir usando a regra 25 (expr)
 
-    expr         ir ao estado 34
-    exprlist     ir ao estado 35
-    lvalue       ir ao estado 10
-    intconstant  ir ao estado 11
+    expr            ir ao estado 36
+    let             ir ao estado 11
+    exprlist        ir ao estado 37
+    lvalue          ir ao estado 12
+    intconstant     ir ao estado 13
+    stringconstant  ir ao estado 14
 
 
-Estado 13
+Estado 16
 
-    4 expr: expr . ATT expr
-    5     | expr . DIF expr
+    5 expr: expr . DIF expr
     6     | expr . GE expr
     7     | expr . LE expr
     8     | expr . EQ expr
@@ -348,26 +437,24 @@ Estado 13
    20     | IF expr . THEN expr
    21     | IF expr . THEN expr ELSE expr
 
-    THEN   deslocar, e ir ao estado 36
-    ATT    deslocar, e ir ao estado 20
-    DIF    deslocar, e ir ao estado 21
-    GE     deslocar, e ir ao estado 22
-    LE     deslocar, e ir ao estado 23
-    EQ     deslocar, e ir ao estado 24
-    GT     deslocar, e ir ao estado 25
-    LT     deslocar, e ir ao estado 26
-    MAIS   deslocar, e ir ao estado 27
-    MENOS  deslocar, e ir ao estado 28
-    VEZES  deslocar, e ir ao estado 29
-    DIV    deslocar, e ir ao estado 30
-    AND    deslocar, e ir ao estado 31
-    OR     deslocar, e ir ao estado 32
+    THEN   deslocar, e ir ao estado 38
+    DIF    deslocar, e ir ao estado 22
+    GE     deslocar, e ir ao estado 23
+    LE     deslocar, e ir ao estado 24
+    EQ     deslocar, e ir ao estado 25
+    GT     deslocar, e ir ao estado 26
+    LT     deslocar, e ir ao estado 27
+    MAIS   deslocar, e ir ao estado 28
+    MENOS  deslocar, e ir ao estado 29
+    VEZES  deslocar, e ir ao estado 30
+    DIV    deslocar, e ir ao estado 31
+    AND    deslocar, e ir ao estado 32
+    OR     deslocar, e ir ao estado 33
 
 
-Estado 14
+Estado 17
 
-    4 expr: expr . ATT expr
-    5     | expr . DIF expr
+    5 expr: expr . DIF expr
     6     | expr . GE expr
     7     | expr . LE expr
     8     | expr . EQ expr
@@ -381,40 +468,24 @@ Estado 14
    16     | expr . MENOS expr
    22     | WHILE expr . DO expr
 
-    DO     deslocar, e ir ao estado 37
-    ATT    deslocar, e ir ao estado 20
-    DIF    deslocar, e ir ao estado 21
-    GE     deslocar, e ir ao estado 22
-    LE     deslocar, e ir ao estado 23
-    EQ     deslocar, e ir ao estado 24
-    GT     deslocar, e ir ao estado 25
-    LT     deslocar, e ir ao estado 26
-    MAIS   deslocar, e ir ao estado 27
-    MENOS  deslocar, e ir ao estado 28
-    VEZES  deslocar, e ir ao estado 29
-    DIV    deslocar, e ir ao estado 30
-    AND    deslocar, e ir ao estado 31
-    OR     deslocar, e ir ao estado 32
+    DO     deslocar, e ir ao estado 39
+    DIF    deslocar, e ir ao estado 22
+    GE     deslocar, e ir ao estado 23
+    LE     deslocar, e ir ao estado 24
+    EQ     deslocar, e ir ao estado 25
+    GT     deslocar, e ir ao estado 26
+    LT     deslocar, e ir ao estado 27
+    MAIS   deslocar, e ir ao estado 28
+    MENOS  deslocar, e ir ao estado 29
+    VEZES  deslocar, e ir ao estado 30
+    DIV    deslocar, e ir ao estado 31
+    AND    deslocar, e ir ao estado 32
+    OR     deslocar, e ir ao estado 33
 
 
-Estado 15
+Estado 18
 
-   23 expr: LET declist . IN exprseq END
-   33 declist: declist . dec
-
-    VAR       deslocar, e ir ao estado 38
-    FUNCTION  deslocar, e ir ao estado 39
-    IN        deslocar, e ir ao estado 40
-
-    dec          ir ao estado 41
-    variabledec  ir ao estado 42
-    functiondec  ir ao estado 43
-
-
-Estado 16
-
-    4 expr: expr . ATT expr
-    5     | expr . DIF expr
+    5 expr: expr . DIF expr
     6     | expr . GE expr
     7     | expr . LE expr
     8     | expr . EQ expr
@@ -431,10 +502,9 @@ Estado 16
     $padrão  reduzir usando a regra 24 (expr)
 
 
-Estado 17
+Estado 19
 
-    4 expr: expr . ATT expr
-    5     | expr . DIF expr
+    5 expr: expr . DIF expr
     6     | expr . GE expr
     7     | expr . LE expr
     8     | expr . EQ expr
@@ -446,283 +516,357 @@ Estado 17
    14     | expr . DIV expr
    15     | expr . MAIS expr
    16     | expr . MENOS expr
-   26 exprseq: expr .
+   30 exprseq: expr .
 
-    ATT    deslocar, e ir ao estado 20
-    DIF    deslocar, e ir ao estado 21
-    GE     deslocar, e ir ao estado 22
-    LE     deslocar, e ir ao estado 23
-    EQ     deslocar, e ir ao estado 24
-    GT     deslocar, e ir ao estado 25
-    LT     deslocar, e ir ao estado 26
-    MAIS   deslocar, e ir ao estado 27
-    MENOS  deslocar, e ir ao estado 28
-    VEZES  deslocar, e ir ao estado 29
-    DIV    deslocar, e ir ao estado 30
-    AND    deslocar, e ir ao estado 31
-    OR     deslocar, e ir ao estado 32
+    DIF    deslocar, e ir ao estado 22
+    GE     deslocar, e ir ao estado 23
+    LE     deslocar, e ir ao estado 24
+    EQ     deslocar, e ir ao estado 25
+    GT     deslocar, e ir ao estado 26
+    LT     deslocar, e ir ao estado 27
+    MAIS   deslocar, e ir ao estado 28
+    MENOS  deslocar, e ir ao estado 29
+    VEZES  deslocar, e ir ao estado 30
+    DIV    deslocar, e ir ao estado 31
+    AND    deslocar, e ir ao estado 32
+    OR     deslocar, e ir ao estado 33
 
-    $padrão  reduzir usando a regra 26 (exprseq)
+    $padrão  reduzir usando a regra 30 (exprseq)
 
 
-Estado 18
+Estado 20
 
    19 expr: AP exprseq . FP
-   25 exprseq: exprseq . PVIR expr
+   29 exprseq: exprseq . PVIR expr
 
-    FP    deslocar, e ir ao estado 44
-    PVIR  deslocar, e ir ao estado 45
+    FP    deslocar, e ir ao estado 40
+    PVIR  deslocar, e ir ao estado 41
 
 
-Estado 19
+Estado 21
 
     0 $accept: prog $end .
 
     $padrão  aceitar
 
 
-Estado 20
-
-    4 expr: expr ATT . expr
-
-    INTEGER  deslocar, e ir ao estado 1
-    ID       deslocar, e ir ao estado 2
-    IF       deslocar, e ir ao estado 3
-    WHILE    deslocar, e ir ao estado 4
-    LET      deslocar, e ir ao estado 5
-    MENOS    deslocar, e ir ao estado 6
-    AP       deslocar, e ir ao estado 7
-
-    expr         ir ao estado 46
-    lvalue       ir ao estado 10
-    intconstant  ir ao estado 11
-
-
-Estado 21
+Estado 22
 
     5 expr: expr DIF . expr
 
-    INTEGER  deslocar, e ir ao estado 1
-    ID       deslocar, e ir ao estado 2
-    IF       deslocar, e ir ao estado 3
-    WHILE    deslocar, e ir ao estado 4
-    LET      deslocar, e ir ao estado 5
-    MENOS    deslocar, e ir ao estado 6
-    AP       deslocar, e ir ao estado 7
+    STRING   deslocar, e ir ao estado 1
+    INTEGER  deslocar, e ir ao estado 2
+    ID       deslocar, e ir ao estado 3
+    IF       deslocar, e ir ao estado 4
+    WHILE    deslocar, e ir ao estado 5
+    LET      deslocar, e ir ao estado 6
+    MENOS    deslocar, e ir ao estado 7
+    AP       deslocar, e ir ao estado 8
 
-    expr         ir ao estado 47
-    lvalue       ir ao estado 10
-    intconstant  ir ao estado 11
+    MENOS     [reduzir usando a regra 25 (expr)]
+    $padrão  reduzir usando a regra 25 (expr)
 
-
-Estado 22
-
-    6 expr: expr GE . expr
-
-    INTEGER  deslocar, e ir ao estado 1
-    ID       deslocar, e ir ao estado 2
-    IF       deslocar, e ir ao estado 3
-    WHILE    deslocar, e ir ao estado 4
-    LET      deslocar, e ir ao estado 5
-    MENOS    deslocar, e ir ao estado 6
-    AP       deslocar, e ir ao estado 7
-
-    expr         ir ao estado 48
-    lvalue       ir ao estado 10
-    intconstant  ir ao estado 11
+    expr            ir ao estado 42
+    let             ir ao estado 11
+    lvalue          ir ao estado 12
+    intconstant     ir ao estado 13
+    stringconstant  ir ao estado 14
 
 
 Estado 23
 
-    7 expr: expr LE . expr
+    6 expr: expr GE . expr
 
-    INTEGER  deslocar, e ir ao estado 1
-    ID       deslocar, e ir ao estado 2
-    IF       deslocar, e ir ao estado 3
-    WHILE    deslocar, e ir ao estado 4
-    LET      deslocar, e ir ao estado 5
-    MENOS    deslocar, e ir ao estado 6
-    AP       deslocar, e ir ao estado 7
+    STRING   deslocar, e ir ao estado 1
+    INTEGER  deslocar, e ir ao estado 2
+    ID       deslocar, e ir ao estado 3
+    IF       deslocar, e ir ao estado 4
+    WHILE    deslocar, e ir ao estado 5
+    LET      deslocar, e ir ao estado 6
+    MENOS    deslocar, e ir ao estado 7
+    AP       deslocar, e ir ao estado 8
 
-    expr         ir ao estado 49
-    lvalue       ir ao estado 10
-    intconstant  ir ao estado 11
+    MENOS     [reduzir usando a regra 25 (expr)]
+    $padrão  reduzir usando a regra 25 (expr)
+
+    expr            ir ao estado 43
+    let             ir ao estado 11
+    lvalue          ir ao estado 12
+    intconstant     ir ao estado 13
+    stringconstant  ir ao estado 14
 
 
 Estado 24
 
-    8 expr: expr EQ . expr
+    7 expr: expr LE . expr
 
-    INTEGER  deslocar, e ir ao estado 1
-    ID       deslocar, e ir ao estado 2
-    IF       deslocar, e ir ao estado 3
-    WHILE    deslocar, e ir ao estado 4
-    LET      deslocar, e ir ao estado 5
-    MENOS    deslocar, e ir ao estado 6
-    AP       deslocar, e ir ao estado 7
+    STRING   deslocar, e ir ao estado 1
+    INTEGER  deslocar, e ir ao estado 2
+    ID       deslocar, e ir ao estado 3
+    IF       deslocar, e ir ao estado 4
+    WHILE    deslocar, e ir ao estado 5
+    LET      deslocar, e ir ao estado 6
+    MENOS    deslocar, e ir ao estado 7
+    AP       deslocar, e ir ao estado 8
 
-    expr         ir ao estado 50
-    lvalue       ir ao estado 10
-    intconstant  ir ao estado 11
+    MENOS     [reduzir usando a regra 25 (expr)]
+    $padrão  reduzir usando a regra 25 (expr)
+
+    expr            ir ao estado 44
+    let             ir ao estado 11
+    lvalue          ir ao estado 12
+    intconstant     ir ao estado 13
+    stringconstant  ir ao estado 14
 
 
 Estado 25
 
-    9 expr: expr GT . expr
+    8 expr: expr EQ . expr
 
-    INTEGER  deslocar, e ir ao estado 1
-    ID       deslocar, e ir ao estado 2
-    IF       deslocar, e ir ao estado 3
-    WHILE    deslocar, e ir ao estado 4
-    LET      deslocar, e ir ao estado 5
-    MENOS    deslocar, e ir ao estado 6
-    AP       deslocar, e ir ao estado 7
+    STRING   deslocar, e ir ao estado 1
+    INTEGER  deslocar, e ir ao estado 2
+    ID       deslocar, e ir ao estado 3
+    IF       deslocar, e ir ao estado 4
+    WHILE    deslocar, e ir ao estado 5
+    LET      deslocar, e ir ao estado 6
+    MENOS    deslocar, e ir ao estado 7
+    AP       deslocar, e ir ao estado 8
 
-    expr         ir ao estado 51
-    lvalue       ir ao estado 10
-    intconstant  ir ao estado 11
+    MENOS     [reduzir usando a regra 25 (expr)]
+    $padrão  reduzir usando a regra 25 (expr)
+
+    expr            ir ao estado 45
+    let             ir ao estado 11
+    lvalue          ir ao estado 12
+    intconstant     ir ao estado 13
+    stringconstant  ir ao estado 14
 
 
 Estado 26
 
-   12 expr: expr LT . expr
+    9 expr: expr GT . expr
 
-    INTEGER  deslocar, e ir ao estado 1
-    ID       deslocar, e ir ao estado 2
-    IF       deslocar, e ir ao estado 3
-    WHILE    deslocar, e ir ao estado 4
-    LET      deslocar, e ir ao estado 5
-    MENOS    deslocar, e ir ao estado 6
-    AP       deslocar, e ir ao estado 7
+    STRING   deslocar, e ir ao estado 1
+    INTEGER  deslocar, e ir ao estado 2
+    ID       deslocar, e ir ao estado 3
+    IF       deslocar, e ir ao estado 4
+    WHILE    deslocar, e ir ao estado 5
+    LET      deslocar, e ir ao estado 6
+    MENOS    deslocar, e ir ao estado 7
+    AP       deslocar, e ir ao estado 8
 
-    expr         ir ao estado 52
-    lvalue       ir ao estado 10
-    intconstant  ir ao estado 11
+    MENOS     [reduzir usando a regra 25 (expr)]
+    $padrão  reduzir usando a regra 25 (expr)
+
+    expr            ir ao estado 46
+    let             ir ao estado 11
+    lvalue          ir ao estado 12
+    intconstant     ir ao estado 13
+    stringconstant  ir ao estado 14
 
 
 Estado 27
 
-   15 expr: expr MAIS . expr
+   12 expr: expr LT . expr
 
-    INTEGER  deslocar, e ir ao estado 1
-    ID       deslocar, e ir ao estado 2
-    IF       deslocar, e ir ao estado 3
-    WHILE    deslocar, e ir ao estado 4
-    LET      deslocar, e ir ao estado 5
-    MENOS    deslocar, e ir ao estado 6
-    AP       deslocar, e ir ao estado 7
+    STRING   deslocar, e ir ao estado 1
+    INTEGER  deslocar, e ir ao estado 2
+    ID       deslocar, e ir ao estado 3
+    IF       deslocar, e ir ao estado 4
+    WHILE    deslocar, e ir ao estado 5
+    LET      deslocar, e ir ao estado 6
+    MENOS    deslocar, e ir ao estado 7
+    AP       deslocar, e ir ao estado 8
 
-    expr         ir ao estado 53
-    lvalue       ir ao estado 10
-    intconstant  ir ao estado 11
+    MENOS     [reduzir usando a regra 25 (expr)]
+    $padrão  reduzir usando a regra 25 (expr)
+
+    expr            ir ao estado 47
+    let             ir ao estado 11
+    lvalue          ir ao estado 12
+    intconstant     ir ao estado 13
+    stringconstant  ir ao estado 14
 
 
 Estado 28
 
-   16 expr: expr MENOS . expr
+   15 expr: expr MAIS . expr
 
-    INTEGER  deslocar, e ir ao estado 1
-    ID       deslocar, e ir ao estado 2
-    IF       deslocar, e ir ao estado 3
-    WHILE    deslocar, e ir ao estado 4
-    LET      deslocar, e ir ao estado 5
-    MENOS    deslocar, e ir ao estado 6
-    AP       deslocar, e ir ao estado 7
+    STRING   deslocar, e ir ao estado 1
+    INTEGER  deslocar, e ir ao estado 2
+    ID       deslocar, e ir ao estado 3
+    IF       deslocar, e ir ao estado 4
+    WHILE    deslocar, e ir ao estado 5
+    LET      deslocar, e ir ao estado 6
+    MENOS    deslocar, e ir ao estado 7
+    AP       deslocar, e ir ao estado 8
 
-    expr         ir ao estado 54
-    lvalue       ir ao estado 10
-    intconstant  ir ao estado 11
+    MENOS     [reduzir usando a regra 25 (expr)]
+    $padrão  reduzir usando a regra 25 (expr)
+
+    expr            ir ao estado 48
+    let             ir ao estado 11
+    lvalue          ir ao estado 12
+    intconstant     ir ao estado 13
+    stringconstant  ir ao estado 14
 
 
 Estado 29
 
-   13 expr: expr VEZES . expr
+   16 expr: expr MENOS . expr
 
-    INTEGER  deslocar, e ir ao estado 1
-    ID       deslocar, e ir ao estado 2
-    IF       deslocar, e ir ao estado 3
-    WHILE    deslocar, e ir ao estado 4
-    LET      deslocar, e ir ao estado 5
-    MENOS    deslocar, e ir ao estado 6
-    AP       deslocar, e ir ao estado 7
+    STRING   deslocar, e ir ao estado 1
+    INTEGER  deslocar, e ir ao estado 2
+    ID       deslocar, e ir ao estado 3
+    IF       deslocar, e ir ao estado 4
+    WHILE    deslocar, e ir ao estado 5
+    LET      deslocar, e ir ao estado 6
+    MENOS    deslocar, e ir ao estado 7
+    AP       deslocar, e ir ao estado 8
 
-    expr         ir ao estado 55
-    lvalue       ir ao estado 10
-    intconstant  ir ao estado 11
+    MENOS     [reduzir usando a regra 25 (expr)]
+    $padrão  reduzir usando a regra 25 (expr)
+
+    expr            ir ao estado 49
+    let             ir ao estado 11
+    lvalue          ir ao estado 12
+    intconstant     ir ao estado 13
+    stringconstant  ir ao estado 14
 
 
 Estado 30
 
-   14 expr: expr DIV . expr
+   13 expr: expr VEZES . expr
 
-    INTEGER  deslocar, e ir ao estado 1
-    ID       deslocar, e ir ao estado 2
-    IF       deslocar, e ir ao estado 3
-    WHILE    deslocar, e ir ao estado 4
-    LET      deslocar, e ir ao estado 5
-    MENOS    deslocar, e ir ao estado 6
-    AP       deslocar, e ir ao estado 7
+    STRING   deslocar, e ir ao estado 1
+    INTEGER  deslocar, e ir ao estado 2
+    ID       deslocar, e ir ao estado 3
+    IF       deslocar, e ir ao estado 4
+    WHILE    deslocar, e ir ao estado 5
+    LET      deslocar, e ir ao estado 6
+    MENOS    deslocar, e ir ao estado 7
+    AP       deslocar, e ir ao estado 8
 
-    expr         ir ao estado 56
-    lvalue       ir ao estado 10
-    intconstant  ir ao estado 11
+    MENOS     [reduzir usando a regra 25 (expr)]
+    $padrão  reduzir usando a regra 25 (expr)
+
+    expr            ir ao estado 50
+    let             ir ao estado 11
+    lvalue          ir ao estado 12
+    intconstant     ir ao estado 13
+    stringconstant  ir ao estado 14
 
 
 Estado 31
 
-   10 expr: expr AND . expr
+   14 expr: expr DIV . expr
 
-    INTEGER  deslocar, e ir ao estado 1
-    ID       deslocar, e ir ao estado 2
-    IF       deslocar, e ir ao estado 3
-    WHILE    deslocar, e ir ao estado 4
-    LET      deslocar, e ir ao estado 5
-    MENOS    deslocar, e ir ao estado 6
-    AP       deslocar, e ir ao estado 7
+    STRING   deslocar, e ir ao estado 1
+    INTEGER  deslocar, e ir ao estado 2
+    ID       deslocar, e ir ao estado 3
+    IF       deslocar, e ir ao estado 4
+    WHILE    deslocar, e ir ao estado 5
+    LET      deslocar, e ir ao estado 6
+    MENOS    deslocar, e ir ao estado 7
+    AP       deslocar, e ir ao estado 8
 
-    expr         ir ao estado 57
-    lvalue       ir ao estado 10
-    intconstant  ir ao estado 11
+    MENOS     [reduzir usando a regra 25 (expr)]
+    $padrão  reduzir usando a regra 25 (expr)
+
+    expr            ir ao estado 51
+    let             ir ao estado 11
+    lvalue          ir ao estado 12
+    intconstant     ir ao estado 13
+    stringconstant  ir ao estado 14
 
 
 Estado 32
 
-   11 expr: expr OR . expr
+   10 expr: expr AND . expr
 
-    INTEGER  deslocar, e ir ao estado 1
-    ID       deslocar, e ir ao estado 2
-    IF       deslocar, e ir ao estado 3
-    WHILE    deslocar, e ir ao estado 4
-    LET      deslocar, e ir ao estado 5
-    MENOS    deslocar, e ir ao estado 6
-    AP       deslocar, e ir ao estado 7
+    STRING   deslocar, e ir ao estado 1
+    INTEGER  deslocar, e ir ao estado 2
+    ID       deslocar, e ir ao estado 3
+    IF       deslocar, e ir ao estado 4
+    WHILE    deslocar, e ir ao estado 5
+    LET      deslocar, e ir ao estado 6
+    MENOS    deslocar, e ir ao estado 7
+    AP       deslocar, e ir ao estado 8
 
-    expr         ir ao estado 58
-    lvalue       ir ao estado 10
-    intconstant  ir ao estado 11
+    MENOS     [reduzir usando a regra 25 (expr)]
+    $padrão  reduzir usando a regra 25 (expr)
+
+    expr            ir ao estado 52
+    let             ir ao estado 11
+    lvalue          ir ao estado 12
+    intconstant     ir ao estado 13
+    stringconstant  ir ao estado 14
 
 
 Estado 33
 
-   17 expr: lvalue ATT . expr
+   11 expr: expr OR . expr
 
-    INTEGER  deslocar, e ir ao estado 1
-    ID       deslocar, e ir ao estado 2
-    IF       deslocar, e ir ao estado 3
-    WHILE    deslocar, e ir ao estado 4
-    LET      deslocar, e ir ao estado 5
-    MENOS    deslocar, e ir ao estado 6
-    AP       deslocar, e ir ao estado 7
+    STRING   deslocar, e ir ao estado 1
+    INTEGER  deslocar, e ir ao estado 2
+    ID       deslocar, e ir ao estado 3
+    IF       deslocar, e ir ao estado 4
+    WHILE    deslocar, e ir ao estado 5
+    LET      deslocar, e ir ao estado 6
+    MENOS    deslocar, e ir ao estado 7
+    AP       deslocar, e ir ao estado 8
 
-    expr         ir ao estado 59
-    lvalue       ir ao estado 10
-    intconstant  ir ao estado 11
+    MENOS     [reduzir usando a regra 25 (expr)]
+    $padrão  reduzir usando a regra 25 (expr)
+
+    expr            ir ao estado 53
+    let             ir ao estado 11
+    lvalue          ir ao estado 12
+    intconstant     ir ao estado 13
+    stringconstant  ir ao estado 14
 
 
 Estado 34
 
-    4 expr: expr . ATT expr
-    5     | expr . DIF expr
+   23 expr: let declist . in exprseq end
+   35 declist: declist . dec
+
+    VAR       deslocar, e ir ao estado 54
+    FUNCTION  deslocar, e ir ao estado 55
+    IN        deslocar, e ir ao estado 56
+
+    in           ir ao estado 57
+    dec          ir ao estado 58
+    variabledec  ir ao estado 59
+    functiondec  ir ao estado 60
+
+
+Estado 35
+
+   17 expr: lvalue ATT . expr
+
+    STRING   deslocar, e ir ao estado 1
+    INTEGER  deslocar, e ir ao estado 2
+    ID       deslocar, e ir ao estado 3
+    IF       deslocar, e ir ao estado 4
+    WHILE    deslocar, e ir ao estado 5
+    LET      deslocar, e ir ao estado 6
+    MENOS    deslocar, e ir ao estado 7
+    AP       deslocar, e ir ao estado 8
+
+    MENOS     [reduzir usando a regra 25 (expr)]
+    $padrão  reduzir usando a regra 25 (expr)
+
+    expr            ir ao estado 61
+    let             ir ao estado 11
+    lvalue          ir ao estado 12
+    intconstant     ir ao estado 13
+    stringconstant  ir ao estado 14
+
+
+Estado 36
+
+    5 expr: expr . DIF expr
     6     | expr . GE expr
     7     | expr . LE expr
     8     | expr . EQ expr
@@ -734,182 +878,113 @@ Estado 34
    14     | expr . DIV expr
    15     | expr . MAIS expr
    16     | expr . MENOS expr
-   29 exprlist: expr .
+   32 exprlist: expr .
 
-    ATT    deslocar, e ir ao estado 20
-    DIF    deslocar, e ir ao estado 21
-    GE     deslocar, e ir ao estado 22
-    LE     deslocar, e ir ao estado 23
-    EQ     deslocar, e ir ao estado 24
-    GT     deslocar, e ir ao estado 25
-    LT     deslocar, e ir ao estado 26
-    MAIS   deslocar, e ir ao estado 27
-    MENOS  deslocar, e ir ao estado 28
-    VEZES  deslocar, e ir ao estado 29
-    DIV    deslocar, e ir ao estado 30
-    AND    deslocar, e ir ao estado 31
-    OR     deslocar, e ir ao estado 32
+    DIF    deslocar, e ir ao estado 22
+    GE     deslocar, e ir ao estado 23
+    LE     deslocar, e ir ao estado 24
+    EQ     deslocar, e ir ao estado 25
+    GT     deslocar, e ir ao estado 26
+    LT     deslocar, e ir ao estado 27
+    MAIS   deslocar, e ir ao estado 28
+    MENOS  deslocar, e ir ao estado 29
+    VEZES  deslocar, e ir ao estado 30
+    DIV    deslocar, e ir ao estado 31
+    AND    deslocar, e ir ao estado 32
+    OR     deslocar, e ir ao estado 33
 
-    $padrão  reduzir usando a regra 29 (exprlist)
-
-
-Estado 35
-
-   18 expr: ID AP exprlist . FP
-   28 exprlist: exprlist . VIR expr
-
-    FP   deslocar, e ir ao estado 60
-    VIR  deslocar, e ir ao estado 61
-
-
-Estado 36
-
-   20 expr: IF expr THEN . expr
-   21     | IF expr THEN . expr ELSE expr
-
-    INTEGER  deslocar, e ir ao estado 1
-    ID       deslocar, e ir ao estado 2
-    IF       deslocar, e ir ao estado 3
-    WHILE    deslocar, e ir ao estado 4
-    LET      deslocar, e ir ao estado 5
-    MENOS    deslocar, e ir ao estado 6
-    AP       deslocar, e ir ao estado 7
-
-    expr         ir ao estado 62
-    lvalue       ir ao estado 10
-    intconstant  ir ao estado 11
+    $padrão  reduzir usando a regra 32 (exprlist)
 
 
 Estado 37
 
-   22 expr: WHILE expr DO . expr
+   18 expr: ID AP exprlist . FP
+   31 exprlist: exprlist . VIR expr
 
-    INTEGER  deslocar, e ir ao estado 1
-    ID       deslocar, e ir ao estado 2
-    IF       deslocar, e ir ao estado 3
-    WHILE    deslocar, e ir ao estado 4
-    LET      deslocar, e ir ao estado 5
-    MENOS    deslocar, e ir ao estado 6
-    AP       deslocar, e ir ao estado 7
-
-    expr         ir ao estado 63
-    lvalue       ir ao estado 10
-    intconstant  ir ao estado 11
+    FP   deslocar, e ir ao estado 62
+    VIR  deslocar, e ir ao estado 63
 
 
 Estado 38
 
-   36 variabledec: VAR . ID ATT expr
+   20 expr: IF expr THEN . expr
+   21     | IF expr THEN . expr ELSE expr
 
-    ID  deslocar, e ir ao estado 64
+    STRING   deslocar, e ir ao estado 1
+    INTEGER  deslocar, e ir ao estado 2
+    ID       deslocar, e ir ao estado 3
+    IF       deslocar, e ir ao estado 4
+    WHILE    deslocar, e ir ao estado 5
+    LET      deslocar, e ir ao estado 6
+    MENOS    deslocar, e ir ao estado 7
+    AP       deslocar, e ir ao estado 8
+
+    MENOS     [reduzir usando a regra 25 (expr)]
+    $padrão  reduzir usando a regra 25 (expr)
+
+    expr            ir ao estado 64
+    let             ir ao estado 11
+    lvalue          ir ao estado 12
+    intconstant     ir ao estado 13
+    stringconstant  ir ao estado 14
 
 
 Estado 39
 
-   42 functiondec: FUNCTION . ID AP typefields FP EQ expr
+   22 expr: WHILE expr DO . expr
 
-    ID  deslocar, e ir ao estado 65
+    STRING   deslocar, e ir ao estado 1
+    INTEGER  deslocar, e ir ao estado 2
+    ID       deslocar, e ir ao estado 3
+    IF       deslocar, e ir ao estado 4
+    WHILE    deslocar, e ir ao estado 5
+    LET      deslocar, e ir ao estado 6
+    MENOS    deslocar, e ir ao estado 7
+    AP       deslocar, e ir ao estado 8
+
+    MENOS     [reduzir usando a regra 25 (expr)]
+    $padrão  reduzir usando a regra 25 (expr)
+
+    expr            ir ao estado 65
+    let             ir ao estado 11
+    lvalue          ir ao estado 12
+    intconstant     ir ao estado 13
+    stringconstant  ir ao estado 14
 
 
 Estado 40
-
-   23 expr: LET declist IN . exprseq END
-
-    INTEGER  deslocar, e ir ao estado 1
-    ID       deslocar, e ir ao estado 2
-    IF       deslocar, e ir ao estado 3
-    WHILE    deslocar, e ir ao estado 4
-    LET      deslocar, e ir ao estado 5
-    MENOS    deslocar, e ir ao estado 6
-    AP       deslocar, e ir ao estado 7
-
-    $padrão  reduzir usando a regra 27 (exprseq)
-
-    expr         ir ao estado 17
-    exprseq      ir ao estado 66
-    lvalue       ir ao estado 10
-    intconstant  ir ao estado 11
-
-
-Estado 41
-
-   33 declist: declist dec .
-
-    $padrão  reduzir usando a regra 33 (declist)
-
-
-Estado 42
-
-   34 dec: variabledec .
-
-    $padrão  reduzir usando a regra 34 (dec)
-
-
-Estado 43
-
-   35 dec: functiondec .
-
-    $padrão  reduzir usando a regra 35 (dec)
-
-
-Estado 44
 
    19 expr: AP exprseq FP .
 
     $padrão  reduzir usando a regra 19 (expr)
 
 
-Estado 45
+Estado 41
 
-   25 exprseq: exprseq PVIR . expr
+   29 exprseq: exprseq PVIR . expr
 
-    INTEGER  deslocar, e ir ao estado 1
-    ID       deslocar, e ir ao estado 2
-    IF       deslocar, e ir ao estado 3
-    WHILE    deslocar, e ir ao estado 4
-    LET      deslocar, e ir ao estado 5
-    MENOS    deslocar, e ir ao estado 6
-    AP       deslocar, e ir ao estado 7
+    STRING   deslocar, e ir ao estado 1
+    INTEGER  deslocar, e ir ao estado 2
+    ID       deslocar, e ir ao estado 3
+    IF       deslocar, e ir ao estado 4
+    WHILE    deslocar, e ir ao estado 5
+    LET      deslocar, e ir ao estado 6
+    MENOS    deslocar, e ir ao estado 7
+    AP       deslocar, e ir ao estado 8
 
-    expr         ir ao estado 67
-    lvalue       ir ao estado 10
-    intconstant  ir ao estado 11
+    MENOS     [reduzir usando a regra 25 (expr)]
+    $padrão  reduzir usando a regra 25 (expr)
 
-
-Estado 46
-
-    4 expr: expr . ATT expr
-    4     | expr ATT expr .
-    5     | expr . DIF expr
-    6     | expr . GE expr
-    7     | expr . LE expr
-    8     | expr . EQ expr
-    9     | expr . GT expr
-   10     | expr . AND expr
-   11     | expr . OR expr
-   12     | expr . LT expr
-   13     | expr . VEZES expr
-   14     | expr . DIV expr
-   15     | expr . MAIS expr
-   16     | expr . MENOS expr
-
-    ATT  erro (não associativo)
-    DIF  erro (não associativo)
-    GE   erro (não associativo)
-    LE   erro (não associativo)
-    EQ   erro (não associativo)
-    GT   erro (não associativo)
-    LT   erro (não associativo)
-    AND  erro (não associativo)
-    OR   erro (não associativo)
-
-    $padrão  reduzir usando a regra 4 (expr)
+    expr            ir ao estado 66
+    let             ir ao estado 11
+    lvalue          ir ao estado 12
+    intconstant     ir ao estado 13
+    stringconstant  ir ao estado 14
 
 
-Estado 47
+Estado 42
 
-    4 expr: expr . ATT expr
-    5     | expr . DIF expr
+    5 expr: expr . DIF expr
     5     | expr DIF expr .
     6     | expr . GE expr
     7     | expr . LE expr
@@ -923,7 +998,6 @@ Estado 47
    15     | expr . MAIS expr
    16     | expr . MENOS expr
 
-    ATT  erro (não associativo)
     DIF  erro (não associativo)
     GE   erro (não associativo)
     LE   erro (não associativo)
@@ -936,10 +1010,9 @@ Estado 47
     $padrão  reduzir usando a regra 5 (expr)
 
 
-Estado 48
+Estado 43
 
-    4 expr: expr . ATT expr
-    5     | expr . DIF expr
+    5 expr: expr . DIF expr
     6     | expr . GE expr
     6     | expr GE expr .
     7     | expr . LE expr
@@ -953,7 +1026,6 @@ Estado 48
    15     | expr . MAIS expr
    16     | expr . MENOS expr
 
-    ATT  erro (não associativo)
     DIF  erro (não associativo)
     GE   erro (não associativo)
     LE   erro (não associativo)
@@ -966,10 +1038,9 @@ Estado 48
     $padrão  reduzir usando a regra 6 (expr)
 
 
-Estado 49
+Estado 44
 
-    4 expr: expr . ATT expr
-    5     | expr . DIF expr
+    5 expr: expr . DIF expr
     6     | expr . GE expr
     7     | expr . LE expr
     7     | expr LE expr .
@@ -983,7 +1054,6 @@ Estado 49
    15     | expr . MAIS expr
    16     | expr . MENOS expr
 
-    ATT  erro (não associativo)
     DIF  erro (não associativo)
     GE   erro (não associativo)
     LE   erro (não associativo)
@@ -996,10 +1066,9 @@ Estado 49
     $padrão  reduzir usando a regra 7 (expr)
 
 
-Estado 50
+Estado 45
 
-    4 expr: expr . ATT expr
-    5     | expr . DIF expr
+    5 expr: expr . DIF expr
     6     | expr . GE expr
     7     | expr . LE expr
     8     | expr . EQ expr
@@ -1013,7 +1082,6 @@ Estado 50
    15     | expr . MAIS expr
    16     | expr . MENOS expr
 
-    ATT  erro (não associativo)
     DIF  erro (não associativo)
     GE   erro (não associativo)
     LE   erro (não associativo)
@@ -1026,10 +1094,9 @@ Estado 50
     $padrão  reduzir usando a regra 8 (expr)
 
 
-Estado 51
+Estado 46
 
-    4 expr: expr . ATT expr
-    5     | expr . DIF expr
+    5 expr: expr . DIF expr
     6     | expr . GE expr
     7     | expr . LE expr
     8     | expr . EQ expr
@@ -1043,7 +1110,6 @@ Estado 51
    15     | expr . MAIS expr
    16     | expr . MENOS expr
 
-    ATT  erro (não associativo)
     DIF  erro (não associativo)
     GE   erro (não associativo)
     LE   erro (não associativo)
@@ -1056,10 +1122,9 @@ Estado 51
     $padrão  reduzir usando a regra 9 (expr)
 
 
-Estado 52
+Estado 47
 
-    4 expr: expr . ATT expr
-    5     | expr . DIF expr
+    5 expr: expr . DIF expr
     6     | expr . GE expr
     7     | expr . LE expr
     8     | expr . EQ expr
@@ -1073,7 +1138,6 @@ Estado 52
    15     | expr . MAIS expr
    16     | expr . MENOS expr
 
-    ATT  erro (não associativo)
     DIF  erro (não associativo)
     GE   erro (não associativo)
     LE   erro (não associativo)
@@ -1086,10 +1150,9 @@ Estado 52
     $padrão  reduzir usando a regra 12 (expr)
 
 
-Estado 53
+Estado 48
 
-    4 expr: expr . ATT expr
-    5     | expr . DIF expr
+    5 expr: expr . DIF expr
     6     | expr . GE expr
     7     | expr . LE expr
     8     | expr . EQ expr
@@ -1103,25 +1166,23 @@ Estado 53
    15     | expr MAIS expr .
    16     | expr . MENOS expr
 
-    ATT    deslocar, e ir ao estado 20
-    DIF    deslocar, e ir ao estado 21
-    GE     deslocar, e ir ao estado 22
-    LE     deslocar, e ir ao estado 23
-    EQ     deslocar, e ir ao estado 24
-    GT     deslocar, e ir ao estado 25
-    LT     deslocar, e ir ao estado 26
-    MAIS   deslocar, e ir ao estado 27
-    MENOS  deslocar, e ir ao estado 28
-    AND    deslocar, e ir ao estado 31
-    OR     deslocar, e ir ao estado 32
+    DIF    deslocar, e ir ao estado 22
+    GE     deslocar, e ir ao estado 23
+    LE     deslocar, e ir ao estado 24
+    EQ     deslocar, e ir ao estado 25
+    GT     deslocar, e ir ao estado 26
+    LT     deslocar, e ir ao estado 27
+    VEZES  deslocar, e ir ao estado 30
+    DIV    deslocar, e ir ao estado 31
+    AND    deslocar, e ir ao estado 32
+    OR     deslocar, e ir ao estado 33
 
     $padrão  reduzir usando a regra 15 (expr)
 
 
-Estado 54
+Estado 49
 
-    4 expr: expr . ATT expr
-    5     | expr . DIF expr
+    5 expr: expr . DIF expr
     6     | expr . GE expr
     7     | expr . LE expr
     8     | expr . EQ expr
@@ -1135,25 +1196,23 @@ Estado 54
    16     | expr . MENOS expr
    16     | expr MENOS expr .
 
-    ATT    deslocar, e ir ao estado 20
-    DIF    deslocar, e ir ao estado 21
-    GE     deslocar, e ir ao estado 22
-    LE     deslocar, e ir ao estado 23
-    EQ     deslocar, e ir ao estado 24
-    GT     deslocar, e ir ao estado 25
-    LT     deslocar, e ir ao estado 26
-    MAIS   deslocar, e ir ao estado 27
-    MENOS  deslocar, e ir ao estado 28
-    AND    deslocar, e ir ao estado 31
-    OR     deslocar, e ir ao estado 32
+    DIF    deslocar, e ir ao estado 22
+    GE     deslocar, e ir ao estado 23
+    LE     deslocar, e ir ao estado 24
+    EQ     deslocar, e ir ao estado 25
+    GT     deslocar, e ir ao estado 26
+    LT     deslocar, e ir ao estado 27
+    VEZES  deslocar, e ir ao estado 30
+    DIV    deslocar, e ir ao estado 31
+    AND    deslocar, e ir ao estado 32
+    OR     deslocar, e ir ao estado 33
 
     $padrão  reduzir usando a regra 16 (expr)
 
 
-Estado 55
+Estado 50
 
-    4 expr: expr . ATT expr
-    5     | expr . DIF expr
+    5 expr: expr . DIF expr
     6     | expr . GE expr
     7     | expr . LE expr
     8     | expr . EQ expr
@@ -1167,27 +1226,21 @@ Estado 55
    15     | expr . MAIS expr
    16     | expr . MENOS expr
 
-    ATT    deslocar, e ir ao estado 20
-    DIF    deslocar, e ir ao estado 21
-    GE     deslocar, e ir ao estado 22
-    LE     deslocar, e ir ao estado 23
-    EQ     deslocar, e ir ao estado 24
-    GT     deslocar, e ir ao estado 25
-    LT     deslocar, e ir ao estado 26
-    MAIS   deslocar, e ir ao estado 27
-    MENOS  deslocar, e ir ao estado 28
-    VEZES  deslocar, e ir ao estado 29
-    DIV    deslocar, e ir ao estado 30
-    AND    deslocar, e ir ao estado 31
-    OR     deslocar, e ir ao estado 32
+    DIF  deslocar, e ir ao estado 22
+    GE   deslocar, e ir ao estado 23
+    LE   deslocar, e ir ao estado 24
+    EQ   deslocar, e ir ao estado 25
+    GT   deslocar, e ir ao estado 26
+    LT   deslocar, e ir ao estado 27
+    AND  deslocar, e ir ao estado 32
+    OR   deslocar, e ir ao estado 33
 
     $padrão  reduzir usando a regra 13 (expr)
 
 
-Estado 56
+Estado 51
 
-    4 expr: expr . ATT expr
-    5     | expr . DIF expr
+    5 expr: expr . DIF expr
     6     | expr . GE expr
     7     | expr . LE expr
     8     | expr . EQ expr
@@ -1201,27 +1254,21 @@ Estado 56
    15     | expr . MAIS expr
    16     | expr . MENOS expr
 
-    ATT    deslocar, e ir ao estado 20
-    DIF    deslocar, e ir ao estado 21
-    GE     deslocar, e ir ao estado 22
-    LE     deslocar, e ir ao estado 23
-    EQ     deslocar, e ir ao estado 24
-    GT     deslocar, e ir ao estado 25
-    LT     deslocar, e ir ao estado 26
-    MAIS   deslocar, e ir ao estado 27
-    MENOS  deslocar, e ir ao estado 28
-    VEZES  deslocar, e ir ao estado 29
-    DIV    deslocar, e ir ao estado 30
-    AND    deslocar, e ir ao estado 31
-    OR     deslocar, e ir ao estado 32
+    DIF  deslocar, e ir ao estado 22
+    GE   deslocar, e ir ao estado 23
+    LE   deslocar, e ir ao estado 24
+    EQ   deslocar, e ir ao estado 25
+    GT   deslocar, e ir ao estado 26
+    LT   deslocar, e ir ao estado 27
+    AND  deslocar, e ir ao estado 32
+    OR   deslocar, e ir ao estado 33
 
     $padrão  reduzir usando a regra 14 (expr)
 
 
-Estado 57
+Estado 52
 
-    4 expr: expr . ATT expr
-    5     | expr . DIF expr
+    5 expr: expr . DIF expr
     6     | expr . GE expr
     7     | expr . LE expr
     8     | expr . EQ expr
@@ -1235,7 +1282,6 @@ Estado 57
    15     | expr . MAIS expr
    16     | expr . MENOS expr
 
-    ATT  erro (não associativo)
     DIF  erro (não associativo)
     GE   erro (não associativo)
     LE   erro (não associativo)
@@ -1248,10 +1294,9 @@ Estado 57
     $padrão  reduzir usando a regra 10 (expr)
 
 
-Estado 58
+Estado 53
 
-    4 expr: expr . ATT expr
-    5     | expr . DIF expr
+    5 expr: expr . DIF expr
     6     | expr . GE expr
     7     | expr . LE expr
     8     | expr . EQ expr
@@ -1265,7 +1310,6 @@ Estado 58
    15     | expr . MAIS expr
    16     | expr . MENOS expr
 
-    ATT  erro (não associativo)
     DIF  erro (não associativo)
     GE   erro (não associativo)
     LE   erro (não associativo)
@@ -1278,10 +1322,75 @@ Estado 58
     $padrão  reduzir usando a regra 11 (expr)
 
 
+Estado 54
+
+   38 variabledec: VAR . ID ATT expr
+
+    ID  deslocar, e ir ao estado 67
+
+
+Estado 55
+
+   43 functiondec: FUNCTION . ID AP typefields FP ATT expr
+
+    ID  deslocar, e ir ao estado 68
+
+
+Estado 56
+
+   27 in: IN .
+
+    $padrão  reduzir usando a regra 27 (in)
+
+
+Estado 57
+
+   23 expr: let declist in . exprseq end
+
+    STRING   deslocar, e ir ao estado 1
+    INTEGER  deslocar, e ir ao estado 2
+    ID       deslocar, e ir ao estado 3
+    IF       deslocar, e ir ao estado 4
+    WHILE    deslocar, e ir ao estado 5
+    LET      deslocar, e ir ao estado 6
+    MENOS    deslocar, e ir ao estado 7
+    AP       deslocar, e ir ao estado 8
+
+    MENOS     [reduzir usando a regra 25 (expr)]
+    $padrão  reduzir usando a regra 25 (expr)
+
+    expr            ir ao estado 19
+    let             ir ao estado 11
+    exprseq         ir ao estado 69
+    lvalue          ir ao estado 12
+    intconstant     ir ao estado 13
+    stringconstant  ir ao estado 14
+
+
+Estado 58
+
+   35 declist: declist dec .
+
+    $padrão  reduzir usando a regra 35 (declist)
+
+
 Estado 59
 
-    4 expr: expr . ATT expr
-    5     | expr . DIF expr
+   36 dec: variabledec .
+
+    $padrão  reduzir usando a regra 36 (dec)
+
+
+Estado 60
+
+   37 dec: functiondec .
+
+    $padrão  reduzir usando a regra 37 (dec)
+
+
+Estado 61
+
+    5 expr: expr . DIF expr
     6     | expr . GE expr
     7     | expr . LE expr
     8     | expr . EQ expr
@@ -1295,7 +1404,6 @@ Estado 59
    16     | expr . MENOS expr
    17     | lvalue ATT expr .
 
-    ATT  erro (não associativo)
     DIF  erro (não associativo)
     GE   erro (não associativo)
     LE   erro (não associativo)
@@ -1308,34 +1416,39 @@ Estado 59
     $padrão  reduzir usando a regra 17 (expr)
 
 
-Estado 60
+Estado 62
 
    18 expr: ID AP exprlist FP .
 
     $padrão  reduzir usando a regra 18 (expr)
 
 
-Estado 61
+Estado 63
 
-   28 exprlist: exprlist VIR . expr
+   31 exprlist: exprlist VIR . expr
 
-    INTEGER  deslocar, e ir ao estado 1
-    ID       deslocar, e ir ao estado 2
-    IF       deslocar, e ir ao estado 3
-    WHILE    deslocar, e ir ao estado 4
-    LET      deslocar, e ir ao estado 5
-    MENOS    deslocar, e ir ao estado 6
-    AP       deslocar, e ir ao estado 7
+    STRING   deslocar, e ir ao estado 1
+    INTEGER  deslocar, e ir ao estado 2
+    ID       deslocar, e ir ao estado 3
+    IF       deslocar, e ir ao estado 4
+    WHILE    deslocar, e ir ao estado 5
+    LET      deslocar, e ir ao estado 6
+    MENOS    deslocar, e ir ao estado 7
+    AP       deslocar, e ir ao estado 8
 
-    expr         ir ao estado 68
-    lvalue       ir ao estado 10
-    intconstant  ir ao estado 11
+    MENOS     [reduzir usando a regra 25 (expr)]
+    $padrão  reduzir usando a regra 25 (expr)
+
+    expr            ir ao estado 70
+    let             ir ao estado 11
+    lvalue          ir ao estado 12
+    intconstant     ir ao estado 13
+    stringconstant  ir ao estado 14
 
 
-Estado 62
+Estado 64
 
-    4 expr: expr . ATT expr
-    5     | expr . DIF expr
+    5 expr: expr . DIF expr
     6     | expr . GE expr
     7     | expr . LE expr
     8     | expr . EQ expr
@@ -1350,15 +1463,14 @@ Estado 62
    20     | IF expr THEN expr .
    21     | IF expr THEN expr . ELSE expr
 
-    ELSE  deslocar, e ir ao estado 69
+    ELSE  deslocar, e ir ao estado 71
 
     $padrão  reduzir usando a regra 20 (expr)
 
 
-Estado 63
+Estado 65
 
-    4 expr: expr . ATT expr
-    5     | expr . DIF expr
+    5 expr: expr . DIF expr
     6     | expr . GE expr
     7     | expr . LE expr
     8     | expr . EQ expr
@@ -1375,67 +1487,66 @@ Estado 63
     $padrão  reduzir usando a regra 22 (expr)
 
 
-Estado 64
-
-   36 variabledec: VAR ID . ATT expr
-
-    ATT  deslocar, e ir ao estado 70
-
-
-Estado 65
-
-   42 functiondec: FUNCTION ID . AP typefields FP EQ expr
-
-    AP  deslocar, e ir ao estado 71
-
-
 Estado 66
 
-   23 expr: LET declist IN exprseq . END
-   25 exprseq: exprseq . PVIR expr
+    5 expr: expr . DIF expr
+    6     | expr . GE expr
+    7     | expr . LE expr
+    8     | expr . EQ expr
+    9     | expr . GT expr
+   10     | expr . AND expr
+   11     | expr . OR expr
+   12     | expr . LT expr
+   13     | expr . VEZES expr
+   14     | expr . DIV expr
+   15     | expr . MAIS expr
+   16     | expr . MENOS expr
+   29 exprseq: exprseq PVIR expr .
 
-    END   deslocar, e ir ao estado 72
-    PVIR  deslocar, e ir ao estado 45
+    DIF    deslocar, e ir ao estado 22
+    GE     deslocar, e ir ao estado 23
+    LE     deslocar, e ir ao estado 24
+    EQ     deslocar, e ir ao estado 25
+    GT     deslocar, e ir ao estado 26
+    LT     deslocar, e ir ao estado 27
+    MAIS   deslocar, e ir ao estado 28
+    MENOS  deslocar, e ir ao estado 29
+    VEZES  deslocar, e ir ao estado 30
+    DIV    deslocar, e ir ao estado 31
+    AND    deslocar, e ir ao estado 32
+    OR     deslocar, e ir ao estado 33
+
+    $padrão  reduzir usando a regra 29 (exprseq)
 
 
 Estado 67
 
-    4 expr: expr . ATT expr
-    5     | expr . DIF expr
-    6     | expr . GE expr
-    7     | expr . LE expr
-    8     | expr . EQ expr
-    9     | expr . GT expr
-   10     | expr . AND expr
-   11     | expr . OR expr
-   12     | expr . LT expr
-   13     | expr . VEZES expr
-   14     | expr . DIV expr
-   15     | expr . MAIS expr
-   16     | expr . MENOS expr
-   25 exprseq: exprseq PVIR expr .
+   38 variabledec: VAR ID . ATT expr
 
-    ATT    deslocar, e ir ao estado 20
-    DIF    deslocar, e ir ao estado 21
-    GE     deslocar, e ir ao estado 22
-    LE     deslocar, e ir ao estado 23
-    EQ     deslocar, e ir ao estado 24
-    GT     deslocar, e ir ao estado 25
-    LT     deslocar, e ir ao estado 26
-    MAIS   deslocar, e ir ao estado 27
-    MENOS  deslocar, e ir ao estado 28
-    VEZES  deslocar, e ir ao estado 29
-    DIV    deslocar, e ir ao estado 30
-    AND    deslocar, e ir ao estado 31
-    OR     deslocar, e ir ao estado 32
-
-    $padrão  reduzir usando a regra 25 (exprseq)
+    ATT  deslocar, e ir ao estado 72
 
 
 Estado 68
 
-    4 expr: expr . ATT expr
-    5     | expr . DIF expr
+   43 functiondec: FUNCTION ID . AP typefields FP ATT expr
+
+    AP  deslocar, e ir ao estado 73
+
+
+Estado 69
+
+   23 expr: let declist in exprseq . end
+   29 exprseq: exprseq . PVIR expr
+
+    END   deslocar, e ir ao estado 74
+    PVIR  deslocar, e ir ao estado 41
+
+    end  ir ao estado 75
+
+
+Estado 70
+
+    5 expr: expr . DIF expr
     6     | expr . GE expr
     7     | expr . LE expr
     8     | expr . EQ expr
@@ -1447,80 +1558,96 @@ Estado 68
    14     | expr . DIV expr
    15     | expr . MAIS expr
    16     | expr . MENOS expr
-   28 exprlist: exprlist VIR expr .
+   31 exprlist: exprlist VIR expr .
 
-    ATT    deslocar, e ir ao estado 20
-    DIF    deslocar, e ir ao estado 21
-    GE     deslocar, e ir ao estado 22
-    LE     deslocar, e ir ao estado 23
-    EQ     deslocar, e ir ao estado 24
-    GT     deslocar, e ir ao estado 25
-    LT     deslocar, e ir ao estado 26
-    MAIS   deslocar, e ir ao estado 27
-    MENOS  deslocar, e ir ao estado 28
-    VEZES  deslocar, e ir ao estado 29
-    DIV    deslocar, e ir ao estado 30
-    AND    deslocar, e ir ao estado 31
-    OR     deslocar, e ir ao estado 32
+    DIF    deslocar, e ir ao estado 22
+    GE     deslocar, e ir ao estado 23
+    LE     deslocar, e ir ao estado 24
+    EQ     deslocar, e ir ao estado 25
+    GT     deslocar, e ir ao estado 26
+    LT     deslocar, e ir ao estado 27
+    MAIS   deslocar, e ir ao estado 28
+    MENOS  deslocar, e ir ao estado 29
+    VEZES  deslocar, e ir ao estado 30
+    DIV    deslocar, e ir ao estado 31
+    AND    deslocar, e ir ao estado 32
+    OR     deslocar, e ir ao estado 33
 
-    $padrão  reduzir usando a regra 28 (exprlist)
-
-
-Estado 69
-
-   21 expr: IF expr THEN expr ELSE . expr
-
-    INTEGER  deslocar, e ir ao estado 1
-    ID       deslocar, e ir ao estado 2
-    IF       deslocar, e ir ao estado 3
-    WHILE    deslocar, e ir ao estado 4
-    LET      deslocar, e ir ao estado 5
-    MENOS    deslocar, e ir ao estado 6
-    AP       deslocar, e ir ao estado 7
-
-    expr         ir ao estado 73
-    lvalue       ir ao estado 10
-    intconstant  ir ao estado 11
-
-
-Estado 70
-
-   36 variabledec: VAR ID ATT . expr
-
-    INTEGER  deslocar, e ir ao estado 1
-    ID       deslocar, e ir ao estado 2
-    IF       deslocar, e ir ao estado 3
-    WHILE    deslocar, e ir ao estado 4
-    LET      deslocar, e ir ao estado 5
-    MENOS    deslocar, e ir ao estado 6
-    AP       deslocar, e ir ao estado 7
-
-    expr         ir ao estado 74
-    lvalue       ir ao estado 10
-    intconstant  ir ao estado 11
+    $padrão  reduzir usando a regra 31 (exprlist)
 
 
 Estado 71
 
-   42 functiondec: FUNCTION ID AP . typefields FP EQ expr
+   21 expr: IF expr THEN expr ELSE . expr
 
-    ID  deslocar, e ir ao estado 75
+    STRING   deslocar, e ir ao estado 1
+    INTEGER  deslocar, e ir ao estado 2
+    ID       deslocar, e ir ao estado 3
+    IF       deslocar, e ir ao estado 4
+    WHILE    deslocar, e ir ao estado 5
+    LET      deslocar, e ir ao estado 6
+    MENOS    deslocar, e ir ao estado 7
+    AP       deslocar, e ir ao estado 8
 
-    typefields  ir ao estado 76
-    typefield   ir ao estado 77
+    MENOS     [reduzir usando a regra 25 (expr)]
+    $padrão  reduzir usando a regra 25 (expr)
+
+    expr            ir ao estado 76
+    let             ir ao estado 11
+    lvalue          ir ao estado 12
+    intconstant     ir ao estado 13
+    stringconstant  ir ao estado 14
 
 
 Estado 72
 
-   23 expr: LET declist IN exprseq END .
+   38 variabledec: VAR ID ATT . expr
 
-    $padrão  reduzir usando a regra 23 (expr)
+    STRING   deslocar, e ir ao estado 1
+    INTEGER  deslocar, e ir ao estado 2
+    ID       deslocar, e ir ao estado 3
+    IF       deslocar, e ir ao estado 4
+    WHILE    deslocar, e ir ao estado 5
+    LET      deslocar, e ir ao estado 6
+    MENOS    deslocar, e ir ao estado 7
+    AP       deslocar, e ir ao estado 8
+
+    MENOS     [reduzir usando a regra 25 (expr)]
+    $padrão  reduzir usando a regra 25 (expr)
+
+    expr            ir ao estado 77
+    let             ir ao estado 11
+    lvalue          ir ao estado 12
+    intconstant     ir ao estado 13
+    stringconstant  ir ao estado 14
 
 
 Estado 73
 
-    4 expr: expr . ATT expr
-    5     | expr . DIF expr
+   43 functiondec: FUNCTION ID AP . typefields FP ATT expr
+
+    ID  deslocar, e ir ao estado 78
+
+    typefields  ir ao estado 79
+
+
+Estado 74
+
+   28 end: END .
+
+    $padrão  reduzir usando a regra 28 (end)
+
+
+Estado 75
+
+   23 expr: let declist in exprseq end .
+
+    $padrão  reduzir usando a regra 23 (expr)
+
+
+Estado 76
+
+    5 expr: expr . DIF expr
     6     | expr . GE expr
     7     | expr . LE expr
     8     | expr . EQ expr
@@ -1537,10 +1664,9 @@ Estado 73
     $padrão  reduzir usando a regra 21 (expr)
 
 
-Estado 74
+Estado 77
 
-    4 expr: expr . ATT expr
-    5     | expr . DIF expr
+    5 expr: expr . DIF expr
     6     | expr . GE expr
     7     | expr . LE expr
     8     | expr . EQ expr
@@ -1552,115 +1678,87 @@ Estado 74
    14     | expr . DIV expr
    15     | expr . MAIS expr
    16     | expr . MENOS expr
-   36 variabledec: VAR ID ATT expr .
+   38 variabledec: VAR ID ATT expr .
 
-    ATT    deslocar, e ir ao estado 20
-    DIF    deslocar, e ir ao estado 21
-    GE     deslocar, e ir ao estado 22
-    LE     deslocar, e ir ao estado 23
-    EQ     deslocar, e ir ao estado 24
-    GT     deslocar, e ir ao estado 25
-    LT     deslocar, e ir ao estado 26
-    MAIS   deslocar, e ir ao estado 27
-    MENOS  deslocar, e ir ao estado 28
-    VEZES  deslocar, e ir ao estado 29
-    DIV    deslocar, e ir ao estado 30
-    AND    deslocar, e ir ao estado 31
-    OR     deslocar, e ir ao estado 32
+    DIF    deslocar, e ir ao estado 22
+    GE     deslocar, e ir ao estado 23
+    LE     deslocar, e ir ao estado 24
+    EQ     deslocar, e ir ao estado 25
+    GT     deslocar, e ir ao estado 26
+    LT     deslocar, e ir ao estado 27
+    MAIS   deslocar, e ir ao estado 28
+    MENOS  deslocar, e ir ao estado 29
+    VEZES  deslocar, e ir ao estado 30
+    DIV    deslocar, e ir ao estado 31
+    AND    deslocar, e ir ao estado 32
+    OR     deslocar, e ir ao estado 33
 
-    $padrão  reduzir usando a regra 36 (variabledec)
-
-
-Estado 75
-
-   40 typefield: ID . DP typeid
-
-    DP  deslocar, e ir ao estado 78
-
-
-Estado 76
-
-   39 typefields: typefields . VIR typefield
-   42 functiondec: FUNCTION ID AP typefields . FP EQ expr
-
-    FP   deslocar, e ir ao estado 79
-    VIR  deslocar, e ir ao estado 80
-
-
-Estado 77
-
-   38 typefields: typefield .
-
-    $padrão  reduzir usando a regra 38 (typefields)
+    $padrão  reduzir usando a regra 38 (variabledec)
 
 
 Estado 78
 
-   40 typefield: ID DP . typeid
+   41 typefields: ID .
 
-    TIPOINT  deslocar, e ir ao estado 81
-
-    typeid  ir ao estado 82
+    $padrão  reduzir usando a regra 41 (typefields)
 
 
 Estado 79
 
-   42 functiondec: FUNCTION ID AP typefields FP . EQ expr
+   42 typefields: typefields . VIR ID
+   43 functiondec: FUNCTION ID AP typefields . FP ATT expr
 
-    EQ  deslocar, e ir ao estado 83
+    FP   deslocar, e ir ao estado 80
+    VIR  deslocar, e ir ao estado 81
 
 
 Estado 80
 
-   39 typefields: typefields VIR . typefield
+   43 functiondec: FUNCTION ID AP typefields FP . ATT expr
 
-    ID  deslocar, e ir ao estado 75
-
-    typefield  ir ao estado 84
+    ATT  deslocar, e ir ao estado 82
 
 
 Estado 81
 
-   41 typeid: TIPOINT .
+   42 typefields: typefields VIR . ID
 
-    $padrão  reduzir usando a regra 41 (typeid)
+    ID  deslocar, e ir ao estado 83
 
 
 Estado 82
 
-   40 typefield: ID DP typeid .
+   43 functiondec: FUNCTION ID AP typefields FP ATT . expr
 
-    $padrão  reduzir usando a regra 40 (typefield)
+    STRING   deslocar, e ir ao estado 1
+    INTEGER  deslocar, e ir ao estado 2
+    ID       deslocar, e ir ao estado 3
+    IF       deslocar, e ir ao estado 4
+    WHILE    deslocar, e ir ao estado 5
+    LET      deslocar, e ir ao estado 6
+    MENOS    deslocar, e ir ao estado 7
+    AP       deslocar, e ir ao estado 8
+
+    MENOS     [reduzir usando a regra 25 (expr)]
+    $padrão  reduzir usando a regra 25 (expr)
+
+    expr            ir ao estado 84
+    let             ir ao estado 11
+    lvalue          ir ao estado 12
+    intconstant     ir ao estado 13
+    stringconstant  ir ao estado 14
 
 
 Estado 83
 
-   42 functiondec: FUNCTION ID AP typefields FP EQ . expr
+   42 typefields: typefields VIR ID .
 
-    INTEGER  deslocar, e ir ao estado 1
-    ID       deslocar, e ir ao estado 2
-    IF       deslocar, e ir ao estado 3
-    WHILE    deslocar, e ir ao estado 4
-    LET      deslocar, e ir ao estado 5
-    MENOS    deslocar, e ir ao estado 6
-    AP       deslocar, e ir ao estado 7
-
-    expr         ir ao estado 85
-    lvalue       ir ao estado 10
-    intconstant  ir ao estado 11
+    $padrão  reduzir usando a regra 42 (typefields)
 
 
 Estado 84
 
-   39 typefields: typefields VIR typefield .
-
-    $padrão  reduzir usando a regra 39 (typefields)
-
-
-Estado 85
-
-    4 expr: expr . ATT expr
-    5     | expr . DIF expr
+    5 expr: expr . DIF expr
     6     | expr . GE expr
     7     | expr . LE expr
     8     | expr . EQ expr
@@ -1672,20 +1770,19 @@ Estado 85
    14     | expr . DIV expr
    15     | expr . MAIS expr
    16     | expr . MENOS expr
-   42 functiondec: FUNCTION ID AP typefields FP EQ expr .
+   43 functiondec: FUNCTION ID AP typefields FP ATT expr .
 
-    ATT    deslocar, e ir ao estado 20
-    DIF    deslocar, e ir ao estado 21
-    GE     deslocar, e ir ao estado 22
-    LE     deslocar, e ir ao estado 23
-    EQ     deslocar, e ir ao estado 24
-    GT     deslocar, e ir ao estado 25
-    LT     deslocar, e ir ao estado 26
-    MAIS   deslocar, e ir ao estado 27
-    MENOS  deslocar, e ir ao estado 28
-    VEZES  deslocar, e ir ao estado 29
-    DIV    deslocar, e ir ao estado 30
-    AND    deslocar, e ir ao estado 31
-    OR     deslocar, e ir ao estado 32
+    DIF    deslocar, e ir ao estado 22
+    GE     deslocar, e ir ao estado 23
+    LE     deslocar, e ir ao estado 24
+    EQ     deslocar, e ir ao estado 25
+    GT     deslocar, e ir ao estado 26
+    LT     deslocar, e ir ao estado 27
+    MAIS   deslocar, e ir ao estado 28
+    MENOS  deslocar, e ir ao estado 29
+    VEZES  deslocar, e ir ao estado 30
+    DIV    deslocar, e ir ao estado 31
+    AND    deslocar, e ir ao estado 32
+    OR     deslocar, e ir ao estado 33
 
-    $padrão  reduzir usando a regra 42 (functiondec)
+    $padrão  reduzir usando a regra 43 (functiondec)

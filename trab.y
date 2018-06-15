@@ -4,12 +4,15 @@
 %{
 #include "heading.h"
 #include <string.h>
-int yyerror(char *s);
+#define YYSTYPE char *
+extern char *yytext;
+int yyerror(const char *s);
 int yylex(void);
 %}
 
+%error-verbose
 %start	prog
-
+%expect 27
 %token	STRING INTEGER VAR FUNCTION ID
 %token  IF THEN ELSE WHILE DO LET IN END 
 %token  ATT DIF GE LE EQ GT LT
@@ -33,7 +36,7 @@ prog:		expr
 expr:		intconstant
 		| stringconstant
 /*		| nil
-*/		| lvalue
+*/		| lvalue {printf("%s",$1);}
 /*		| expr ATT expr
 */		| expr DIF expr
 		| expr GE expr
@@ -53,21 +56,25 @@ expr:		intconstant
 		| IF expr THEN expr %prec LTE
 		| IF expr THEN expr ELSE expr
 		| WHILE expr DO expr %prec HTO
-		| LET declist IN exprseq END
+		| let declist in exprseq end {printf("%s %s %s",$1, $3, $5);}
 		| MENOS expr %prec UMENOS
-		;
-
-exprseq:	 exprseq PVIR expr
-		| expr
 		| %empty
 		;
+let:		LET{ $$ = strdup(yytext);};
+in:		IN{ $$ = strdup(yytext);};
+end:		END{ $$ = strdup(yytext);};
+ 
+exprseq:	 exprseq PVIR expr  
+		| expr  
+/*		| %empty 
+*/		;
 
 exprlist:	 exprlist VIR expr
 		| expr
-		| %empty
-		;
+/*		| %empty
+*/		;
 
-lvalue:		ID
+lvalue:		ID { $$ = strdup(yytext);}
 		;
 
 declist:	%empty	
@@ -121,17 +128,19 @@ exp:
 
 %%
 
+
+
 int yyerror(string s)
 {
   extern int yylineno;	// defined and maintained in lex.c
   extern char *yytext;	// defined and maintained in lex.c
   
-  cerr << "ERROR: " << s << " at symbol \"" << yytext;
-  cerr << "\" on line " << yylineno << endl;
+  cerr << "ERRO: " << s << " no simbolo \"" << yytext;
+  cerr << "\" na linha " << yylineno << endl;
   exit(1);
 }
 
-int yyerror(char *s)
+int yyerror(const char *s)
 {
   return yyerror(string(s));
 }

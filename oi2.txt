@@ -1,10 +1,13 @@
  let
-            var n := 0     /* o numero    */
+            var n := ("oi;5;tu")     /* o numero    */
             var f := 1     /* o fatorial  */
             var i := 2     /* um contador */
             function oi(i,f):=oi  
   in
      /*       printf("Entre com o numero:");*/
+     /*
+          while i <= n do();
+      */
             n := getint();
             while i <= n do
             (

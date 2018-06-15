@@ -31,4 +31,6 @@ lex.o main.o		: tok.h
 
 clean:
 	rm -f *.o *~ lex.c lex.yy.c bison.c tok.h trab.tab.c trab.tab.h trab.output trab
+cleanc:
+	rm -f *.o *~ lex.c lex.yy.c bison.c tok.h trab.tab.c trab.tab.h trab.output
 
