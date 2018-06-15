@@ -5,23 +5,23 @@ OBJS	= bison.o lex.o main.o
 CC	= g++
 CFLAGS	= -g -Wall -ansi -pedantic
 
-trab:		$(OBJS)
-		$(CC) $(CFLAGS) $(OBJS) -o trab -lfl
+tc--:		$(OBJS)
+		$(CC) $(CFLAGS) $(OBJS) -o tc-- -lfl
 
 lex.o:		lex.c
 		$(CC) $(CFLAGS) -c lex.c -o lex.o
 
-lex.c:		trab.lex 
-		lex trab.lex
+lex.c:		tc--.lex 
+		lex tc--.lex
 		cp lex.yy.c lex.c
 
 bison.o:	bison.c
 		$(CC) $(CFLAGS) -c bison.c -o bison.o
 
-bison.c:	trab.y
-		bison -v -d --warnings trab.y
-		cp trab.tab.c bison.c
-		cmp -s trab.tab.h tok.h || cp trab.tab.h tok.h
+bison.c:	tc--.y
+		bison -v -d --warnings tc--.y
+		cp tc--.tab.c bison.c
+		cmp -s tc--.tab.h tok.h || cp tc--.tab.h tok.h
 
 main.o:		main.cc
 		$(CC) $(CFLAGS) -c main.cc -o main.o
@@ -30,7 +30,11 @@ lex.o yac.o main.o	: heading.h
 lex.o main.o		: tok.h
 
 clean:
+<<<<<<< HEAD
 	rm -f *.o *~ lex.c lex.yy.c bison.c tok.h trab.tab.c trab.tab.h trab.output trab
 cleanc:
 	rm -f *.o *~ lex.c lex.yy.c bison.c tok.h trab.tab.c trab.tab.h trab.output
+=======
+	rm -f *.o *~ lex.c lex.yy.c bison.c tok.h tc--.tab.c tc--.tab.h tc--.output tc--
+>>>>>>> 8f9bb63b090938b58db047fba6e3c11445e91305
 
