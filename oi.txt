@@ -1,6 +1,0 @@
-let
-  function fortytwo() = 42
-  var fortytwo := fortytwo()
-in
-  print_int(fortytwo); print(5,6)
-end
