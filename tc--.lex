@@ -7,7 +7,9 @@ IDENTIFICADOR       [a-zA-Z][a-zA-Z0-9]*
 #include "heading.h"
 #include "tok.h"
 #include <string.h>
-#include <iostream>
+/*#include <iostream>
+*/
+#include <stdio.h>
 int yyerror(char *s);
 
 %}
@@ -50,13 +52,14 @@ int return TIPOINT;
 "&" return AND;
 "|" return OR;
 ":" return DP;
-"/*".*"*/" {}
+
+"/*"([^*]|\*+[^*/])*\*+"/" 
 
 [ \t]*		{}
 [\n]		{yylineno++;}
 
 .		{
-		std::cerr << "SCANNER - Erro linha: " << yylineno << "\n";
+		fprintf(stderr, "Scanner - Erro linha: %d\n",yylineno);
 		yyerror("");
 		exit(1);
 }
