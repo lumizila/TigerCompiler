@@ -42,14 +42,18 @@ no* addIrmao(no* nodo, no* irmao){
 	return nodo;
 }
 void imprimeArvore(no* nodo, int nivel){
-	for (int j=0; j<nivel; j++) printf("#");
-	printf("<%s> ",nodo->conteudo);
-	printf("\n");
+//	for (int j=0; j<nivel; j++) printf("#");
+//	printf("< %s >\n",nodo->conteudo);
+	for (int j=0; j<nivel+1; j++) printf("#");
+	for (int i=0; i<nodo->numfilhos; i++){
+		printf("< %s > ",nodo->filhos[i]->conteudo);
+	}
 	if (nivel==0){
-	for (no* i=nodo->irmao; i!=NULL; i=i->irmao){
-		imprimeArvore(i, nivel);
+		for (no* i=nodo->irmao; i!=NULL; i=i->irmao){
+			imprimeArvore(i, nivel+1);
+		}
 	}
-	}
+	printf("\n");
 	for (int i=0; i<nodo->numfilhos; i++){
 		imprimeArvore(nodo->filhos[i], nivel+1);
 	}
@@ -84,28 +88,28 @@ prog:		expr {imprimeArvore(addFilho(criaNo((char*)"expr"),$1),0);}
 
 expr:		intconstant 
 		| stringconstant 
-		| lvalue 
-		| expr DIF expr { $$=addFilho(addFilho(criaNo((char*)"<>"),$1),$3);} 
-		| expr GE expr{ $$=addFilho(addFilho(criaNo((char*)">="),$1),$3);} 
-		| expr LE expr{ $$=addFilho(addFilho(criaNo((char*)"<="),$1),$3);} 
-		| expr EQ expr{ $$=addFilho(addFilho(criaNo((char*)"="),$1),$3);} 
-		| expr GT expr{ $$=addFilho(addFilho(criaNo((char*)">"),$1),$3);} 
-		| expr AND expr { $$=addFilho(addFilho(criaNo((char*)"&"),$1),$3);}
-		| expr OR expr{ $$=addFilho(addFilho(criaNo((char*)"|"),$1),$3);} 
-		| expr LT expr{ $$=addFilho(addFilho(criaNo((char*)"<"),$1),$3);} 
-		| expr VEZES expr{ $$=addFilho(addFilho(criaNo((char*)"*"),$1),$3);} 
-		| expr DIV expr{ $$=addFilho(addFilho(criaNo((char*)"/"),$1),$3);} 
-		| expr MAIS expr{ $$=addFilho(addFilho(criaNo((char*)"+"),$1),$3);} 
-		| expr MENOS expr{ $$=addFilho(addFilho(criaNo((char*)"-"),$1),$3);} 
-		| lvalue ATT expr { $$=addFilho(addFilho(criaNo((char*)":="),$1),$3);}		
-		| ID AP exprlist FP 
+		| id 
+		| expr DIF expr { $$=  addIrmao(addFilho(criaNo((char*)"expr"),$1),addIrmao(criaNo((char*)"<>"),addFilho(criaNo((char*)"expr"),$3)));} 
+		| expr GE expr{ $$=  addIrmao(addFilho(criaNo((char*)"expr"),$1),addIrmao(criaNo((char*)">="),addFilho(criaNo((char*)"expr"),$3)));} 
+		| expr LE expr{ $$=  addIrmao(addFilho(criaNo((char*)"expr"),$1),addIrmao(criaNo((char*)"<="),addFilho(criaNo((char*)"expr"),$3)));} 
+		| expr EQ expr{ $$=  addIrmao(addFilho(criaNo((char*)"expr"),$1),addIrmao(criaNo((char*)"="),addFilho(criaNo((char*)"expr"),$3)));} 
+		| expr GT expr{ $$=  addIrmao(addFilho(criaNo((char*)"expr"),$1),addIrmao(criaNo((char*)">"),addFilho(criaNo((char*)"expr"),$3)));} 
+		| expr AND expr { $$=  addIrmao(addFilho(criaNo((char*)"expr"),$1),addIrmao(criaNo((char*)"&"),addFilho(criaNo((char*)"expr"),$3)));} 
+		| expr OR expr{ $$=  addIrmao(addFilho(criaNo((char*)"expr"),$1),addIrmao(criaNo((char*)"|"),addFilho(criaNo((char*)"expr"),$3)));} 
+		| expr LT expr{ $$=  addIrmao(addFilho(criaNo((char*)"expr"),$1),addIrmao(criaNo((char*)"<"),addFilho(criaNo((char*)"expr"),$3)));} 
+		| expr VEZES expr{ $$=  addIrmao(addFilho(criaNo((char*)"expr"),$1),addIrmao(criaNo((char*)"*"),addFilho(criaNo((char*)"expr"),$3)));} 
+		| expr DIV expr{ $$=  addIrmao(addFilho(criaNo((char*)"expr"),$1),addIrmao(criaNo((char*)"/"),addFilho(criaNo((char*)"expr"),$3)));} 
+		| expr MAIS expr{ $$=  addIrmao(addFilho(criaNo((char*)"expr"),$1),addIrmao(criaNo((char*)"+"),addFilho(criaNo((char*)"expr"),$3)));} 
+		| expr MENOS expr{ $$=  addIrmao(addFilho(criaNo((char*)"expr"),$1),addIrmao(criaNo((char*)"-"),addFilho(criaNo((char*)"expr"),$3)));} 
+		| id ATT expr { $$=  addIrmao(addFilho(criaNo((char*)"id"),$1),addIrmao(criaNo((char*)":="),addFilho(criaNo((char*)"expr"),$3)));} 
+		| id AP exprlist FP 
 		| AP exprseq FP 
 		| IF expr THEN expr %prec LTE 
 		| IF expr THEN expr ELSE expr 
 		| WHILE expr DO expr %prec HTO 
 		| LET declist IN exprseq END {$$=addIrmao(criaNo((char*)"let"),addIrmao(addFilho(criaNo((char*)"declist"),$2),addIrmao(criaNo((char*)"in"),addIrmao(addFilho(criaNo((char*)"exprseq"),$4),criaNo((char*)"end"))))); }
 		| MENOS expr %prec UMENOS 
-		| %empty { $$=NULL;} 
+		| %empty { $$=criaNo((char*)"NULL");} 
 		;
 
 exprseq:	 exprseq PVIR expr
@@ -116,10 +120,7 @@ exprlist:	 exprlist VIR expr
 		| expr
 		;
 
-lvalue:		ID{ $$ = criaNo(strdup(yytext));}   
-		;
-
-declist:	%empty{ $$=NULL;}	
+declist:	%empty{ $$=NULL;}	 
 		| declist dec {$$=addIrmao(criaNo((char*)"var"),addFilho(criaNo((char*)"dec"),$2));}
 		;
 
@@ -139,12 +140,12 @@ intconstant:	INTEGER{ $$ = criaNo(strdup(yytext));}
 stringconstant:	STRING{ $$ = criaNo(strdup(yytext));}  
 		;
 
-typefields:	ID { $$ = criaNo(strdup(yytext));}   
-		| typefields VIR ID
+typefields:	id { $$ = criaNo(strdup(yytext));}   
+		| typefields VIR id
 		;
 
 
-functiondec:	FUNCTION ID AP typefields FP ATT expr
+functiondec:	FUNCTION id AP typefields FP ATT expr
 		;
 
 %%

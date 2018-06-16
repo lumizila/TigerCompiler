@@ -1,7 +1,7 @@
 %option noyywrap
 
-INTEIRO   [0-9]+
-IDENTIFICADOR       [a-zA-Z][a-zA-Z0-9]*
+INTEIRO          [0-9]+
+IDENTIFICADOR    [a-zA-Z][a-zA-Z0-9]*
 
 %{
 #include "heading.h"
