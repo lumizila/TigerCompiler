@@ -7,6 +7,7 @@
 extern char *yytext;
 int yyerror(char *s);
 int yylex(void);
+
 struct node{
 	int numfilhos;
 	char * conteudo; 
@@ -14,6 +15,7 @@ struct node{
 	struct node *irmao;
 };
 typedef struct node no;
+
 no* criaNo(char * conteudo){
 	no* novo = (no*) malloc(sizeof(no));
 	novo->filhos = (no**) malloc(10*sizeof(no*));
@@ -21,6 +23,7 @@ no* criaNo(char * conteudo){
 	novo->conteudo = conteudo;
 	return novo;
 }
+
 no* addFilho(no* pai, no* filho){
 	if (!filho) return pai;
 	if (pai->numfilhos==10){
@@ -37,10 +40,12 @@ no* addFilho(no* pai, no* filho){
 	}
 	return pai;
 }
+
 no* addIrmao(no* nodo, no* irmao){
 	nodo->irmao=irmao;
 	return nodo;
 }
+
 void imprimeArvore(no* nodo, int nivel){
 //	for (int j=0; j<nivel; j++) printf("#");
 //	printf("< %s >\n",nodo->conteudo);
@@ -86,9 +91,9 @@ void imprimeArvore(no* nodo, int nivel){
 prog:		expr {imprimeArvore(addFilho(criaNo((char*)"expr"),$1),0);}
 		;
 
-expr:		intconstant 
-		| stringconstant 
-		| id 
+expr:		intconstant { $$= addFilho(criaNo((char*)"intconstant"),$1);} 
+		| stringconstant { $$= addFilho(criaNo((char*)"stringconstant"), $1);} 
+		| id { $$= addFilho(criaNo((char*)"id"), $1);} 
 		| expr DIF expr { $$=  addIrmao(addFilho(criaNo((char*)"expr"),$1),addIrmao(criaNo((char*)"<>"),addFilho(criaNo((char*)"expr"),$3)));} 
 		| expr GE expr{ $$=  addIrmao(addFilho(criaNo((char*)"expr"),$1),addIrmao(criaNo((char*)">="),addFilho(criaNo((char*)"expr"),$3)));} 
 		| expr LE expr{ $$=  addIrmao(addFilho(criaNo((char*)"expr"),$1),addIrmao(criaNo((char*)"<="),addFilho(criaNo((char*)"expr"),$3)));} 
@@ -102,13 +107,13 @@ expr:		intconstant
 		| expr MAIS expr{ $$=  addIrmao(addFilho(criaNo((char*)"expr"),$1),addIrmao(criaNo((char*)"+"),addFilho(criaNo((char*)"expr"),$3)));} 
 		| expr MENOS expr{ $$=  addIrmao(addFilho(criaNo((char*)"expr"),$1),addIrmao(criaNo((char*)"-"),addFilho(criaNo((char*)"expr"),$3)));} 
 		| id ATT expr { $$=  addIrmao(addFilho(criaNo((char*)"id"),$1),addIrmao(criaNo((char*)":="),addFilho(criaNo((char*)"expr"),$3)));} 
-		| id AP exprlist FP 
-		| AP exprseq FP 
-		| IF expr THEN expr %prec LTE 
-		| IF expr THEN expr ELSE expr 
-		| WHILE expr DO expr %prec HTO 
+		| id AP exprlist FP { $$=  addIrmao(addFilho(criaNo((char*)"id"),$1),addIrmao(criaNo((char*)"("),addIrmao(addFilho(criaNo((char*)"exprlist"),$3), criaNo((char*)")"))));}  
+		| AP exprseq FP { $$= addIrmao(criaNo((char*)"("), addIrmao(addFilho(criaNo((char*)"exprseq"), $1), criaNo((char*)")")));}
+		| IF expr THEN expr %prec LTE { $$= addIrmao(criaNo((char*)"if"), addIrmao(addFilho(criaNo((char*)"expr"), $1), addIrmao(criaNo((char*)"then"), addFilho(criaNo((char*)"expr"),$2))));}
+		| IF expr THEN expr ELSE expr { $$= addIrmao(criaNo((char*)"if"), addIrmao(addFilho(criaNo((char*)"expr"), $1), addIrmao(criaNo((char*)"then"), addIrmao(addFilho(criaNo((char*)"expr"),$2),addIrmao(criaNo((char*)"else"),addFilho(criaNo((char*)"expr"),$3))))));}
+		| WHILE expr DO expr %prec HTO { $$= addIrmao(criaNo((char*)"while"), addIrmao(addFilho(criaNo((char*)"expr"), $1),addIrmao(criaNo((char*)"do"),addFilho(criaNo((char*)"expr"),$2))));} 
 		| LET declist IN exprseq END {$$=addIrmao(criaNo((char*)"let"),addIrmao(addFilho(criaNo((char*)"declist"),$2),addIrmao(criaNo((char*)"in"),addIrmao(addFilho(criaNo((char*)"exprseq"),$4),criaNo((char*)"end"))))); }
-		| MENOS expr %prec UMENOS 
+		| MENOS expr %prec UMENOS{ $$= addIrmao(criaNo((char*)"-"),addFilho(criaNo((char*)"expr"),$1));} 
 		| %empty { $$=criaNo((char*)"NULL");} 
 		;
 
@@ -120,7 +125,7 @@ exprlist:	 exprlist VIR expr
 		| expr
 		;
 
-declist:	%empty{ $$=NULL;}	 
+declist:	%empty{ $$=criaNo("NULL");}	 
 		| declist dec {$$=addIrmao(criaNo((char*)"var"),addFilho(criaNo((char*)"dec"),$2));}
 		;
 
@@ -145,7 +150,7 @@ typefields:	id { $$ = criaNo(strdup(yytext));}
 		;
 
 
-functiondec:	FUNCTION id AP typefields FP ATT expr
+functiondec:	FUNCTION id AP typefields FP ATT expr{ $$= addIrmao(criaNo((char*)"function"), addIrmao(addFilho(criaNo((char*)"id"), $1), addIrmao(criaNo((char*)"("),addIrmao(addFilho(criaNo((char*)"typefields"),$2),addIrmao(criaNo((char*)")"),addIrmao(criaNo((char*)":="),addFilho(criaNo((char*)"expr"),$3)))))));}
 		;
 
 %%
