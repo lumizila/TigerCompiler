@@ -109,27 +109,31 @@ no* addIrmao(no* nodo, no* irmao){
 }
 
 void imprimeArvore(no* nodo, int nivel){
-//	for (int j=0; j<nivel; j++) printf("#");
-//	printf("< %s >\n",nodo->conteudo);
-	for (int j=0; j<nivel+1; j++) printf("#");
-	for (int i=0; i<nodo->numfilhos; i++){
-		printf("< %s > ",nodo->filhos[i]->conteudo);
+	for (int j=0; j<nivel+1; j++) printf(" ");
+	if(nodo->numfilhos == 0){
+		printf("%s", nodo->conteudo);
 	}
-	if (nivel==0){
-		for (no* i=nodo->irmao; i!=NULL; i=i->irmao){
-			imprimeArvore(i, nivel+1);
+	else{
+		printf("%s{\n", nodo->conteudo);
+		for (int i=0; i<nodo->numfilhos; i++){
+			imprimeArvore(nodo->filhos[i], nivel+1);
+			if(i < (nodo->numfilhos -1)){
+				printf(",\n");
+			}else{
+				printf("\n");
+			}
 		}
+		for (int j=0; j<nivel+1; j++) printf(" ");
+		printf("}");
+		return;
 	}
-	printf("\n");
-	for (int i=0; i<nodo->numfilhos; i++){
-		imprimeArvore(nodo->filhos[i], nivel+1);
-	}
+
 }
 
 #define YYSTYPE no*
 
 
-#line 133 "tc--.tab.c" /* yacc.c:339  */
+#line 137 "tc--.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -218,7 +222,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 222 "tc--.tab.c" /* yacc.c:358  */
+#line 226 "tc--.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -519,11 +523,11 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    91,    91,    94,    95,    96,    97,    98,    99,   100,
-     101,   102,   103,   104,   105,   106,   107,   108,   109,   110,
-     111,   112,   113,   114,   115,   116,   117,   120,   121,   124,
-     125,   128,   129,   132,   133,   136,   139,   142,   145,   148,
-     149,   153
+       0,    95,    95,    98,    99,   100,   101,   102,   103,   104,
+     105,   106,   107,   108,   109,   110,   111,   112,   113,   114,
+     115,   116,   117,   118,   119,   120,   121,   124,   125,   128,
+     129,   132,   133,   136,   137,   140,   143,   146,   149,   152,
+     153,   157
 };
 #endif
 
@@ -1359,211 +1363,211 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 91 "tc--.y" /* yacc.c:1646  */
-    {imprimeArvore(addFilho(criaNo((char*)"expr"),(yyvsp[0])),0);}
-#line 1365 "tc--.tab.c" /* yacc.c:1646  */
+#line 95 "tc--.y" /* yacc.c:1646  */
+    {imprimeArvore(addFilho(criaNo((char*)"expr"),(yyvsp[0])),0);printf("\n");}
+#line 1369 "tc--.tab.c" /* yacc.c:1646  */
     break;
 
   case 3:
-#line 94 "tc--.y" /* yacc.c:1646  */
+#line 98 "tc--.y" /* yacc.c:1646  */
     { (yyval)= addFilho(criaNo((char*)"intconstant"),(yyvsp[0]));}
-#line 1371 "tc--.tab.c" /* yacc.c:1646  */
+#line 1375 "tc--.tab.c" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 95 "tc--.y" /* yacc.c:1646  */
+#line 99 "tc--.y" /* yacc.c:1646  */
     { (yyval)= addFilho(criaNo((char*)"stringconstant"), (yyvsp[0]));}
-#line 1377 "tc--.tab.c" /* yacc.c:1646  */
+#line 1381 "tc--.tab.c" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 96 "tc--.y" /* yacc.c:1646  */
+#line 100 "tc--.y" /* yacc.c:1646  */
     { (yyval)= addFilho(criaNo((char*)"id"), (yyvsp[0]));}
-#line 1383 "tc--.tab.c" /* yacc.c:1646  */
+#line 1387 "tc--.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 97 "tc--.y" /* yacc.c:1646  */
+#line 101 "tc--.y" /* yacc.c:1646  */
     { (yyval)=  addIrmao(addFilho(criaNo((char*)"expr"),(yyvsp[-2])),addIrmao(criaNo((char*)"<>"),addFilho(criaNo((char*)"expr"),(yyvsp[0]))));}
-#line 1389 "tc--.tab.c" /* yacc.c:1646  */
+#line 1393 "tc--.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 98 "tc--.y" /* yacc.c:1646  */
+#line 102 "tc--.y" /* yacc.c:1646  */
     { (yyval)=  addIrmao(addFilho(criaNo((char*)"expr"),(yyvsp[-2])),addIrmao(criaNo((char*)">="),addFilho(criaNo((char*)"expr"),(yyvsp[0]))));}
-#line 1395 "tc--.tab.c" /* yacc.c:1646  */
+#line 1399 "tc--.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 99 "tc--.y" /* yacc.c:1646  */
+#line 103 "tc--.y" /* yacc.c:1646  */
     { (yyval)=  addIrmao(addFilho(criaNo((char*)"expr"),(yyvsp[-2])),addIrmao(criaNo((char*)"<="),addFilho(criaNo((char*)"expr"),(yyvsp[0]))));}
-#line 1401 "tc--.tab.c" /* yacc.c:1646  */
+#line 1405 "tc--.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 100 "tc--.y" /* yacc.c:1646  */
+#line 104 "tc--.y" /* yacc.c:1646  */
     { (yyval)=  addIrmao(addFilho(criaNo((char*)"expr"),(yyvsp[-2])),addIrmao(criaNo((char*)"="),addFilho(criaNo((char*)"expr"),(yyvsp[0]))));}
-#line 1407 "tc--.tab.c" /* yacc.c:1646  */
+#line 1411 "tc--.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 101 "tc--.y" /* yacc.c:1646  */
+#line 105 "tc--.y" /* yacc.c:1646  */
     { (yyval)=  addIrmao(addFilho(criaNo((char*)"expr"),(yyvsp[-2])),addIrmao(criaNo((char*)">"),addFilho(criaNo((char*)"expr"),(yyvsp[0]))));}
-#line 1413 "tc--.tab.c" /* yacc.c:1646  */
+#line 1417 "tc--.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 102 "tc--.y" /* yacc.c:1646  */
+#line 106 "tc--.y" /* yacc.c:1646  */
     { (yyval)=  addIrmao(addFilho(criaNo((char*)"expr"),(yyvsp[-2])),addIrmao(criaNo((char*)"&"),addFilho(criaNo((char*)"expr"),(yyvsp[0]))));}
-#line 1419 "tc--.tab.c" /* yacc.c:1646  */
+#line 1423 "tc--.tab.c" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 103 "tc--.y" /* yacc.c:1646  */
+#line 107 "tc--.y" /* yacc.c:1646  */
     { (yyval)=  addIrmao(addFilho(criaNo((char*)"expr"),(yyvsp[-2])),addIrmao(criaNo((char*)"|"),addFilho(criaNo((char*)"expr"),(yyvsp[0]))));}
-#line 1425 "tc--.tab.c" /* yacc.c:1646  */
+#line 1429 "tc--.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 104 "tc--.y" /* yacc.c:1646  */
+#line 108 "tc--.y" /* yacc.c:1646  */
     { (yyval)=  addIrmao(addFilho(criaNo((char*)"expr"),(yyvsp[-2])),addIrmao(criaNo((char*)"<"),addFilho(criaNo((char*)"expr"),(yyvsp[0]))));}
-#line 1431 "tc--.tab.c" /* yacc.c:1646  */
+#line 1435 "tc--.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 105 "tc--.y" /* yacc.c:1646  */
+#line 109 "tc--.y" /* yacc.c:1646  */
     { (yyval)=  addIrmao(addFilho(criaNo((char*)"expr"),(yyvsp[-2])),addIrmao(criaNo((char*)"*"),addFilho(criaNo((char*)"expr"),(yyvsp[0]))));}
-#line 1437 "tc--.tab.c" /* yacc.c:1646  */
+#line 1441 "tc--.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 106 "tc--.y" /* yacc.c:1646  */
+#line 110 "tc--.y" /* yacc.c:1646  */
     { (yyval)=  addIrmao(addFilho(criaNo((char*)"expr"),(yyvsp[-2])),addIrmao(criaNo((char*)"/"),addFilho(criaNo((char*)"expr"),(yyvsp[0]))));}
-#line 1443 "tc--.tab.c" /* yacc.c:1646  */
+#line 1447 "tc--.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 107 "tc--.y" /* yacc.c:1646  */
+#line 111 "tc--.y" /* yacc.c:1646  */
     { (yyval)=  addIrmao(addFilho(criaNo((char*)"expr"),(yyvsp[-2])),addIrmao(criaNo((char*)"+"),addFilho(criaNo((char*)"expr"),(yyvsp[0]))));}
-#line 1449 "tc--.tab.c" /* yacc.c:1646  */
+#line 1453 "tc--.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 108 "tc--.y" /* yacc.c:1646  */
+#line 112 "tc--.y" /* yacc.c:1646  */
     { (yyval)=  addIrmao(addFilho(criaNo((char*)"expr"),(yyvsp[-2])),addIrmao(criaNo((char*)"-"),addFilho(criaNo((char*)"expr"),(yyvsp[0]))));}
-#line 1455 "tc--.tab.c" /* yacc.c:1646  */
+#line 1459 "tc--.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 109 "tc--.y" /* yacc.c:1646  */
+#line 113 "tc--.y" /* yacc.c:1646  */
     { (yyval)=  addIrmao(addFilho(criaNo((char*)"id"),(yyvsp[-2])),addIrmao(criaNo((char*)":="),addFilho(criaNo((char*)"expr"),(yyvsp[0]))));}
-#line 1461 "tc--.tab.c" /* yacc.c:1646  */
+#line 1465 "tc--.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 110 "tc--.y" /* yacc.c:1646  */
+#line 114 "tc--.y" /* yacc.c:1646  */
     { (yyval)=  addIrmao(addFilho(criaNo((char*)"id"),(yyvsp[-3])),addIrmao(criaNo((char*)"("),addIrmao(addFilho(criaNo((char*)"exprlist"),(yyvsp[-1])), criaNo((char*)")"))));}
-#line 1467 "tc--.tab.c" /* yacc.c:1646  */
+#line 1471 "tc--.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 111 "tc--.y" /* yacc.c:1646  */
+#line 115 "tc--.y" /* yacc.c:1646  */
     { (yyval)= addIrmao(criaNo((char*)"("), addIrmao(addFilho(criaNo((char*)"exprseq"), (yyvsp[-2])), criaNo((char*)")")));}
-#line 1473 "tc--.tab.c" /* yacc.c:1646  */
+#line 1477 "tc--.tab.c" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 112 "tc--.y" /* yacc.c:1646  */
+#line 116 "tc--.y" /* yacc.c:1646  */
     { (yyval)= addIrmao(criaNo((char*)"if"), addIrmao(addFilho(criaNo((char*)"expr"), (yyvsp[-3])), addIrmao(criaNo((char*)"then"), addFilho(criaNo((char*)"expr"),(yyvsp[-2])))));}
-#line 1479 "tc--.tab.c" /* yacc.c:1646  */
+#line 1483 "tc--.tab.c" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 113 "tc--.y" /* yacc.c:1646  */
+#line 117 "tc--.y" /* yacc.c:1646  */
     { (yyval)= addIrmao(criaNo((char*)"if"), addIrmao(addFilho(criaNo((char*)"expr"), (yyvsp[-5])), addIrmao(criaNo((char*)"then"), addIrmao(addFilho(criaNo((char*)"expr"),(yyvsp[-4])),addIrmao(criaNo((char*)"else"),addFilho(criaNo((char*)"expr"),(yyvsp[-3])))))));}
-#line 1485 "tc--.tab.c" /* yacc.c:1646  */
+#line 1489 "tc--.tab.c" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 114 "tc--.y" /* yacc.c:1646  */
+#line 118 "tc--.y" /* yacc.c:1646  */
     { (yyval)= addIrmao(criaNo((char*)"while"), addIrmao(addFilho(criaNo((char*)"expr"), (yyvsp[-3])),addIrmao(criaNo((char*)"do"),addFilho(criaNo((char*)"expr"),(yyvsp[-2])))));}
-#line 1491 "tc--.tab.c" /* yacc.c:1646  */
+#line 1495 "tc--.tab.c" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 115 "tc--.y" /* yacc.c:1646  */
+#line 119 "tc--.y" /* yacc.c:1646  */
     {(yyval)=addIrmao(criaNo((char*)"let"),addIrmao(addFilho(criaNo((char*)"declist"),(yyvsp[-3])),addIrmao(criaNo((char*)"in"),addIrmao(addFilho(criaNo((char*)"exprseq"),(yyvsp[-1])),criaNo((char*)"end"))))); }
-#line 1497 "tc--.tab.c" /* yacc.c:1646  */
+#line 1501 "tc--.tab.c" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 116 "tc--.y" /* yacc.c:1646  */
+#line 120 "tc--.y" /* yacc.c:1646  */
     { (yyval)= addIrmao(criaNo((char*)"-"),addFilho(criaNo((char*)"expr"),(yyvsp[-1])));}
-#line 1503 "tc--.tab.c" /* yacc.c:1646  */
+#line 1507 "tc--.tab.c" /* yacc.c:1646  */
     break;
 
   case 26:
-#line 117 "tc--.y" /* yacc.c:1646  */
+#line 121 "tc--.y" /* yacc.c:1646  */
     { (yyval)=criaNo((char*)"NULL");}
-#line 1509 "tc--.tab.c" /* yacc.c:1646  */
+#line 1513 "tc--.tab.c" /* yacc.c:1646  */
     break;
 
   case 31:
-#line 128 "tc--.y" /* yacc.c:1646  */
-    { (yyval)=criaNo("NULL");}
-#line 1515 "tc--.tab.c" /* yacc.c:1646  */
+#line 132 "tc--.y" /* yacc.c:1646  */
+    { (yyval)=criaNo(strdup("NULL"));}
+#line 1519 "tc--.tab.c" /* yacc.c:1646  */
     break;
 
   case 32:
-#line 129 "tc--.y" /* yacc.c:1646  */
+#line 133 "tc--.y" /* yacc.c:1646  */
     {(yyval)=addIrmao(criaNo((char*)"var"),addFilho(criaNo((char*)"dec"),(yyvsp[0])));}
-#line 1521 "tc--.tab.c" /* yacc.c:1646  */
+#line 1525 "tc--.tab.c" /* yacc.c:1646  */
     break;
 
   case 33:
-#line 132 "tc--.y" /* yacc.c:1646  */
+#line 136 "tc--.y" /* yacc.c:1646  */
     {(yyval)=addFilho(criaNo((char*)"variabledec"),(yyvsp[0]));}
-#line 1527 "tc--.tab.c" /* yacc.c:1646  */
+#line 1531 "tc--.tab.c" /* yacc.c:1646  */
     break;
 
   case 35:
-#line 136 "tc--.y" /* yacc.c:1646  */
+#line 140 "tc--.y" /* yacc.c:1646  */
     {(yyval)=addIrmao(criaNo((char*)"var"),addIrmao(addFilho(criaNo((char*)"id"),(yyvsp[-2])),addIrmao(criaNo((char*)":="),addFilho(criaNo((char*)"expr"),(yyvsp[0])))));}
-#line 1533 "tc--.tab.c" /* yacc.c:1646  */
+#line 1537 "tc--.tab.c" /* yacc.c:1646  */
     break;
 
   case 36:
-#line 139 "tc--.y" /* yacc.c:1646  */
+#line 143 "tc--.y" /* yacc.c:1646  */
     { (yyval) = criaNo(strdup(yytext));}
-#line 1539 "tc--.tab.c" /* yacc.c:1646  */
+#line 1543 "tc--.tab.c" /* yacc.c:1646  */
     break;
 
   case 37:
-#line 142 "tc--.y" /* yacc.c:1646  */
+#line 146 "tc--.y" /* yacc.c:1646  */
     { (yyval) = criaNo(strdup(yytext));}
-#line 1545 "tc--.tab.c" /* yacc.c:1646  */
+#line 1549 "tc--.tab.c" /* yacc.c:1646  */
     break;
 
   case 38:
-#line 145 "tc--.y" /* yacc.c:1646  */
+#line 149 "tc--.y" /* yacc.c:1646  */
     { (yyval) = criaNo(strdup(yytext));}
-#line 1551 "tc--.tab.c" /* yacc.c:1646  */
+#line 1555 "tc--.tab.c" /* yacc.c:1646  */
     break;
 
   case 39:
-#line 148 "tc--.y" /* yacc.c:1646  */
+#line 152 "tc--.y" /* yacc.c:1646  */
     { (yyval) = criaNo(strdup(yytext));}
-#line 1557 "tc--.tab.c" /* yacc.c:1646  */
+#line 1561 "tc--.tab.c" /* yacc.c:1646  */
     break;
 
   case 41:
-#line 153 "tc--.y" /* yacc.c:1646  */
+#line 157 "tc--.y" /* yacc.c:1646  */
     { (yyval)= addIrmao(criaNo((char*)"function"), addIrmao(addFilho(criaNo((char*)"id"), (yyvsp[-6])), addIrmao(criaNo((char*)"("),addIrmao(addFilho(criaNo((char*)"typefields"),(yyvsp[-5])),addIrmao(criaNo((char*)")"),addIrmao(criaNo((char*)":="),addFilho(criaNo((char*)"expr"),(yyvsp[-4]))))))));}
-#line 1563 "tc--.tab.c" /* yacc.c:1646  */
+#line 1567 "tc--.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1567 "tc--.tab.c" /* yacc.c:1646  */
+#line 1571 "tc--.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1791,7 +1795,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 156 "tc--.y" /* yacc.c:1906  */
+#line 160 "tc--.y" /* yacc.c:1906  */
 
 
 int yyerror(char* s)

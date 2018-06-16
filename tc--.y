@@ -47,21 +47,25 @@ no* addIrmao(no* nodo, no* irmao){
 }
 
 void imprimeArvore(no* nodo, int nivel){
-//	for (int j=0; j<nivel; j++) printf("#");
-//	printf("< %s >\n",nodo->conteudo);
-	for (int j=0; j<nivel+1; j++) printf("#");
-	for (int i=0; i<nodo->numfilhos; i++){
-		printf("< %s > ",nodo->filhos[i]->conteudo);
+	for (int j=0; j<nivel+1; j++) printf(" ");
+	if(nodo->numfilhos == 0){
+		printf("%s", nodo->conteudo);
 	}
-	if (nivel==0){
-		for (no* i=nodo->irmao; i!=NULL; i=i->irmao){
-			imprimeArvore(i, nivel+1);
+	else{
+		printf("%s{\n", nodo->conteudo);
+		for (int i=0; i<nodo->numfilhos; i++){
+			imprimeArvore(nodo->filhos[i], nivel+1);
+			if(i < (nodo->numfilhos -1)){
+				printf(",\n");
+			}else{
+				printf("\n");
+			}
 		}
+		for (int j=0; j<nivel+1; j++) printf(" ");
+		printf("}");
+		return;
 	}
-	printf("\n");
-	for (int i=0; i<nodo->numfilhos; i++){
-		imprimeArvore(nodo->filhos[i], nivel+1);
-	}
+
 }
 
 #define YYSTYPE no*
@@ -88,7 +92,7 @@ void imprimeArvore(no* nodo, int nivel){
 %right ELSE LTE
 %%
 
-prog:		expr {imprimeArvore(addFilho(criaNo((char*)"expr"),$1),0);}
+prog:		expr {imprimeArvore(addFilho(criaNo((char*)"expr"),$1),0);printf("\n");}
 		;
 
 expr:		intconstant { $$= addFilho(criaNo((char*)"intconstant"),$1);} 
@@ -125,7 +129,7 @@ exprlist:	 exprlist VIR expr
 		| expr
 		;
 
-declist:	%empty{ $$=criaNo("NULL");}	 
+declist:	%empty{ $$=criaNo(strdup("NULL"));}	 
 		| declist dec {$$=addIrmao(criaNo((char*)"var"),addFilho(criaNo((char*)"dec"),$2));}
 		;
 
