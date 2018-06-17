@@ -4,11 +4,13 @@
 %{
 #include "heading.h"
 #include <malloc.h>
+#include <ctype.h>
 extern char *yytext;
 int yyerror(char *s);
 int yylex(void);
-
+int var=0;
 struct node{
+	int nserie;
 	int numfilhos;
 	char * conteudo; 
 	struct node **filhos;
@@ -44,6 +46,54 @@ no* addFilho(no* pai, no* filho){
 no* addIrmao(no* nodo, no* irmao){
 	nodo->irmao=irmao;
 	return nodo;
+}
+
+char * scape(char* texto){
+/*	char *str1 = (char*) malloc(strlen(texto)+4);
+	str1[0] = '\\';
+	for (int i=0; i<strlen(texto);i++){
+		str1[i+1]=texto[i];
+	} 
+	str1[strlen(texto)]='\\';
+	str1[strlen(texto)+1]='\"';
+	str1[strlen(texto)+2]='\0';
+	free(texto);
+	return str1;
+*/
+	return texto;	
+}
+
+void impDot(no* nodo, int nivel, FILE* fp){
+	char ch;
+	for (int i=0; i<strlen(nodo->conteudo); i++){
+	ch = nodo->conteudo[i];
+	if (ch=='\\'&&nodo->conteudo[i+1]!='\"') {
+	   fprintf(fp, "\\%c", ch);
+	}
+	else
+	    fputc(ch, fp);
+	}
+	fprintf(fp,";\n");
+	for (int i=0; i<nodo->numfilhos; i++){
+		char * str3 = (char *) malloc(40+ strlen(nodo->filhos[i]->conteudo));
+		sprintf(str3,"%d [label=\"%s\"]",++var, nodo->filhos[i]->conteudo);
+		nodo->filhos[i]->nserie=var;
+		fprintf(fp,"%d->%d;\n",nodo->nserie,nodo->filhos[i]->nserie);	
+		nodo->filhos[i]->conteudo = str3;
+		impDot(nodo->filhos[i], nivel+1,fp);
+	}
+
+}
+void imprimeDot(no* nodo, int nivel){
+	FILE * fp = fopen("parsetree.dot","w");
+	if (!fp) return;
+	fprintf(fp,"digraph ParseTree{\n");
+	nodo->nserie=var;
+	char * str3 = (char *) malloc(40+ strlen(nodo->conteudo));
+	sprintf(str3,"%d [label=%s]",var, nodo->conteudo);
+	nodo->conteudo = str3;
+	impDot(nodo, nivel, fp);
+	fprintf(fp,"\noverlap=false\nfontsize=12;\n}\n");
 }
 
 void imprimeArvore(no* nodo, int nivel){
@@ -92,7 +142,7 @@ void imprimeArvore(no* nodo, int nivel){
 %right ELSE LTE
 %%
 
-prog:		expr {imprimeArvore(addFilho(criaNo((char*)"expr"),$1),0);printf("\n");}
+prog:		expr {imprimeArvore(addFilho(criaNo((char*)"prog"),addFilho(criaNo((char*)"expr"),$1)),0);printf("\n");}
 		;
 
 expr:		intconstant { $$= addFilho(criaNo((char*)"intconstant"),$1);} 
@@ -112,29 +162,29 @@ expr:		intconstant { $$= addFilho(criaNo((char*)"intconstant"),$1);}
 		| expr MENOS expr{ $$=  addIrmao(addFilho(criaNo((char*)"expr"),$1),addIrmao(criaNo((char*)"-"),addFilho(criaNo((char*)"expr"),$3)));} 
 		| id ATT expr { $$=  addIrmao(addFilho(criaNo((char*)"id"),$1),addIrmao(criaNo((char*)":="),addFilho(criaNo((char*)"expr"),$3)));} 
 		| id AP exprlist FP { $$=  addIrmao(addFilho(criaNo((char*)"id"),$1),addIrmao(criaNo((char*)"("),addIrmao(addFilho(criaNo((char*)"exprlist"),$3), criaNo((char*)")"))));}  
-		| AP exprseq FP { $$= addIrmao(criaNo((char*)"("), addIrmao(addFilho(criaNo((char*)"exprseq"), $1), criaNo((char*)")")));}
-		| IF expr THEN expr %prec LTE { $$= addIrmao(criaNo((char*)"if"), addIrmao(addFilho(criaNo((char*)"expr"), $1), addIrmao(criaNo((char*)"then"), addFilho(criaNo((char*)"expr"),$2))));}
-		| IF expr THEN expr ELSE expr { $$= addIrmao(criaNo((char*)"if"), addIrmao(addFilho(criaNo((char*)"expr"), $1), addIrmao(criaNo((char*)"then"), addIrmao(addFilho(criaNo((char*)"expr"),$2),addIrmao(criaNo((char*)"else"),addFilho(criaNo((char*)"expr"),$3))))));}
-		| WHILE expr DO expr %prec HTO { $$= addIrmao(criaNo((char*)"while"), addIrmao(addFilho(criaNo((char*)"expr"), $1),addIrmao(criaNo((char*)"do"),addFilho(criaNo((char*)"expr"),$2))));} 
+		| AP exprseq FP { $$= addIrmao(criaNo((char*)"("), addIrmao(addFilho(criaNo((char*)"exprseq"), $2), criaNo((char*)")")));}
+		| IF expr THEN expr %prec LTE { $$= addIrmao(criaNo((char*)"if"), addIrmao(addFilho(criaNo((char*)"expr"), $2), addIrmao(criaNo((char*)"then"), addFilho(criaNo((char*)"expr"),$4))));}
+		| IF expr THEN expr ELSE expr { $$= addIrmao(criaNo((char*)"if"), addIrmao(addFilho(criaNo((char*)"expr"), $2), addIrmao(criaNo((char*)"then"), addIrmao(addFilho(criaNo((char*)"expr"),$4),addIrmao(criaNo((char*)"else"),addFilho(criaNo((char*)"expr"),$6))))));}
+		| WHILE expr DO expr %prec HTO { $$= addIrmao(criaNo((char*)"while"), addIrmao(addFilho(criaNo((char*)"expr"), $2),addIrmao(criaNo((char*)"do"),addFilho(criaNo((char*)"expr"),$4))));} 
 		| LET declist IN exprseq END {$$=addIrmao(criaNo((char*)"let"),addIrmao(addFilho(criaNo((char*)"declist"),$2),addIrmao(criaNo((char*)"in"),addIrmao(addFilho(criaNo((char*)"exprseq"),$4),criaNo((char*)"end"))))); }
-		| MENOS expr %prec UMENOS{ $$= addIrmao(criaNo((char*)"-"),addFilho(criaNo((char*)"expr"),$1));} 
+		| MENOS expr %prec UMENOS{ $$= addIrmao(criaNo((char*)"-"),addFilho(criaNo((char*)"expr"),$2));} 
 		| %empty { $$=criaNo((char*)"NULL");} 
 		;
 
-exprseq:	 exprseq PVIR expr
-		| expr
+exprseq:	 exprseq PVIR expr{ $$=  addIrmao(addFilho(criaNo((char*)"exprseq"),$1),addIrmao(criaNo((char*)";"),addFilho(criaNo((char*)"expr"),$3)));}  
+		| expr{ $$= addFilho(criaNo((char*)"expr"), $1);}  
 		;
 
-exprlist:	 exprlist VIR expr
-		| expr
+exprlist:	 exprlist VIR expr{ $$=  addIrmao(addFilho(criaNo((char*)"exprlist"),$1),addIrmao(criaNo((char*)","),addFilho(criaNo((char*)"expr"),$3)));}  
+		| expr{ $$= addFilho(criaNo((char*)"expr"), $1);}  
 		;
 
 declist:	%empty{ $$=criaNo(strdup("NULL"));}	 
-		| declist dec {$$=addIrmao(criaNo((char*)"var"),addFilho(criaNo((char*)"dec"),$2));}
+		| declist dec {$$=addIrmao(addFilho(criaNo((char*)"declist"),$1),addFilho(criaNo((char*)"dec"),$2));}
 		;
 
 dec:		variabledec {$$=addFilho(criaNo((char*)"variabledec"),$1);}
-		| functiondec
+		| functiondec{$$=addFilho(criaNo((char*)"functiondec"),$1);} 
 		;
 
 variabledec:	VAR id ATT expr {$$=addIrmao(criaNo((char*)"var"),addIrmao(addFilho(criaNo((char*)"id"),$2),addIrmao(criaNo((char*)":="),addFilho(criaNo((char*)"expr"),$4))));}
@@ -146,15 +196,15 @@ id:		ID{ $$ = criaNo(strdup(yytext));}
 intconstant:	INTEGER{ $$ = criaNo(strdup(yytext));} 
 		;
 
-stringconstant:	STRING{ $$ = criaNo(strdup(yytext));}  
+stringconstant:	STRING{ $$ = criaNo(scape(strdup(yytext)));}  
 		;
 
 typefields:	id { $$ = criaNo(strdup(yytext));}   
-		| typefields VIR id
+		| typefields VIR id{ $$=  addIrmao(addFilho(criaNo((char*)"typefields"),$1),addIrmao(criaNo((char*)","),addFilho(criaNo((char*)"id"),$3)));}   
 		;
 
 
-functiondec:	FUNCTION id AP typefields FP ATT expr{ $$= addIrmao(criaNo((char*)"function"), addIrmao(addFilho(criaNo((char*)"id"), $1), addIrmao(criaNo((char*)"("),addIrmao(addFilho(criaNo((char*)"typefields"),$2),addIrmao(criaNo((char*)")"),addIrmao(criaNo((char*)":="),addFilho(criaNo((char*)"expr"),$3)))))));}
+functiondec:	FUNCTION id AP typefields FP ATT expr{ $$= addIrmao(criaNo((char*)"function"), addIrmao(addFilho(criaNo((char*)"id"), $2), addIrmao(criaNo((char*)"("),addIrmao(addFilho(criaNo((char*)"typefields"),$4),addIrmao(criaNo((char*)")"),addIrmao(criaNo((char*)":="),addFilho(criaNo((char*)"expr"),$7)))))));}
 		;
 
 %%
@@ -175,4 +225,3 @@ int yyerror(char *s)
   return yyerror(s);
 }
 */
-

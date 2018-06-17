@@ -1,1 +1,1 @@
-let in 12 + 17 - 1 end
+let in -(17 - 1) end
