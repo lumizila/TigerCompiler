@@ -1,6 +1,7 @@
 # Makefile
 
-OBJS	= bison.o lex.o main.o
+OBJS	= bison.o lex.o 
+#main.o
 
 CC	= g++
 CFLAGS	= -g -Wall -ansi 
@@ -23,11 +24,12 @@ bison.c:	tc--.y
 		cp tc--.tab.c bison.c
 		cmp -s tc--.tab.h tok.h || cp tc--.tab.h tok.h
 
-main.o:		main.c
-		$(CC) $(CFLAGS) -c main.c -o main.o
+#main.o:		main.c
+#		$(CC) $(CFLAGS) -c main.c -o main.o
 
-lex.o yac.o main.o	: heading.h
-lex.o main.o		: tok.h
+lex.o yac.o     	: heading.h
+lex.o   		: tok.h
+#lex.o main.o		: tok.h
 
 clean:
 	rm -f *.o *~ lex.c lex.yy.c bison.c tok.h tc--.tab.c tc--.tab.h tc--.output tc--

@@ -9,6 +9,7 @@ extern char *yytext;
 int yyerror(char *s);
 int yylex(void);
 int var=0;
+int erro=0;
 struct node{
 	int nserie;
 	int numfilhos;
@@ -17,7 +18,7 @@ struct node{
 	struct node *irmao;
 };
 typedef struct node no;
-
+no* raiz;
 no* criaNo(char * conteudo){
 	no* novo = (no*) malloc(sizeof(no));
 	novo->filhos = (no**) malloc(10*sizeof(no*));
@@ -142,7 +143,7 @@ void imprimeArvore(no* nodo, int nivel){
 %right ELSE LTE
 %%
 
-prog:		expr {imprimeArvore(addFilho(criaNo((char*)"prog"),addFilho(criaNo((char*)"expr"),$1)),0);printf("\n");}
+prog:		expr  {/*imprimeArvore(*/raiz=addFilho(criaNo((char*)"prog"),addFilho(criaNo((char*)"expr"),$1));}
 		;
 
 expr:		intconstant { $$= addFilho(criaNo((char*)"intconstant"),$1);} 
@@ -213,7 +214,7 @@ int yyerror(char* s)
 {
   extern int yylineno;	
   extern char *yytext;	
-
+erro++;
   fprintf(stderr, "Erro: %s no simbolo %s na linha %d.\n",s, yytext, yylineno);
 /*  cerr << "ERROR: " << s << " at symbol \"" << yytext;
   cerr << "\" on line " << yylineno << endl;
@@ -225,3 +226,20 @@ int yyerror(char *s)
   return yyerror(s);
 }
 */
+int main(int argc, char **argv)
+{
+  if ((argc > 1) && (freopen(argv[1], "r", stdin) == NULL))
+  {
+	
+/*    cout << argv[0] << ": File " << argv[1] << " cannot be opened.\n";
+ */
+   fprintf(stderr, "Arquivo %s nao pode ser aberto.\n", argv[1]);
+   exit( 1 );
+  }
+  
+if(!yyparse()){
+  imprimeArvore(raiz,0);
+}
+return 0;
+}
+
