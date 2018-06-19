@@ -239,6 +239,7 @@ int main(int argc, char **argv)
   
 if(!yyparse()){
   imprimeArvore(raiz,0);
+  printf("\n");
 }
 return 0;
 }
